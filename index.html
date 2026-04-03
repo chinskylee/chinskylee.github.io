@@ -74,6 +74,25 @@
                 },
             },
         }
+</script>
+<script id="theme-init">
+        (() => {
+            let storedTheme = null;
+
+            try {
+                storedTheme = window.localStorage.getItem('theme');
+            } catch {
+                storedTheme = null;
+            }
+
+            const prefersDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const initialTheme = storedTheme === 'dark' || storedTheme === 'light'
+                ? storedTheme
+                : (prefersDarkTheme ? 'dark' : 'light');
+
+            document.documentElement.classList.toggle('dark', initialTheme === 'dark');
+            document.documentElement.classList.toggle('light', initialTheme !== 'dark');
+        })();
     </script>
 <style>
         html {
@@ -87,6 +106,11 @@
             background-color: #fbfaee;
             color: #1b1c15;
             cursor: crosshair;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .dark body {
+            background-color: #15160f;
+            color: #edeadf;
         }
         .terminal-block::after {
             content: '_';
@@ -108,16 +132,117 @@
         .custom-scrollbar::-webkit-scrollbar-thumb {
             background: #79776d;
         }
+        .dark .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1f2019;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #6e6a5f;
+        }
+        .dark .bg-surface-container-low {
+            background-color: #1f2019;
+        }
+        .dark .bg-surface-container {
+            background-color: #262821;
+        }
+        .dark .bg-surface-container-highest {
+            background-color: #2f3128;
+        }
+        .dark .hover\:bg-surface-container:hover {
+            background-color: #262821;
+        }
+        .dark .hover\:bg-surface-container-highest:hover {
+            background-color: #2f3128;
+        }
+        .dark .text-on-surface {
+            color: #f1eee2;
+        }
+        .dark .text-on-surface-variant {
+            color: #c1beb2;
+        }
+        .dark .text-outline {
+            color: #9f9c90;
+        }
+        .dark .border-outline {
+            border-color: #6f6c60;
+        }
+        .dark .border-outline-variant {
+            border-color: #59574d;
+        }
+        .dark .bg-background {
+            background-color: #1b1c15;
+        }
+        .theme-toggle {
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 0 1px rgba(121, 119, 109, 0.18);
+        }
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, rgba(112, 90, 74, 0) 0%, rgba(112, 90, 74, 0.18) 48%, rgba(112, 90, 74, 0) 100%);
+            transform: translateX(-140%);
+            transition: transform 0.45s ease;
+            pointer-events: none;
+        }
+        .theme-toggle:hover::before,
+        .theme-toggle:focus-visible::before {
+            transform: translateX(0%);
+        }
+        .theme-toggle:focus-visible {
+            outline: 1px solid #705a4a;
+            outline-offset: 2px;
+        }
+        .theme-toggle .theme-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 9999px;
+            background: #705a4a;
+            box-shadow: 0 0 0 rgba(112, 90, 74, 0.55);
+            animation: terminalPulse 2.2s ease-in-out infinite;
+        }
+        .dark .theme-toggle {
+            box-shadow: inset 0 0 0 1px rgba(159, 156, 144, 0.24);
+        }
+        .dark .theme-toggle::before {
+            background: linear-gradient(120deg, rgba(222, 193, 173, 0) 0%, rgba(222, 193, 173, 0.2) 50%, rgba(222, 193, 173, 0) 100%);
+        }
+        .dark .theme-toggle:focus-visible {
+            outline-color: #dec1ad;
+        }
+        .dark .theme-toggle .theme-dot {
+            background: #dec1ad;
+            box-shadow: 0 0 0 rgba(222, 193, 173, 0.55);
+        }
+        @keyframes terminalPulse {
+            0%, 100% {
+                opacity: 0.62;
+                box-shadow: 0 0 0 rgba(112, 90, 74, 0);
+            }
+            50% {
+                opacity: 1;
+                box-shadow: 0 0 10px rgba(112, 90, 74, 0.5);
+            }
+        }
     </style>
 </head>
 <body class="font-body selection:bg-primary-fixed selection:text-on-primary-fixed">
 <!-- TopNavBar Navigation Shell -->
-<nav class="fixed top-0 w-full rounded-none border-b border-[#79776d]/20 bg-[#fbfaee] dark:bg-[#1b1c15] flex justify-between items-center px-6 py-4 max-w-full z-50">
+<nav class="fixed top-0 w-full rounded-none border-b border-[#79776d]/20 dark:border-[#9f9c90]/20 bg-[#fbfaee] dark:bg-[#1b1c15] flex justify-between items-center px-6 py-4 max-w-full z-50">
 <div class="font-bold text-lg tracking-widest text-[#705a4a] dark:text-[#f5f4e8] font-['Space_Grotesk'] uppercase" style="">TERMINAL_V1.0
         </div>
-<div class="hidden md:flex gap-8 items-center">
-<a class="nav-link font-['Space_Grotesk'] tracking-tighter uppercase text-xs text-[#79776d] border-b-2 border-transparent hover:text-[#705a4a] pb-1 transition-colors duration-150" href="#articles-heading" id="articles-link" style="">ARTICLES</a>
-<a class="nav-link font-['Space_Grotesk'] tracking-tighter uppercase text-xs text-[#79776d] border-b-2 border-transparent hover:text-[#705a4a] pb-1 transition-colors duration-150" href="#projects-heading" id="projects-link" style="">PROJECTS</a>
+<div class="flex items-center gap-5 md:gap-8">
+<div class="hidden md:flex gap-8 items-center pr-2 md:pr-4">
+<a class="nav-link font-['Space_Grotesk'] tracking-tighter uppercase text-xs text-[#79776d] dark:text-[#a9a596] border-b-2 border-transparent hover:text-[#705a4a] dark:hover:text-[#dec1ad] pb-1 transition-colors duration-150" href="#articles-heading" id="articles-link" style="">ARTICLES</a>
+<a class="nav-link font-['Space_Grotesk'] tracking-tighter uppercase text-xs text-[#79776d] dark:text-[#a9a596] border-b-2 border-transparent hover:text-[#705a4a] dark:hover:text-[#dec1ad] pb-1 transition-colors duration-150" href="#projects-heading" id="projects-link" style="">PROJECTS</a>
+</div>
+<button aria-label="Switch to dark mode" aria-pressed="false" class="theme-toggle group border border-outline-variant bg-surface-container-low px-3 py-2 hover:bg-surface-container transition-colors" id="theme-toggle" type="button">
+<span class="inline-flex items-center gap-2">
+<span class="material-symbols-outlined text-base text-on-surface" id="theme-toggle-icon" style="">dark_mode</span>
+<span class="theme-dot" aria-hidden="true"></span>
+<span class="font-label text-[10px] tracking-widest uppercase text-on-surface" id="theme-toggle-label" style="">DARK</span>
+</span>
+</button>
 </div>
 </nav>
 <main class="pt-24 pb-12 px-6 max-w-7xl mx-auto space-y-24">
@@ -125,10 +250,10 @@
 <section class="grid md:grid-cols-12 gap-12 items-center pt-6 md:pt-8">
 <div class="md:col-span-12 space-y-6">
 <h1 class="font-headline text-6xl md:text-8xl font-bold tracking-tighter text-on-surface leading-[0.9]" style="">CHINSKY&nbsp;<span class="text-primary" style="">LEE</span></h1>
-<p class="font-headline text-xl uppercase tracking-widest text-outline border-l-4 border-primary pl-6" style="">A STUDENT MAJOR IN PHYSICS</p>
+<p class="font-headline text-xl uppercase tracking-widest text-outline border-l-4 border-primary pl-6" style="">A STUDENT MAJORING IN PHYSICS</p>
 <div class="max-w-md pt-4">
 <p class="text-on-surface-variant leading-relaxed text-sm" style="">
-                        Decoding the fabric of space-time through mathematical elegance and computational rigor. Currently investigating non-linear dynamics in high-energy particle collisions.
+                        Harnessing subwavelength flow of light through mathematical elegance and nanophotonic rigor. Currently investigating LSPR effect in AuNPs and its application in biosensing.
                     </p>
 </div>
 <div class="flex gap-4 pt-4">
@@ -152,23 +277,23 @@
 </div>
 <div class="font-label text-sm space-y-4 text-on-surface-variant leading-relaxed">
 <div class="flex gap-4">
-<span class="text-outline shrink-0" style="">[10:42:01]</span>
-<p class="" style=""><span class="text-primary" style="">INITIALIZING_BIOGRAPHY:</span> Born in the intersection of mathematics and philosophy. Aris Thorne focuses on the structural anomalies of the universe. Education: PhD Theoretical Physics, ETH Zürich.</p>
+<span class="text-outline shrink-0" style="">[10:41:53]</span>
+<p class="" style=""><span class="text-primary" style="">INITIALIZING_SYSTEM:</span> Start my physics study as a little boy full of curiosity. </p>
 </div>
 <div class="flex gap-4">
 <span class="text-outline shrink-0" style="">[10:42:05]</span>
-<p class="" style=""><span class="text-primary" style="">RESEARCH_FOCUS:</span> Primary focus on Quantum Entanglement and its relation to Thermodynamic Entropy. Secondary interests include String Theory and Computational Fluid Dynamics.</p>
+<p class="" style=""><span class="text-primary" style="">RESEARCH_FOCUS:</span> Primary focus on Quantum Optics and its relation to remote communication. Secondary interests include Quantum Field Theory and Computational Physics.</p>
 </div>
 <div class="flex gap-4">
 <span class="text-outline shrink-0" style="">[10:42:12]</span>
-<p class="" style=""><span class="text-primary" style="">LOCATION_DATA:</span> Currently based in Sector 7G (Pacific Northwest). Operating out of a private observatory and digital workspace.</p>
+<p class="" style=""><span class="text-primary" style="">LOCATION_DATA:</span> Currently based in China. Operating out of a library and digital workspace.</p>
 </div>
 <div class="flex gap-4">
 <span class="text-outline shrink-0" style="">[10:42:15]</span>
 <p class="" style=""><span class="text-primary" style="">CURRENT_STATUS:</span> Terminal input active. Monitoring for cosmic background radiation spikes. Ready for collaboration on open-source physics engines.</p>
 </div>
 <div class="pt-4 flex gap-4 text-primary">
-<span class="text-outline shrink-0" style="">aris@thorne:~$</span>
+<span class="text-outline shrink-0" style="">lyra@nancy:~$</span>
 <span class="terminal-block"></span>
 </div>
 </div>
@@ -177,8 +302,8 @@
 <section class="space-y-8 scroll-mt-28" id="articles">
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
 <div>
-<h2 class="font-headline text-4xl font-bold tracking-tight scroll-mt-28" id="articles-heading" style="">RESEARCH_ARCHIVE</h2>
-<p class="font-label text-xs text-outline uppercase tracking-widest mt-2" style="">Index of published papers &amp; experimental notes</p>
+<h2 class="font-headline text-4xl font-bold tracking-tight scroll-mt-28" id="articles-heading" style="">FEATURED_POSTS</h2>
+<p class="font-label text-xs text-outline uppercase tracking-widest mt-2" style="">Modest insights into physics &amp; tech notes</p>
 </div>
 <a class="text-sm font-label border-b border-on-surface pb-1 hover:text-primary transition-colors" href="#" style="">VIEW_ALL_RECORDS</a>
 </div>
@@ -190,7 +315,7 @@
 <h3 class="font-headline text-xl font-bold leading-tight" style="">Quantum Decoherence in Sub-Zero Vacuums</h3>
 <p class="text-xs text-on-surface-variant line-clamp-3" style="">A study of particle behavior in extreme isolation environments, focusing on the preservation of spin states.</p>
 </div>
-<div class="flex items-center justify-between pt-4 border-t border-outline/10">
+<div class="mt-auto flex items-center justify-between pt-4 border-t border-outline/10">
 <span class="font-label text-[10px] uppercase" style="">PDF_DOWNLOAD</span>
 <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" style="">arrow_forward</span>
 </div>
@@ -202,7 +327,7 @@
 <h3 class="font-headline text-xl font-bold leading-tight" style="">Entropy Cascades: A New Framework</h3>
 <p class="text-xs text-on-surface-variant line-clamp-3" style="">Proposing a hierarchical model for entropy distribution in closed-loop systems undergoing rapid thermal shifts.</p>
 </div>
-<div class="flex items-center justify-between pt-4 border-t border-outline/10">
+<div class="mt-auto flex items-center justify-between pt-4 border-t border-outline/10">
 <span class="font-label text-[10px] uppercase" style="">BROWSE_DATA</span>
 <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" style="">arrow_forward</span>
 </div>
@@ -214,7 +339,7 @@
 <h3 class="font-headline text-xl font-bold leading-tight" style="">Dark Matter Fluidity &amp; Gravitational Lensing</h3>
 <p class="text-xs opacity-80 line-clamp-3" style="">Experimental modeling of dark matter as a non-Newtonian fluid in galactic clusters.</p>
 </div>
-<div class="flex items-center justify-between pt-4 border-t border-on-primary/20">
+<div class="mt-auto flex items-center justify-between pt-4 border-t border-on-primary/20">
 <span class="font-label text-[10px] uppercase" style="">WIP_DRAFT</span>
 <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" style="">lock</span>
 </div>
@@ -226,16 +351,16 @@
 <div class="space-y-6">
 <h2 class="font-headline text-4xl font-bold tracking-tight scroll-mt-28" id="projects-heading" style="">GITHUB_PROJECTS</h2>
 <p class="text-on-surface-variant text-sm max-w-sm leading-relaxed" style="">
-                    Transparent research requires reproducible code. Explore my computational models, physics engines, and data analysis pipelines on GitHub.
+                    Lately, I’ve been leaning into the intuition of vibe coding. On GitHub, you'll find my modest attempts at AI-assisted programming—rough prototypes and evolving experiments as I learn to co-create with LLMs.
                 </p>
 <div class="pt-4">
-<a class="inline-flex items-center gap-4 group" href="https://github.com/athorne_phys" rel="noopener noreferrer" style="" target="_blank">
+<a class="inline-flex items-center gap-4 group" href="https://github.com/chinskylee" rel="noopener noreferrer" style="" target="_blank">
 <div class="w-12 h-12 flex items-center justify-center border border-outline group-hover:bg-primary group-hover:text-on-primary transition-all">
 <span class="material-symbols-outlined" style="">code</span>
 </div>
 <div>
 <span class="block font-headline font-bold text-sm tracking-widest uppercase" style="">Visit Repository</span>
-<span class="text-[10px] font-label text-outline uppercase" style="">github.com/athorne_phys</span>
+<span class="text-[10px] font-label text-outline uppercase" style="">github.com/chinskylee</span>
 </div>
 </a>
 </div>
@@ -291,17 +416,17 @@
 <p class="font-label text-xs text-outline uppercase tracking-widest" style="">Direct channels for collaboration</p>
 </div>
 <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-<a class="group bg-surface-container p-5 flex items-center justify-between hover:bg-surface-container-highest transition-colors" href="mailto:chinskylee.physics@gmail.com" style="">
+<a class="group bg-surface-container p-5 flex items-center justify-between hover:bg-surface-container-highest transition-colors" href="mailto:chinskylee@outlook.com" style="">
 <div class="space-y-1">
 <span class="font-label text-[10px] text-outline uppercase" style="">Email</span>
-<span class="block font-headline text-lg font-semibold tracking-tight" style="">chinskylee.physics@gmail.com</span>
+<span class="block font-headline text-lg font-semibold tracking-tight" style="">chinskylee@outlook.com</span>
 </div>
 <span class="material-symbols-outlined text-sm text-outline group-hover:translate-x-1 transition-transform" style="">north_east</span>
 </a>
-<a class="group bg-surface-container p-5 flex items-center justify-between hover:bg-surface-container-highest transition-colors" href="https://github.com/athorne_phys" rel="noopener noreferrer" style="" target="_blank">
+<a class="group bg-surface-container p-5 flex items-center justify-between hover:bg-surface-container-highest transition-colors" href="https://github.com/chinskylee" rel="noopener noreferrer" style="" target="_blank">
 <div class="space-y-1">
 <span class="font-label text-[10px] text-outline uppercase" style="">GitHub</span>
-<span class="block font-headline text-lg font-semibold tracking-tight" style="">github.com/athorne_phys</span>
+<span class="block font-headline text-lg font-semibold tracking-tight" style="">github.com/chinskylee</span>
 </div>
 <span class="material-symbols-outlined text-sm text-outline group-hover:translate-x-1 transition-transform" style="">north_east</span>
 </a>
@@ -323,6 +448,10 @@
             document.getElementById('projects-link'),
         ].filter(Boolean);
 
+        const themeToggleButton = document.getElementById('theme-toggle');
+        const themeToggleIcon = document.getElementById('theme-toggle-icon');
+        const themeToggleLabel = document.getElementById('theme-toggle-label');
+
         const articlesHeading = document.getElementById('articles-heading');
         const projectsHeading = document.getElementById('projects-heading');
         const contactSection = document.getElementById('contact');
@@ -332,7 +461,10 @@
                 const isActive = link.getAttribute('href') === hash;
                 link.classList.toggle('text-[#705a4a]', isActive);
                 link.classList.toggle('border-[#705a4a]', isActive);
+                link.classList.toggle('dark:text-[#dec1ad]', isActive);
+                link.classList.toggle('dark:border-[#dec1ad]', isActive);
                 link.classList.toggle('text-[#79776d]', !isActive);
+                link.classList.toggle('dark:text-[#a9a596]', !isActive);
                 link.classList.toggle('border-transparent', !isActive);
 
                 if (isActive) {
@@ -341,6 +473,59 @@
                     link.removeAttribute('aria-current');
                 }
             });
+        };
+
+        const readStoredTheme = () => {
+            try {
+                return window.localStorage.getItem('theme');
+            } catch {
+                return null;
+            }
+        };
+
+        const writeStoredTheme = (theme) => {
+            try {
+                window.localStorage.setItem('theme', theme);
+            } catch {
+                return;
+            }
+        };
+
+        const applyTheme = (theme, persistPreference) => {
+            const resolvedTheme = theme === 'dark' ? 'dark' : 'light';
+            const isDarkTheme = resolvedTheme === 'dark';
+
+            document.documentElement.classList.toggle('dark', isDarkTheme);
+            document.documentElement.classList.toggle('light', !isDarkTheme);
+
+            if (themeToggleButton) {
+                themeToggleButton.setAttribute('aria-pressed', String(isDarkTheme));
+                themeToggleButton.setAttribute('aria-label', isDarkTheme ? 'Switch to light mode' : 'Switch to dark mode');
+            }
+
+            if (themeToggleIcon) {
+                themeToggleIcon.textContent = isDarkTheme ? 'light_mode' : 'dark_mode';
+            }
+
+            if (themeToggleLabel) {
+                themeToggleLabel.textContent = isDarkTheme ? 'LIGHT' : 'DARK';
+            }
+
+            if (persistPreference) {
+                writeStoredTheme(resolvedTheme);
+            }
+        };
+
+        const initializeTheme = () => {
+            const storedTheme = readStoredTheme();
+
+            if (storedTheme === 'dark' || storedTheme === 'light') {
+                applyTheme(storedTheme, false);
+                return;
+            }
+
+            const prefersDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            applyTheme(prefersDarkTheme ? 'dark' : 'light', false);
         };
 
         const getHeadingAnchorOffset = () => {
@@ -393,6 +578,7 @@
         };
 
         setActiveNav('');
+        initializeTheme();
         updateActiveNavByScroll();
         updateBackToTopVisibility();
 
@@ -411,6 +597,13 @@
         if (backToTopButton) {
             backToTopButton.addEventListener('click', () => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        if (themeToggleButton) {
+            themeToggleButton.addEventListener('click', () => {
+                const isCurrentlyDark = document.documentElement.classList.contains('dark');
+                applyTheme(isCurrentlyDark ? 'light' : 'dark', true);
             });
         }
     </script>
