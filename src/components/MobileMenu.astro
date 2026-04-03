@@ -56,6 +56,7 @@
     const menu = document.getElementById('mobile-menu');
     const overlay = document.getElementById('mobile-menu-overlay');
     const toggleBtnNav = document.getElementById('mobile-menu-toggle-nav');
+    const menuIcon = document.getElementById('menu-icon');
     const closeBtn = document.getElementById('mobile-menu-close');
     const themeToggleMobile = document.getElementById('theme-toggle-mobile');
     
@@ -70,6 +71,8 @@
       menu.classList.remove('-translate-x-full');
       overlay.classList.remove('opacity-0', 'pointer-events-none');
       document.body.style.overflow = 'hidden';
+      // 切换图标为 close
+      if (menuIcon) menuIcon.textContent = 'close';
     }
 
     function closeMenu() {
@@ -77,10 +80,20 @@
       menu.classList.add('-translate-x-full');
       overlay.classList.add('opacity-0', 'pointer-events-none');
       document.body.style.overflow = '';
+      // 切换图标为 menu
+      if (menuIcon) menuIcon.textContent = 'menu';
     }
 
-    // Toggle button click (from NavBar)
-    if (toggleBtnNav) toggleBtnNav.addEventListener('click', openMenu);
+    function toggleMenu() {
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    }
+
+    // Toggle button click (from NavBar) - 现在可以开关
+    if (toggleBtnNav) toggleBtnNav.addEventListener('click', toggleMenu);
     
     // Close button click
     if (closeBtn) closeBtn.addEventListener('click', closeMenu);
@@ -152,11 +165,9 @@
 </script>
 
 <style>
-  /* Dark mode support */
+  /* Dark mode support for mobile menu */
   .dark #mobile-menu {
     background-color: #262821;
-  }
-  .dark #mobile-menu-toggle {
-    background-color: #1f2019;
+    border-right-color: #3f3f3f;
   }
 </style>

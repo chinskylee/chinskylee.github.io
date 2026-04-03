@@ -10,8 +10,8 @@ const currentPath = Astro.url.pathname;
 
 <nav class="fixed top-0 w-full rounded-none border-b border-[#79776d]/20 dark:border-[#9f9c90]/20 bg-[#fbfaee] dark:bg-[#1b1c15] flex justify-between items-center px-6 py-4 max-w-full z-50">
   <!-- Mobile Menu Button (Left side) -->
-  <button id="mobile-menu-toggle-nav" class="md:hidden p-2 text-on-surface hover:text-primary transition-colors" aria-label="Open menu">
-    <span class="material-symbols-outlined text-2xl">menu</span>
+  <button id="mobile-menu-toggle-nav" class="md:hidden p-2 text-on-surface hover:text-primary transition-colors" aria-label="Toggle menu">
+    <span id="menu-icon" class="material-symbols-outlined text-2xl">menu</span>
   </button>
   
   <a href="/" class="hidden md:block font-bold text-lg tracking-widest text-[#705a4a] dark:text-[#f5f4e8] font-['Space_Grotesk'] uppercase">
