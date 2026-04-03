@@ -41,10 +41,10 @@ const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a))
             {postsByYear[parseInt(year)].map(post => (
               <article class="group">
                 <a href={`/blog/${post.slug}/`} class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6 py-2 hover:pl-2 transition-all">
-                  <time class="font-label text-sm text-outline uppercase w-24 shrink-0" datetime={post.data.pubDate.toISOString()}>
+                  <time class="font-label text-base text-outline uppercase w-24 shrink-0" datetime={post.data.pubDate.toISOString()}>
                     {post.data.pubDate.toISOString().split('T')[0].slice(5)}
                   </time>
-                  <h3 class="font-headline text-lg font-semibold tracking-tight group-hover:text-primary transition-colors">
+                  <h3 class="font-headline text-xl font-semibold tracking-tight group-hover:text-primary transition-colors">
                     {post.data.title}
                   </h3>
                 </a>

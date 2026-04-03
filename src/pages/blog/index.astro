@@ -24,11 +24,11 @@ const allTags = [...new Set(sortedPosts.flatMap(post => post.data.tags || []))];
     <!-- Tags -->
     {allTags.length > 0 && (
       <section class="flex flex-wrap gap-2">
-        <span class="font-label text-sm text-outline uppercase mr-2">TAGS:</span>
+        <span class="font-label text-base text-outline uppercase mr-2">TAGS:</span>
         {allTags.map(tag => (
-          <a 
+          <a
             href={`/tags/${tag.toLowerCase().replace(/\s+/g, '-')}/`}
-            class="px-3 py-1 bg-surface-container text-sm font-label uppercase tracking-wider hover:bg-surface-container-highest transition-colors"
+            class="px-3 py-1 bg-surface-container text-base font-label uppercase tracking-wider hover:bg-surface-container-highest transition-colors"
           >
             {tag}
           </a>
@@ -41,7 +41,7 @@ const allTags = [...new Set(sortedPosts.flatMap(post => post.data.tags || []))];
       {sortedPosts.map(post => (
         <article class="bg-surface-container p-6 flex flex-col md:flex-row md:items-start gap-4 hover:bg-surface-container-highest transition-colors">
           <div class="md:w-32 shrink-0">
-            <time class="font-label text-sm text-outline uppercase" datetime={post.data.pubDate.toISOString()}>
+            <time class="font-label text-base text-outline uppercase" datetime={post.data.pubDate.toISOString()}>
               {post.data.pubDate.toISOString().split('T')[0]}
             </time>
           </div>
@@ -51,13 +51,13 @@ const allTags = [...new Set(sortedPosts.flatMap(post => post.data.tags || []))];
                 {post.data.title}
               </a>
             </h2>
-            <p class="text-base text-on-surface-variant">{post.data.description}</p>
+            <p class="text-lg text-on-surface-variant">{post.data.description}</p>
             {post.data.tags && post.data.tags.length > 0 && (
               <div class="flex flex-wrap gap-2 pt-2">
                 {post.data.tags.map(tag => (
-                  <a 
+                  <a
                     href={`/tags/${tag.toLowerCase().replace(/\s+/g, '-')}/`}
-                    class="text-xs font-label uppercase tracking-wider text-outline hover:text-primary transition-colors"
+                    class="text-sm font-label uppercase tracking-wider text-outline hover:text-primary transition-colors"
                   >
                     #{tag}
                   </a>
@@ -66,7 +66,7 @@ const allTags = [...new Set(sortedPosts.flatMap(post => post.data.tags || []))];
             )}
           </div>
           <a href={`/blog/${post.slug}/`} class="shrink-0 flex items-center gap-2 text-outline hover:text-primary transition-colors">
-            <span class="font-label text-sm uppercase">READ</span>
+            <span class="font-label text-base uppercase">READ</span>
             <span class="material-symbols-outlined text-base">arrow_forward</span>
           </a>
         </article>

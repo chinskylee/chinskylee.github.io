@@ -23,19 +23,19 @@ const rssUrl = 'https://lyralex.qzz.io/rss.xml';
     <section class="bg-surface-container p-8 space-y-6">
       <h2 class="font-headline text-2xl font-bold tracking-tight">FEED_URL</h2>
       <div class="flex flex-col md:flex-row gap-4">
-        <code class="flex-1 bg-surface-container-low p-4 font-mono text-sm break-all">
+        <code class="flex-1 bg-surface-container-low p-4 font-mono text-base break-all">
           {rssUrl}
         </code>
         <button 
           id="copy-btn"
-          class="inline-flex items-center justify-center gap-2 bg-primary text-on-primary px-6 py-3 text-base font-label uppercase tracking-widest hover:bg-on-primary-container transition-all"
+          class="inline-flex items-center justify-center gap-2 bg-primary text-on-primary px-6 py-3 text-lg font-label uppercase tracking-widest hover:bg-on-primary-container transition-all"
           data-url={rssUrl}
         >
           <span class="material-symbols-outlined text-base">content_copy</span>
           <span>COPY</span>
         </button>
       </div>
-      <p id="copy-feedback" class="text-primary text-sm hidden">URL copied to clipboard!</p>
+      <p id="copy-feedback" class="text-primary text-base hidden">URL copied to clipboard!</p>
     </section>
 
     <!-- What is RSS -->
@@ -43,7 +43,7 @@ const rssUrl = 'https://lyralex.qzz.io/rss.xml';
       <h2 class="font-headline text-2xl font-bold tracking-tight border-b border-outline-variant pb-4">
         WHAT_IS_RSS
       </h2>
-      <div class="space-y-4 text-lg text-on-surface-variant leading-relaxed">
+      <div class="space-y-4 text-xl text-on-surface-variant leading-relaxed">
         <p>
           RSS (Really Simple Syndication) is a web feed format that allows you to subscribe to websites 
           and receive automatic updates when new content is published. Instead of manually checking for 
@@ -74,21 +74,21 @@ const rssUrl = 'https://lyralex.qzz.io/rss.xml';
               <span class="text-primary">→</span>
               <div>
                 <a href="https://feedly.com" target="_blank" rel="noopener" class="font-semibold hover:text-primary transition-colors">Feedly</a>
-                <p class="text-sm">Popular web-based reader with mobile apps</p>
+                <p class="text-base">Popular web-based reader with mobile apps</p>
               </div>
             </li>
             <li class="flex items-start gap-3">
               <span class="text-primary">→</span>
               <div>
                 <a href="https://inoreader.com" target="_blank" rel="noopener" class="font-semibold hover:text-primary transition-colors">Inoreader</a>
-                <p class="text-sm">Powerful reader with advanced features</p>
+                <p class="text-base">Powerful reader with advanced features</p>
               </div>
             </li>
             <li class="flex items-start gap-3">
               <span class="text-primary">→</span>
               <div>
                 <a href="https://www.thunderbird.net/" target="_blank" rel="noopener" class="font-semibold hover:text-primary transition-colors">Thunderbird</a>
-                <p class="text-sm">Email client with built-in RSS support</p>
+                <p class="text-base">Email client with built-in RSS support</p>
               </div>
             </li>
           </ul>
@@ -105,21 +105,21 @@ const rssUrl = 'https://lyralex.qzz.io/rss.xml';
               <span class="text-primary">→</span>
               <div>
                 <span class="font-semibold">Reeder</span>
-                <p class="text-sm">iOS/macOS (Paid, highly recommended)</p>
+                <p class="text-base">iOS/macOS (Paid, highly recommended)</p>
               </div>
             </li>
             <li class="flex items-start gap-3">
               <span class="text-primary">→</span>
               <div>
                 <span class="font-semibold">Feedly</span>
-                <p class="text-sm">iOS/Android (Free)</p>
+                <p class="text-base">iOS/Android (Free)</p>
               </div>
             </li>
             <li class="flex items-start gap-3">
               <span class="text-primary">→</span>
               <div>
                 <span class="font-semibold">Read You</span>
-                <p class="text-sm">Android, open source (Free)</p>
+                <p class="text-base">Android, open source (Free)</p>
               </div>
             </li>
           </ul>
@@ -161,7 +161,7 @@ const rssUrl = 'https://lyralex.qzz.io/rss.xml';
       </p>
       <a 
         href="/blog" 
-        class="inline-flex items-center gap-2 border border-on-primary px-6 py-3 text-base font-label uppercase tracking-widest hover:bg-on-primary hover:text-primary transition-all"
+        class="inline-flex items-center gap-2 border border-on-primary px-6 py-3 text-lg font-label uppercase tracking-widest hover:bg-on-primary hover:text-primary transition-all"
       >
         <span>VISIT_BLOG</span>
         <span class="material-symbols-outlined">arrow_forward</span>

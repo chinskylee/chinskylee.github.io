@@ -29,15 +29,15 @@ const { Content } = await post.render();
           {post.data.tags?.map(tag => (
             <a 
               href={`/tags/${tag.toLowerCase().replace(/\s+/g, '-')}/`}
-              class="px-3 py-1 bg-surface-container text-xs font-label uppercase tracking-wider hover:bg-surface-container-highest transition-colors"
+              class="px-3 py-1 bg-surface-container text-sm font-label uppercase tracking-wider hover:bg-surface-container-highest transition-colors"
             >
               {tag}
             </a>
           ))}
         </div>
         <h1 class="font-headline text-4xl md:text-5xl font-bold tracking-tight">{post.data.title}</h1>
-        <p class="text-lg text-on-surface-variant">{post.data.description}</p>
-        <div class="flex items-center gap-4 text-sm text-outline">
+        <p class="text-xl text-on-surface-variant">{post.data.description}</p>
+        <div class="flex items-center gap-4 text-base text-outline">
           <time datetime={post.data.pubDate.toISOString()}>
             {post.data.pubDate.toISOString().split('T')[0]}
           </time>

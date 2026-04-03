@@ -14,14 +14,14 @@ const { title, description, pubDate, slug, tags = [] } = Astro.props;
 
 <a href={`/blog/${slug}/`} class="group bg-surface-container p-4 flex flex-col gap-4 hover:bg-surface-container-highest transition-colors min-h-[200px]">
   <div class="space-y-2 flex-1">
-    <span class="font-label text-xs text-outline block h-5">
+    <span class="font-label text-sm text-outline block h-5">
       {format(pubDate, 'yyyy-MM-dd')}
     </span>
     <h3 class="font-headline text-2xl font-bold leading-tight min-h-[64px]">{title}</h3>
-    <p class="text-base text-on-surface-variant line-clamp-3 min-h-[72px]">{description}</p>
+    <p class="text-lg text-on-surface-variant line-clamp-3 min-h-[72px]">{description}</p>
   </div>
   <div class="flex items-center justify-between pt-4 border-t border-outline/10 mt-auto">
-    <span class="font-label text-sm uppercase">READ_MORE</span>
+    <span class="font-label text-base uppercase">READ_MORE</span>
     <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform flex-shrink-0">arrow_forward</span>
   </div>
 </a>
