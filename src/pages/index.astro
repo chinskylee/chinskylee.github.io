@@ -15,7 +15,7 @@ const recentPosts = posts
 <BaseLayout title="PHYSICIST_TERMINAL_V1.0 // Chinsky Lee">
   <NavBar />
 
-  <main class="pt-24 pb-12 px-6 max-w-7xl mx-auto space-y-32">
+  <main class="pt-24 pb-12 px-6 max-w-7xl mx-auto space-y-32" style="scroll-snap-type: y mandatory;">
     <Hero />
     <TerminalLog />
     
@@ -143,57 +143,6 @@ const recentPosts = posts
       </div>
     </section>
   </main>
-
-  <!-- Custom Scroll Snap Script -->
-  <script is:inline>
-    (function() {
-      // 等待 DOM 加载
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initScrollSnap);
-      } else {
-        initScrollSnap();
-      }
-
-      function initScrollSnap() {
-        const terminalLog = document.getElementById('terminal-log');
-        if (!terminalLog) {
-          console.log('TerminalLog not found');
-          return;
-        }
-
-        let hasSnapped = false;
-        const navbarHeight = 80;
-        const triggerOffset = 300; // 增大触发范围
-
-        window.addEventListener('scroll', function() {
-          if (hasSnapped) return;
-
-          const rect = terminalLog.getBoundingClientRect();
-          const terminalTop = rect.top;
-
-          // 调试：打印位置信息
-          // console.log('terminalTop:', terminalTop, 'range:', navbarHeight, 'to', navbarHeight + triggerOffset);
-
-          // 当 TerminalLog 进入视口上方区域时触发
-          if (terminalTop < navbarHeight + triggerOffset && terminalTop > -100) {
-            console.log('Snapping to TerminalLog');
-            hasSnapped = true;
-            const targetY = terminalLog.offsetTop - navbarHeight;
-
-            window.scrollTo({
-              top: targetY,
-              behavior: 'smooth'
-            });
-
-            // 2秒后重置
-            setTimeout(function() {
-              hasSnapped = false;
-            }, 2000);
-          }
-        }, { passive: true });
-      }
-    })();
-  </script>
 
   <Footer />
 </BaseLayout>
