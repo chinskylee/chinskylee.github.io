@@ -1,0 +1,195 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import NavBar from '../components/NavBar.astro';
+import Footer from '../components/Footer.astro';
+
+const rssUrl = 'https://lyralex.qzz.io/rss.xml';
+---
+
+<BaseLayout title="Subscribe // PHYSICIST_TERMINAL_V1.0" description="Subscribe to updates via RSS feed">
+  <NavBar />
+  
+  <main class="pt-24 pb-12 px-6 max-w-4xl mx-auto space-y-12">
+    <!-- Header -->
+    <section class="space-y-4 text-center">
+      <div class="inline-flex items-center justify-center w-20 h-20 bg-primary text-on-primary mb-4">
+        <span class="material-symbols-outlined text-4xl">rss_feed</span>
+      </div>
+      <h1 class="font-headline text-4xl md:text-5xl font-bold tracking-tight">SUBSCRIBE_VIA_RSS</h1>
+      <p class="font-label text-base text-outline uppercase tracking-widest">Stay updated with the latest posts</p>
+    </section>
+
+    <!-- RSS URL Section -->
+    <section class="bg-surface-container p-8 space-y-6">
+      <h2 class="font-headline text-2xl font-bold tracking-tight">FEED_URL</h2>
+      <div class="flex flex-col md:flex-row gap-4">
+        <code class="flex-1 bg-surface-container-low p-4 font-mono text-sm break-all">
+          {rssUrl}
+        </code>
+        <button 
+          id="copy-btn"
+          class="inline-flex items-center justify-center gap-2 bg-primary text-on-primary px-6 py-3 text-base font-label uppercase tracking-widest hover:bg-on-primary-container transition-all"
+          data-url={rssUrl}
+        >
+          <span class="material-symbols-outlined text-base">content_copy</span>
+          <span>COPY</span>
+        </button>
+      </div>
+      <p id="copy-feedback" class="text-primary text-sm hidden">URL copied to clipboard!</p>
+    </section>
+
+    <!-- What is RSS -->
+    <section class="space-y-6">
+      <h2 class="font-headline text-2xl font-bold tracking-tight border-b border-outline-variant pb-4">
+        WHAT_IS_RSS
+      </h2>
+      <div class="space-y-4 text-lg text-on-surface-variant leading-relaxed">
+        <p>
+          RSS (Really Simple Syndication) is a web feed format that allows you to subscribe to websites 
+          and receive automatic updates when new content is published. Instead of manually checking for 
+          new posts, your RSS reader will notify you.
+        </p>
+        <p>
+          Think of it like subscribing to a newsletter, but without the email. You use an RSS reader 
+          app to collect and read updates from all your favorite websites in one place.
+        </p>
+      </div>
+    </section>
+
+    <!-- Recommended Readers -->
+    <section class="space-y-6">
+      <h2 class="font-headline text-2xl font-bold tracking-tight border-b border-outline-variant pb-4">
+        RECOMMENDED_READERS
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Desktop/Web -->
+        <div class="bg-surface-container p-6 space-y-4">
+          <h3 class="font-headline text-xl font-bold flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary">computer</span>
+            Desktop / Web
+          </h3>
+          <ul class="space-y-3 text-on-surface-variant">
+            <li class="flex items-start gap-3">
+              <span class="text-primary">→</span>
+              <div>
+                <a href="https://feedly.com" target="_blank" rel="noopener" class="font-semibold hover:text-primary transition-colors">Feedly</a>
+                <p class="text-sm">Popular web-based reader with mobile apps</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary">→</span>
+              <div>
+                <a href="https://inoreader.com" target="_blank" rel="noopener" class="font-semibold hover:text-primary transition-colors">Inoreader</a>
+                <p class="text-sm">Powerful reader with advanced features</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary">→</span>
+              <div>
+                <a href="https://www.thunderbird.net/" target="_blank" rel="noopener" class="font-semibold hover:text-primary transition-colors">Thunderbird</a>
+                <p class="text-sm">Email client with built-in RSS support</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Mobile -->
+        <div class="bg-surface-container p-6 space-y-4">
+          <h3 class="font-headline text-xl font-bold flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary">smartphone</span>
+            Mobile Apps
+          </h3>
+          <ul class="space-y-3 text-on-surface-variant">
+            <li class="flex items-start gap-3">
+              <span class="text-primary">→</span>
+              <div>
+                <span class="font-semibold">Reeder</span>
+                <p class="text-sm">iOS/macOS (Paid, highly recommended)</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary">→</span>
+              <div>
+                <span class="font-semibold">Feedly</span>
+                <p class="text-sm">iOS/Android (Free)</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary">→</span>
+              <div>
+                <span class="font-semibold">Read You</span>
+                <p class="text-sm">Android, open source (Free)</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- How to Subscribe -->
+    <section class="space-y-6">
+      <h2 class="font-headline text-2xl font-bold tracking-tight border-b border-outline-variant pb-4">
+        HOW_TO_SUBSCRIBE
+      </h2>
+      <div class="bg-surface-container-low p-6 space-y-4">
+        <ol class="space-y-4 text-on-surface-variant list-decimal list-inside">
+          <li class="pl-2">
+            <span class="text-on-surface font-semibold">Choose an RSS reader</span> from the recommendations above
+          </li>
+          <li class="pl-2">
+            <span class="text-on-surface font-semibold">Copy the feed URL</span> at the top of this page
+          </li>
+          <li class="pl-2">
+            <span class="text-on-surface font-semibold">Add the feed</span> to your reader (usually a "+" or "Add" button)
+          </li>
+          <li class="pl-2">
+            <span class="text-on-surface font-semibold">Done!</span> You'll receive automatic updates for new posts
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Alternative -->
+    <section class="bg-primary text-on-primary p-8 space-y-4">
+      <h2 class="font-headline text-2xl font-bold tracking-tight flex items-center gap-2">
+        <span class="material-symbols-outlined">bookmark</span>
+        PREFER_MANUAL_CHECKING?
+      </h2>
+      <p class="text-lg opacity-90">
+        You can also bookmark the blog page and visit whenever you want to see new content.
+      </p>
+      <a 
+        href="/blog" 
+        class="inline-flex items-center gap-2 border border-on-primary px-6 py-3 text-base font-label uppercase tracking-widest hover:bg-on-primary hover:text-primary transition-all"
+      >
+        <span>VISIT_BLOG</span>
+        <span class="material-symbols-outlined">arrow_forward</span>
+      </a>
+    </section>
+  </main>
+  
+  <Footer />
+</BaseLayout>
+
+<script>
+  const copyBtn = document.getElementById('copy-btn');
+  const feedback = document.getElementById('copy-feedback');
+  
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      const url = copyBtn.dataset.url;
+      if (url) {
+        try {
+          await navigator.clipboard.writeText(url);
+          feedback?.classList.remove('hidden');
+          setTimeout(() => {
+            feedback?.classList.add('hidden');
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy:', err);
+        }
+      }
+    });
+  }
+</script>
