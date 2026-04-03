@@ -51,3 +51,15 @@ const currentPath = Astro.url.pathname;
     </button>
   </div>
 </nav>
+
+<script is:inline>
+  // Sync icon with current theme immediately after button renders
+  (function() {
+    var icon = document.getElementById('theme-toggle-icon');
+    if (icon && !icon.dataset.synced) {
+      var isDark = document.documentElement.classList.contains('dark');
+      icon.textContent = isDark ? 'light_mode' : 'dark_mode';
+      icon.dataset.synced = 'true';
+    }
+  })();
+</script>
