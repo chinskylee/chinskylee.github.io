@@ -43,7 +43,10 @@ const currentPath = Astro.url.pathname;
       <span class="inline-flex items-center justify-center gap-1.5 w-full">
         <span class="material-symbols-outlined text-base text-on-surface transition-all duration-150 shrink-0" id="theme-toggle-icon" style="font-size: 20px; width: 20px; height: 20px;">dark_mode</span>
         <span class="theme-dot shrink-0" aria-hidden="true"></span>
-        <span class="font-label text-sm tracking-widest uppercase text-on-surface w-[40px] text-center transition-opacity duration-150" id="theme-toggle-label">DARK</span>
+        <span class="font-label text-sm tracking-widest uppercase text-on-surface w-[40px] text-center relative" id="theme-toggle-label">
+          <span class="dark:hidden">DARK</span>
+          <span class="hidden dark:inline">LIGHT</span>
+        </span>
       </span>
     </button>
   </div>

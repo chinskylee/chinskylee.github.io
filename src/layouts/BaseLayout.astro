@@ -222,49 +222,27 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
       }
     };
 
-    // Sync button state with current theme (no animation, only if needed)
-    const syncButtonState = () => {
-      const isDark = document.documentElement.classList.contains('dark');
-      const expectedText = isDark ? 'LIGHT' : 'DARK';
-      const expectedIcon = isDark ? 'light_mode' : 'dark_mode';
-      
-      // Only update if actually different (prevents flash)
-      if (themeToggleLabel.textContent !== expectedText) {
-        themeToggleLabel.textContent = expectedText;
-      }
-      if (themeToggleIcon.textContent !== expectedIcon) {
-        themeToggleIcon.textContent = expectedIcon;
-      }
-      
-      themeToggleButton.setAttribute('aria-pressed', String(isDark));
-      themeToggleButton.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
-    };
-
-    // Initial sync only if needed
-    syncButtonState();
+    // Set initial aria attributes
+    const isDark = document.documentElement.classList.contains('dark');
+    themeToggleButton.setAttribute('aria-pressed', String(isDark));
+    themeToggleButton.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+    // Note: Label text is controlled by CSS (dark: classes), no JS update needed
 
     // Handle click
     themeToggleButton.addEventListener('click', () => {
       const isDark = document.documentElement.classList.contains('dark');
       const newTheme = isDark ? 'light' : 'dark';
-      
-      // Fade out
-      themeToggleLabel.style.opacity = '0';
-      themeToggleIcon.style.transform = 'scale(0.8)';
-      
-      setTimeout(() => {
-        document.documentElement.classList.toggle('dark', !isDark);
-        document.documentElement.classList.toggle('light', isDark);
-        themeToggleIcon.textContent = !isDark ? 'light_mode' : 'dark_mode';
-        themeToggleLabel.textContent = !isDark ? 'LIGHT' : 'DARK';
-        themeToggleButton.setAttribute('aria-pressed', String(!isDark));
-        themeToggleButton.setAttribute('aria-label', !isDark ? 'Switch to light mode' : 'Switch to dark mode');
-        
-        // Fade in
-        themeToggleLabel.style.opacity = '1';
-        themeToggleIcon.style.transform = 'scale(1)';
-        writeStoredTheme(newTheme);
-      }, 75);
+
+      // Toggle theme class immediately (CSS will handle label text)
+      document.documentElement.classList.toggle('dark', !isDark);
+      document.documentElement.classList.toggle('light', isDark);
+
+      // Update icon and aria
+      themeToggleIcon.textContent = !isDark ? 'light_mode' : 'dark_mode';
+      themeToggleButton.setAttribute('aria-pressed', String(!isDark));
+      themeToggleButton.setAttribute('aria-label', !isDark ? 'Switch to light mode' : 'Switch to dark mode');
+
+      writeStoredTheme(newTheme);
     });
   })();
 
