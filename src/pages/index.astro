@@ -155,12 +155,17 @@ const recentPosts = posts
       }
 
       function initScrollSnap() {
-        const terminalLog = document.querySelector('.bg-surface-container-low');
-        if (!terminalLog) return;
+        // 使用更精确的选择器 - TerminalLog 是第二个 section
+        const sections = document.querySelectorAll('main > section');
+        const terminalLog = sections[1]; // Hero 是第一个，TerminalLog 是第二个
+        if (!terminalLog) {
+          console.log('TerminalLog not found');
+          return;
+        }
 
         let hasSnapped = false;
         const navbarHeight = 80;
-        const triggerOffset = 100; // 当 TerminalLog 顶部距离视口顶部 100px 时触发
+        const triggerOffset = 300; // 增大触发范围
 
         window.addEventListener('scroll', function() {
           if (hasSnapped) return;
@@ -168,20 +173,24 @@ const recentPosts = posts
           const rect = terminalLog.getBoundingClientRect();
           const terminalTop = rect.top;
 
-          // 向下滚动时，当 TerminalLog 接近视口顶部，强制吸附
-          if (terminalTop > navbarHeight && terminalTop < navbarHeight + triggerOffset + 200) {
+          // 调试：打印位置信息
+          // console.log('terminalTop:', terminalTop, 'range:', navbarHeight, 'to', navbarHeight + triggerOffset);
+
+          // 当 TerminalLog 进入视口上方区域时触发
+          if (terminalTop < navbarHeight + triggerOffset && terminalTop > -100) {
+            console.log('Snapping to TerminalLog');
             hasSnapped = true;
-            const targetY = terminalLog.offsetTop - navbarHeight - 20;
+            const targetY = terminalLog.offsetTop - navbarHeight;
 
             window.scrollTo({
               top: targetY,
               behavior: 'smooth'
             });
 
-            // 3秒后重置，允许再次吸附
+            // 2秒后重置
             setTimeout(function() {
               hasSnapped = false;
-            }, 3000);
+            }, 2000);
           }
         }, { passive: true });
       }
