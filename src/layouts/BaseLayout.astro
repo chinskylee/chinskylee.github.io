@@ -19,7 +19,7 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&display=block" rel="stylesheet">
   
-  <!-- Theme Init Script - Execute immediately -->
+  <!-- Theme Init Script - Set HTML class only -->
   <script is:inline>
     (function() {
       var storedTheme = null;
@@ -35,12 +35,6 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
       var isDark = initialTheme === 'dark';
       document.documentElement.classList.toggle('dark', isDark);
       document.documentElement.classList.toggle('light', !isDark);
-
-      // Immediately update button if it exists
-      var label = document.getElementById('theme-toggle-label');
-      var icon = document.getElementById('theme-toggle-icon');
-      if (label) label.textContent = isDark ? 'LIGHT' : 'DARK';
-      if (icon) icon.textContent = isDark ? 'light_mode' : 'dark_mode';
     })();
   </script>
 </head>
@@ -208,13 +202,17 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
     document.documentElement.classList.remove('loading');
   });
 
-  // Theme toggle functionality
-  function initThemeToggle() {
+  // Theme toggle functionality - only initialize once
+  (function initThemeToggle() {
     const themeToggleButton = document.getElementById('theme-toggle');
+    if (!themeToggleButton || themeToggleButton.dataset.initialized) return;
+    
+    // Mark as initialized to prevent duplicate handlers
+    themeToggleButton.dataset.initialized = 'true';
+
     const themeToggleIcon = document.getElementById('theme-toggle-icon');
     const themeToggleLabel = document.getElementById('theme-toggle-label');
-
-    if (!themeToggleButton || !themeToggleIcon || !themeToggleLabel) return;
+    if (!themeToggleIcon || !themeToggleLabel) return;
 
     const writeStoredTheme = (theme) => {
       try {
@@ -224,58 +222,42 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
       }
     };
 
-    const updateToggleUI = (isDark, animate = false) => {
+    // Sync button state with current theme (no animation)
+    const syncButtonState = () => {
+      const isDark = document.documentElement.classList.contains('dark');
       themeToggleButton.setAttribute('aria-pressed', String(isDark));
       themeToggleButton.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
-      
-      var currentLabel = themeToggleLabel.textContent;
-      var targetLabel = isDark ? 'LIGHT' : 'DARK';
-      var currentIcon = themeToggleIcon.textContent;
-      var targetIcon = isDark ? 'light_mode' : 'dark_mode';
-      
-      // Only update if actually different
-      if (currentLabel === targetLabel && currentIcon === targetIcon) {
-        return;
-      }
-      
-      if (animate) {
-        // Fade out, change, then fade in for smooth transition
-        themeToggleLabel.style.opacity = '0';
-        themeToggleIcon.style.transform = 'scale(0.8)';
-        
-        setTimeout(() => {
-          themeToggleIcon.textContent = targetIcon;
-          themeToggleLabel.textContent = targetLabel;
-          themeToggleLabel.style.opacity = '1';
-          themeToggleIcon.style.transform = 'scale(1)';
-        }, 75);
-      } else {
-        // Direct update without animation
-        themeToggleIcon.textContent = targetIcon;
-        themeToggleLabel.textContent = targetLabel;
-      }
+      themeToggleIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
+      themeToggleLabel.textContent = isDark ? 'LIGHT' : 'DARK';
     };
 
-    // Initialize button state only if needed (no animation)
-    const isCurrentlyDark = document.documentElement.classList.contains('dark');
-    updateToggleUI(isCurrentlyDark, false);
+    // Initial sync
+    syncButtonState();
 
-    // Handle click (with animation)
+    // Handle click
     themeToggleButton.addEventListener('click', () => {
       const isDark = document.documentElement.classList.contains('dark');
       const newTheme = isDark ? 'light' : 'dark';
       
-      document.documentElement.classList.toggle('dark', !isDark);
-      document.documentElement.classList.toggle('light', isDark);
-      updateToggleUI(!isDark, true);
-      writeStoredTheme(newTheme);
+      // Fade out
+      themeToggleLabel.style.opacity = '0';
+      themeToggleIcon.style.transform = 'scale(0.8)';
+      
+      setTimeout(() => {
+        document.documentElement.classList.toggle('dark', !isDark);
+        document.documentElement.classList.toggle('light', isDark);
+        themeToggleIcon.textContent = !isDark ? 'light_mode' : 'dark_mode';
+        themeToggleLabel.textContent = !isDark ? 'LIGHT' : 'DARK';
+        themeToggleButton.setAttribute('aria-pressed', String(!isDark));
+        themeToggleButton.setAttribute('aria-label', !isDark ? 'Switch to light mode' : 'Switch to dark mode');
+        
+        // Fade in
+        themeToggleLabel.style.opacity = '1';
+        themeToggleIcon.style.transform = 'scale(1)';
+        writeStoredTheme(newTheme);
+      }, 75);
     });
-  }
-
-  // Initialize on page load
-  initThemeToggle();
-  // Re-initialize after Astro page transitions
-  document.addEventListener('astro:page-load', initThemeToggle);
+  })();
 
   // Back to top button
   function initBackToTop() {
