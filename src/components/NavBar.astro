@@ -35,14 +35,14 @@ const currentPath = Astro.url.pathname;
     <button 
       aria-label="Switch to dark mode" 
       aria-pressed="false" 
-      class="theme-toggle group border border-outline-variant bg-surface-container-low px-3 py-2 hover:bg-surface-container transition-colors w-[100px]" 
+      class="theme-toggle group border border-outline-variant bg-surface-container-low px-2 py-2 hover:bg-surface-container transition-colors w-[110px] shrink-0" 
       id="theme-toggle" 
       type="button"
     >
-      <span class="inline-flex items-center justify-center gap-2 w-full">
-        <span class="material-symbols-outlined text-base text-on-surface transition-transform duration-200" id="theme-toggle-icon">dark_mode</span>
-        <span class="theme-dot" aria-hidden="true"></span>
-        <span class="font-label text-sm tracking-widest uppercase text-on-surface w-[44px] text-center transition-opacity duration-150" id="theme-toggle-label">DARK</span>
+      <span class="inline-flex items-center justify-center gap-1.5 w-full">
+        <span class="material-symbols-outlined text-base text-on-surface transition-all duration-150 shrink-0" id="theme-toggle-icon" style="font-size: 20px; width: 20px; height: 20px;">dark_mode</span>
+        <span class="theme-dot shrink-0" aria-hidden="true"></span>
+        <span class="font-label text-sm tracking-widest uppercase text-on-surface w-[40px] text-center transition-opacity duration-150" id="theme-toggle-label">DARK</span>
       </span>
     </button>
   </div>
