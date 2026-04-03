@@ -19,34 +19,28 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&display=block" rel="stylesheet">
   
-  <!-- Theme Init Script -->
+  <!-- Theme Init Script - Execute immediately -->
   <script is:inline>
-    (() => {
-      let storedTheme = null;
+    (function() {
+      var storedTheme = null;
       try {
         storedTheme = window.localStorage.getItem('theme');
-      } catch {
+      } catch (e) {
         storedTheme = null;
       }
-      const prefersDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const initialTheme = storedTheme === 'dark' || storedTheme === 'light'
+      var prefersDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var initialTheme = storedTheme === 'dark' || storedTheme === 'light'
         ? storedTheme
         : (prefersDarkTheme ? 'dark' : 'light');
-      const isDark = initialTheme === 'dark';
+      var isDark = initialTheme === 'dark';
       document.documentElement.classList.toggle('dark', isDark);
       document.documentElement.classList.toggle('light', !isDark);
 
-      // Set initial button state to prevent flash
-      const label = document.getElementById('theme-toggle-label');
-      const icon = document.getElementById('theme-toggle-icon');
-      if (label) {
-        label.textContent = isDark ? 'LIGHT' : 'DARK';
-        label.classList.remove('opacity-0');
-      }
-      if (icon) {
-        icon.textContent = isDark ? 'light_mode' : 'dark_mode';
-        icon.classList.remove('opacity-0');
-      }
+      // Immediately update button if it exists
+      var label = document.getElementById('theme-toggle-label');
+      var icon = document.getElementById('theme-toggle-icon');
+      if (label) label.textContent = isDark ? 'LIGHT' : 'DARK';
+      if (icon) icon.textContent = isDark ? 'light_mode' : 'dark_mode';
     })();
   </script>
 </head>
@@ -234,27 +228,35 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
       themeToggleButton.setAttribute('aria-pressed', String(isDark));
       themeToggleButton.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
       
+      var currentLabel = themeToggleLabel.textContent;
+      var targetLabel = isDark ? 'LIGHT' : 'DARK';
+      var currentIcon = themeToggleIcon.textContent;
+      var targetIcon = isDark ? 'light_mode' : 'dark_mode';
+      
+      // Only update if actually different
+      if (currentLabel === targetLabel && currentIcon === targetIcon) {
+        return;
+      }
+      
       if (animate) {
         // Fade out, change, then fade in for smooth transition
         themeToggleLabel.style.opacity = '0';
         themeToggleIcon.style.transform = 'scale(0.8)';
         
         setTimeout(() => {
-          themeToggleIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
-          themeToggleLabel.textContent = isDark ? 'LIGHT' : 'DARK';
+          themeToggleIcon.textContent = targetIcon;
+          themeToggleLabel.textContent = targetLabel;
           themeToggleLabel.style.opacity = '1';
           themeToggleIcon.style.transform = 'scale(1)';
         }, 75);
       } else {
-        // Direct update without animation for initialization
-        themeToggleIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
-        themeToggleLabel.textContent = isDark ? 'LIGHT' : 'DARK';
-        themeToggleLabel.classList.remove('opacity-0');
-        themeToggleIcon.classList.remove('opacity-0');
+        // Direct update without animation
+        themeToggleIcon.textContent = targetIcon;
+        themeToggleLabel.textContent = targetLabel;
       }
     };
 
-    // Initialize button state based on current theme (no animation)
+    // Initialize button state only if needed (no animation)
     const isCurrentlyDark = document.documentElement.classList.contains('dark');
     updateToggleUI(isCurrentlyDark, false);
 
