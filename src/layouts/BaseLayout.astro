@@ -55,8 +55,8 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
     /* 防止滚动条导致的布局抖动 */
     scrollbar-gutter: stable;
     overflow-y: scroll;
-    /* 全局滚动吸附 - mandatory 强制吸附 */
-    scroll-snap-type: y mandatory;
+    /* 全局滚动吸附 - proximity 仅在接近时吸附 */
+    scroll-snap-type: y proximity;
   }
   @media (prefers-reduced-motion: reduce) {
     html {
