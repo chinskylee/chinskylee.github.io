@@ -12,38 +12,38 @@ const rssUrl = 'https://lyralex.qzz.io/rss.xml';
   <main class="pt-24 pb-12 px-6 max-w-4xl mx-auto space-y-12">
     <!-- Header -->
     <section class="space-y-4 text-center">
-      <div class="inline-flex items-center justify-center w-20 h-20 bg-primary text-on-primary mb-4">
-        <span class="material-symbols-outlined text-4xl">rss_feed</span>
+      <div class="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-primary text-on-primary mb-4">
+        <span class="material-symbols-outlined text-3xl md:text-4xl">rss_feed</span>
       </div>
-      <h1 class="font-headline text-4xl md:text-5xl font-bold tracking-tight">SUBSCRIBE_VIA_RSS</h1>
-      <p class="font-label text-base text-outline uppercase tracking-widest">Stay updated with the latest posts</p>
+      <h1 class="font-headline text-2xl md:text-5xl font-bold tracking-tight">SUBSCRIBE_VIA_RSS</h1>
+      <p class="font-label text-sm md:text-base text-outline uppercase tracking-widest">Stay updated with the latest posts</p>
     </section>
 
     <!-- RSS URL Section -->
-    <section class="bg-surface-container p-8 space-y-6">
-      <h2 class="font-headline text-2xl font-bold tracking-tight">FEED_URL</h2>
+    <section class="bg-surface-container p-6 md:p-8 space-y-4 md:space-y-6">
+      <h2 class="font-headline text-lg md:text-2xl font-bold tracking-tight">FEED_URL</h2>
       <div class="flex flex-col md:flex-row gap-4">
-        <code class="flex-1 bg-surface-container-low p-4 font-mono text-base break-all">
+        <code class="flex-1 bg-surface-container-low p-3 md:p-4 font-mono text-sm md:text-base break-all">
           {rssUrl}
         </code>
         <button 
           id="copy-btn"
-          class="inline-flex items-center justify-center gap-2 bg-primary text-on-primary px-6 py-3 text-lg font-label uppercase tracking-widest hover:bg-on-primary-container transition-all"
+          class="inline-flex items-center justify-center gap-2 bg-primary text-on-primary px-4 md:px-6 py-2.5 md:py-3 text-sm md:text-lg font-label uppercase tracking-widest hover:bg-on-primary-container transition-all"
           data-url={rssUrl}
         >
-          <span class="material-symbols-outlined text-base">content_copy</span>
+          <span class="material-symbols-outlined text-sm md:text-base">content_copy</span>
           <span>COPY</span>
         </button>
       </div>
-      <p id="copy-feedback" class="text-primary text-base hidden">URL copied to clipboard!</p>
+      <p id="copy-feedback" class="text-primary text-sm md:text-base hidden">URL copied to clipboard!</p>
     </section>
 
     <!-- What is RSS -->
-    <section class="space-y-6">
-      <h2 class="font-headline text-2xl font-bold tracking-tight border-b border-outline-variant pb-4">
+    <section class="space-y-4 md:space-y-6">
+      <h2 class="font-headline text-lg md:text-2xl font-bold tracking-tight border-b border-outline-variant pb-4">
         WHAT_IS_RSS
       </h2>
-      <div class="space-y-4 text-xl text-on-surface-variant leading-relaxed">
+      <div class="space-y-3 md:space-y-4 text-base md:text-xl text-on-surface-variant leading-relaxed">
         <p>
           RSS (Really Simple Syndication) is a web feed format that allows you to subscribe to websites 
           and receive automatic updates when new content is published. Instead of manually checking for 
@@ -57,69 +57,69 @@ const rssUrl = 'https://lyralex.qzz.io/rss.xml';
     </section>
 
     <!-- Recommended Readers -->
-    <section class="space-y-6">
-      <h2 class="font-headline text-2xl font-bold tracking-tight border-b border-outline-variant pb-4">
+    <section class="space-y-4 md:space-y-6">
+      <h2 class="font-headline text-lg md:text-2xl font-bold tracking-tight border-b border-outline-variant pb-4">
         RECOMMENDED_READERS
       </h2>
       
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <!-- Desktop/Web -->
-        <div class="bg-surface-container p-6 space-y-4">
-          <h3 class="font-headline text-xl font-bold flex items-center gap-2">
-            <span class="material-symbols-outlined text-primary">computer</span>
+        <div class="bg-surface-container p-4 md:p-6 space-y-3 md:space-y-4 w-full">
+          <h3 class="font-headline text-base md:text-xl font-bold flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-sm md:text-base">computer</span>
             Desktop / Web
           </h3>
-          <ul class="space-y-3 text-on-surface-variant">
-            <li class="flex items-start gap-3">
+          <ul class="space-y-2 md:space-y-3 text-on-surface-variant text-sm md:text-base">
+            <li class="flex items-start gap-2 md:gap-3">
               <span class="text-primary">→</span>
               <div>
                 <a href="https://feedly.com" target="_blank" rel="noopener" class="font-semibold hover:text-primary transition-colors">Feedly</a>
-                <p class="text-base">Popular web-based reader with mobile apps</p>
+                <p class="text-xs md:text-base">Popular web-based reader with mobile apps</p>
               </div>
             </li>
-            <li class="flex items-start gap-3">
+            <li class="flex items-start gap-2 md:gap-3">
               <span class="text-primary">→</span>
               <div>
                 <a href="https://inoreader.com" target="_blank" rel="noopener" class="font-semibold hover:text-primary transition-colors">Inoreader</a>
-                <p class="text-base">Powerful reader with advanced features</p>
+                <p class="text-xs md:text-base">Powerful reader with advanced features</p>
               </div>
             </li>
-            <li class="flex items-start gap-3">
+            <li class="flex items-start gap-2 md:gap-3">
               <span class="text-primary">→</span>
               <div>
                 <a href="https://www.thunderbird.net/" target="_blank" rel="noopener" class="font-semibold hover:text-primary transition-colors">Thunderbird</a>
-                <p class="text-base">Email client with built-in RSS support</p>
+                <p class="text-xs md:text-base">Email client with built-in RSS support</p>
               </div>
             </li>
           </ul>
         </div>
 
         <!-- Mobile -->
-        <div class="bg-surface-container p-6 space-y-4">
-          <h3 class="font-headline text-xl font-bold flex items-center gap-2">
-            <span class="material-symbols-outlined text-primary">smartphone</span>
+        <div class="bg-surface-container p-4 md:p-6 space-y-3 md:space-y-4 w-full">
+          <h3 class="font-headline text-base md:text-xl font-bold flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-sm md:text-base">smartphone</span>
             Mobile Apps
           </h3>
-          <ul class="space-y-3 text-on-surface-variant">
-            <li class="flex items-start gap-3">
+          <ul class="space-y-2 md:space-y-3 text-on-surface-variant text-sm md:text-base">
+            <li class="flex items-start gap-2 md:gap-3">
               <span class="text-primary">→</span>
               <div>
                 <span class="font-semibold">Reeder</span>
-                <p class="text-base">iOS/macOS (Paid, highly recommended)</p>
+                <p class="text-xs md:text-base">iOS/macOS (Paid, highly recommended)</p>
               </div>
             </li>
-            <li class="flex items-start gap-3">
+            <li class="flex items-start gap-2 md:gap-3">
               <span class="text-primary">→</span>
               <div>
                 <span class="font-semibold">Feedly</span>
-                <p class="text-base">iOS/Android (Free)</p>
+                <p class="text-xs md:text-base">iOS/Android (Free)</p>
               </div>
             </li>
-            <li class="flex items-start gap-3">
+            <li class="flex items-start gap-2 md:gap-3">
               <span class="text-primary">→</span>
               <div>
                 <span class="font-semibold">Read You</span>
-                <p class="text-base">Android, open source (Free)</p>
+                <p class="text-xs md:text-base">Android, open source (Free)</p>
               </div>
             </li>
           </ul>
@@ -128,12 +128,12 @@ const rssUrl = 'https://lyralex.qzz.io/rss.xml';
     </section>
 
     <!-- How to Subscribe -->
-    <section class="space-y-6">
-      <h2 class="font-headline text-2xl font-bold tracking-tight border-b border-outline-variant pb-4">
+    <section class="space-y-4 md:space-y-6">
+      <h2 class="font-headline text-lg md:text-2xl font-bold tracking-tight border-b border-outline-variant pb-4">
         HOW_TO_SUBSCRIBE
       </h2>
-      <div class="bg-surface-container-low p-6 space-y-4">
-        <ol class="space-y-4 text-on-surface-variant list-decimal list-inside">
+      <div class="bg-surface-container-low p-4 md:p-6 space-y-3 md:space-y-4">
+        <ol class="space-y-3 md:space-y-4 text-sm md:text-base text-on-surface-variant list-decimal list-inside">
           <li class="pl-2">
             <span class="text-on-surface font-semibold">Choose an RSS reader</span> from the recommendations above
           </li>
@@ -151,20 +151,20 @@ const rssUrl = 'https://lyralex.qzz.io/rss.xml';
     </section>
 
     <!-- Alternative -->
-    <section class="bg-primary text-on-primary p-8 space-y-4">
-      <h2 class="font-headline text-2xl font-bold tracking-tight flex items-center gap-2">
-        <span class="material-symbols-outlined">bookmark</span>
+    <section class="bg-primary text-on-primary p-6 md:p-8 space-y-3 md:space-y-4">
+      <h2 class="font-headline text-lg md:text-2xl font-bold tracking-tight flex items-center gap-2">
+        <span class="material-symbols-outlined text-sm md:text-base">bookmark</span>
         PREFER_MANUAL_CHECKING?
       </h2>
-      <p class="text-lg opacity-90">
+      <p class="text-sm md:text-lg opacity-90">
         You can also bookmark the blog page and visit whenever you want to see new content.
       </p>
       <a 
         href="/blog" 
-        class="inline-flex items-center gap-2 border border-on-primary px-6 py-3 text-lg font-label uppercase tracking-widest hover:bg-on-primary hover:text-primary transition-all"
+        class="inline-flex items-center gap-2 border border-on-primary px-4 md:px-6 py-2.5 md:py-3 text-sm md:text-lg font-label uppercase tracking-widest hover:bg-on-primary hover:text-primary transition-all"
       >
         <span>VISIT_BLOG</span>
-        <span class="material-symbols-outlined">arrow_forward</span>
+        <span class="material-symbols-outlined text-sm md:text-base">arrow_forward</span>
       </a>
     </section>
   </main>

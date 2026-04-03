@@ -26,25 +26,25 @@ const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a))
   <main class="pt-24 pb-12 px-6 max-w-4xl mx-auto space-y-12">
     <!-- Header -->
     <section class="space-y-4">
-      <h1 class="font-headline text-4xl font-bold tracking-tight">ARCHIVE</h1>
-      <p class="font-label text-base text-outline uppercase tracking-widest">Timeline of all published articles</p>
+      <h1 class="font-headline text-2xl md:text-4xl font-bold tracking-tight">ARCHIVE</h1>
+      <p class="font-label text-sm md:text-base text-outline uppercase tracking-widest">Timeline of all published articles</p>
     </section>
     
     <!-- Archive Timeline -->
     <section class="space-y-12">
       {years.map(year => (
         <div class="space-y-6">
-          <h2 class="font-headline text-2xl font-bold tracking-tight text-outline border-b border-outline-variant pb-4">
+          <h2 class="font-headline text-xl md:text-2xl font-bold tracking-tight text-outline border-b border-outline-variant pb-4">
             {year}
           </h2>
-          <div class="space-y-4 pl-4 border-l-2 border-outline-variant">
+          <div class="space-y-3 md:space-y-4 pl-3 md:pl-4 border-l-2 border-outline-variant">
             {postsByYear[parseInt(year)].map(post => (
-              <article class="group">
-                <a href={`/blog/${post.slug}/`} class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6 py-2 hover:pl-2 transition-all">
-                  <time class="font-label text-base text-outline uppercase w-24 shrink-0" datetime={post.data.pubDate.toISOString()}>
+              <article class="group w-full">
+                <a href={`/blog/${post.slug}/`} class="flex flex-col md:flex-row md:items-baseline gap-1 md:gap-6 py-2 hover:pl-2 transition-all">
+                  <time class="font-label text-xs md:text-base text-outline uppercase w-20 md:w-24 shrink-0" datetime={post.data.pubDate.toISOString()}>
                     {post.data.pubDate.toISOString().split('T')[0].slice(5)}
                   </time>
-                  <h3 class="font-headline text-xl font-semibold tracking-tight group-hover:text-primary transition-colors">
+                  <h3 class="font-headline text-base md:text-xl font-semibold tracking-tight group-hover:text-primary transition-colors break-words">
                     {post.data.title}
                   </h3>
                 </a>
