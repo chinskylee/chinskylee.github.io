@@ -35,12 +35,18 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
       const isDark = initialTheme === 'dark';
       document.documentElement.classList.toggle('dark', isDark);
       document.documentElement.classList.toggle('light', !isDark);
-      
+
       // Set initial button state to prevent flash
       const label = document.getElementById('theme-toggle-label');
       const icon = document.getElementById('theme-toggle-icon');
-      if (label) label.textContent = isDark ? 'LIGHT' : 'DARK';
-      if (icon) icon.textContent = isDark ? 'light_mode' : 'dark_mode';
+      if (label) {
+        label.textContent = isDark ? 'LIGHT' : 'DARK';
+        label.classList.remove('opacity-0');
+      }
+      if (icon) {
+        icon.textContent = isDark ? 'light_mode' : 'dark_mode';
+        icon.classList.remove('opacity-0');
+      }
     })();
   </script>
 </head>
@@ -243,8 +249,8 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
         // Direct update without animation for initialization
         themeToggleIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
         themeToggleLabel.textContent = isDark ? 'LIGHT' : 'DARK';
-        themeToggleLabel.style.opacity = '1';
-        themeToggleIcon.style.transform = 'scale(1)';
+        themeToggleLabel.classList.remove('opacity-0');
+        themeToggleIcon.classList.remove('opacity-0');
       }
     };
 
