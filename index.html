@@ -116,8 +116,8 @@
 <div class="font-bold text-lg tracking-widest text-[#705a4a] dark:text-[#f5f4e8] font-['Space_Grotesk'] uppercase" style="">TERMINAL_V1.0
         </div>
 <div class="hidden md:flex gap-8 items-center">
-<a class="nav-link font-['Space_Grotesk'] tracking-tighter uppercase text-xs text-[#79776d] border-b-2 border-transparent hover:text-[#705a4a] pb-1 transition-colors duration-150" href="#articles" id="articles-link" style="">ARTICLES</a>
-<a class="nav-link font-['Space_Grotesk'] tracking-tighter uppercase text-xs text-[#79776d] border-b-2 border-transparent hover:text-[#705a4a] pb-1 transition-colors duration-150" href="#projects" id="projects-link" style="">PROJECTS</a>
+<a class="nav-link font-['Space_Grotesk'] tracking-tighter uppercase text-xs text-[#79776d] border-b-2 border-transparent hover:text-[#705a4a] pb-1 transition-colors duration-150" href="#articles-heading" id="articles-link" style="">ARTICLES</a>
+<a class="nav-link font-['Space_Grotesk'] tracking-tighter uppercase text-xs text-[#79776d] border-b-2 border-transparent hover:text-[#705a4a] pb-1 transition-colors duration-150" href="#projects-heading" id="projects-link" style="">PROJECTS</a>
 </div>
 </nav>
 <main class="pt-24 pb-12 px-6 max-w-7xl mx-auto space-y-24">
@@ -132,10 +132,10 @@
                     </p>
 </div>
 <div class="flex gap-4 pt-4">
-<a class="inline-flex items-center bg-primary text-on-primary px-8 py-3 text-sm font-label uppercase tracking-widest hover:bg-on-primary-container transition-all" href="#articles" style="">
+<a class="inline-flex items-center bg-primary text-on-primary px-8 py-3 text-sm font-label uppercase tracking-widest hover:bg-on-primary-container transition-all" href="#articles-heading" style="">
                         VIEW_ARTICLES
                     </a>
-<button type="button" class="border border-outline text-on-surface px-8 py-3 text-sm font-label uppercase tracking-widest hover:bg-surface-container transition-all" style="">GET_IN_TOUCH</button>
+<a class="inline-flex items-center border border-outline text-on-surface px-8 py-3 text-sm font-label uppercase tracking-widest hover:bg-surface-container transition-all" href="#contact" style="">GET_IN_TOUCH</a>
 </div>
 </div>
 </section>
@@ -177,7 +177,7 @@
 <section class="space-y-8 scroll-mt-28" id="articles">
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
 <div>
-<h2 class="font-headline text-4xl font-bold tracking-tight" style="">RESEARCH_ARCHIVE</h2>
+<h2 class="font-headline text-4xl font-bold tracking-tight scroll-mt-28" id="articles-heading" style="">RESEARCH_ARCHIVE</h2>
 <p class="font-label text-xs text-outline uppercase tracking-widest mt-2" style="">Index of published papers &amp; experimental notes</p>
 </div>
 <a class="text-sm font-label border-b border-on-surface pb-1 hover:text-primary transition-colors" href="#" style="">VIEW_ALL_RECORDS</a>
@@ -224,7 +224,7 @@
 <!-- Source Code: GitHub Projects -->
 <section class="grid md:grid-cols-2 gap-12 border-t border-outline-variant pt-24 scroll-mt-28" id="projects">
 <div class="space-y-6">
-<h2 class="font-headline text-4xl font-bold tracking-tight" style="">GITHUB_PROJECTS</h2>
+<h2 class="font-headline text-4xl font-bold tracking-tight scroll-mt-28" id="projects-heading" style="">GITHUB_PROJECTS</h2>
 <p class="text-on-surface-variant text-sm max-w-sm leading-relaxed" style="">
                     Transparent research requires reproducible code. Explore my computational models, physics engines, and data analysis pipelines on GitHub.
                 </p>
@@ -285,23 +285,47 @@
 </div>
 </div>
 </section>
+<section class="border-t border-outline-variant pt-24 scroll-mt-28" id="contact">
+<div class="space-y-4">
+<h2 class="font-headline text-4xl font-bold tracking-tight" style="">GET_IN_TOUCH</h2>
+<p class="font-label text-xs text-outline uppercase tracking-widest" style="">Direct channels for collaboration</p>
+</div>
+<div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+<a class="group bg-surface-container p-5 flex items-center justify-between hover:bg-surface-container-highest transition-colors" href="mailto:chinskylee.physics@gmail.com" style="">
+<div class="space-y-1">
+<span class="font-label text-[10px] text-outline uppercase" style="">Email</span>
+<span class="block font-headline text-lg font-semibold tracking-tight" style="">chinskylee.physics@gmail.com</span>
+</div>
+<span class="material-symbols-outlined text-sm text-outline group-hover:translate-x-1 transition-transform" style="">north_east</span>
+</a>
+<a class="group bg-surface-container p-5 flex items-center justify-between hover:bg-surface-container-highest transition-colors" href="https://github.com/athorne_phys" rel="noopener noreferrer" style="" target="_blank">
+<div class="space-y-1">
+<span class="font-label text-[10px] text-outline uppercase" style="">GitHub</span>
+<span class="block font-headline text-lg font-semibold tracking-tight" style="">github.com/athorne_phys</span>
+</div>
+<span class="material-symbols-outlined text-sm text-outline group-hover:translate-x-1 transition-transform" style="">north_east</span>
+</a>
+</div>
+</section>
 </main>
 <!-- Footer Navigation Shell -->
 <footer class="w-full border-t border-[#79776d]/10 bg-[#f5f4e8] dark:bg-[#1b1c15] flex items-center justify-center px-8 py-6 gap-4 mt-24">
 <div class="font-['Space_Grotesk'] text-[10px] leading-tight text-[#705a4a] dark:text-[#f5f4e8]" style="">
-            © 2024 SYSTEM_ERR_NULL // ALL_EQUATIONS_RESERVED
+            © 2026 SYSTEM_ERR_NULL // ALL_EQUATIONS_RESERVED
         </div>
 </footer>
+<button aria-label="Back to top" class="hidden fixed right-6 bottom-8 z-40 border border-outline bg-surface-container text-on-surface px-3 py-3 hover:bg-surface-container-highest transition-colors" id="back-to-top" type="button">
+<span class="material-symbols-outlined text-base" style="">arrow_upward</span>
+</button>
 <script>
         const navLinks = [
             document.getElementById('articles-link'),
             document.getElementById('projects-link'),
         ].filter(Boolean);
 
-        const sections = [
-            document.getElementById('articles'),
-            document.getElementById('projects'),
-        ].filter(Boolean);
+        const articlesHeading = document.getElementById('articles-heading');
+        const projectsHeading = document.getElementById('projects-heading');
+        const contactSection = document.getElementById('contact');
 
         const setActiveNav = (hash) => {
             navLinks.forEach((link) => {
@@ -319,31 +343,75 @@
             });
         };
 
+        const getHeadingAnchorOffset = () => {
+            const targetHeading = articlesHeading || projectsHeading;
+
+            if (!targetHeading) {
+                return 0;
+            }
+
+            const computedStyles = window.getComputedStyle(targetHeading);
+            const rawScrollMarginTop = computedStyles.scrollMarginTop || computedStyles.getPropertyValue('scroll-margin-top');
+            const anchorOffset = Number.parseFloat(rawScrollMarginTop);
+
+            return Number.isFinite(anchorOffset) ? anchorOffset : 0;
+        };
+
         const updateActiveNavByScroll = () => {
-            const nav = document.querySelector('nav');
-            const navHeight = nav ? nav.offsetHeight : 0;
-            const probeY = window.scrollY + navHeight + 24;
+            const headingAnchorOffset = getHeadingAnchorOffset();
+            const activationLead = 6;
+            const probeY = window.scrollY + headingAnchorOffset + activationLead;
             let activeHash = '';
 
-            sections.forEach((section) => {
-                const sectionTop = section.offsetTop;
-                const sectionBottom = sectionTop + section.offsetHeight;
+            if (articlesHeading && projectsHeading) {
+                const articlesStart = articlesHeading.offsetTop;
+                const projectsStart = projectsHeading.offsetTop;
+                const projectsEnd = contactSection ? contactSection.offsetTop : Number.POSITIVE_INFINITY;
 
-                if (probeY >= sectionTop && probeY < sectionBottom) {
-                    activeHash = `#${section.id}`;
+                if (probeY >= articlesStart && probeY < projectsStart) {
+                    activeHash = '#articles-heading';
+                } else if (probeY >= projectsStart && probeY < projectsEnd) {
+                    activeHash = '#projects-heading';
                 }
-            });
+            }
 
             setActiveNav(activeHash);
         };
 
+        const backToTopButton = document.getElementById('back-to-top');
+
+        const updateBackToTopVisibility = () => {
+            if (!backToTopButton) {
+                return;
+            }
+
+            const shouldShow = window.scrollY > 320;
+            backToTopButton.classList.toggle('hidden', !shouldShow);
+            backToTopButton.classList.toggle('flex', shouldShow);
+            backToTopButton.classList.toggle('items-center', shouldShow);
+            backToTopButton.classList.toggle('justify-center', shouldShow);
+        };
+
         setActiveNav('');
         updateActiveNavByScroll();
+        updateBackToTopVisibility();
 
-        window.addEventListener('scroll', updateActiveNavByScroll, { passive: true });
-        window.addEventListener('resize', updateActiveNavByScroll);
+        window.addEventListener('scroll', () => {
+            updateActiveNavByScroll();
+            updateBackToTopVisibility();
+        }, { passive: true });
+        window.addEventListener('resize', () => {
+            updateActiveNavByScroll();
+            updateBackToTopVisibility();
+        });
         window.addEventListener('hashchange', () => {
             window.setTimeout(updateActiveNavByScroll, 120);
         });
+
+        if (backToTopButton) {
+            backToTopButton.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
     </script>
 </body></html>
