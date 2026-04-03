@@ -1,0 +1,349 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>PHYSICIST_TERMINAL_V1.0 // Aris Thorne</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#e3e2e2",
+                        "secondary-fixed": "#e7e3ca",
+                        "on-secondary-fixed": "#1d1c0d",
+                        "surface-container-high": "#e9e9dd",
+                        "on-secondary-container": "#65634f",
+                        "on-tertiary-fixed": "#1b1c1c",
+                        "on-background": "#1b1c15",
+                        "secondary": "#615f4b",
+                        "inverse-surface": "#303129",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "background": "#fbfaee",
+                        "secondary-fixed-dim": "#cac7af",
+                        "tertiary-container": "#faf9f9",
+                        "on-primary-container": "#856e5c",
+                        "surface-container": "#efeee3",
+                        "outline-variant": "#cac6bb",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#1b1c15",
+                        "surface-container-low": "#f5f4e8",
+                        "surface-tint": "#705a4a",
+                        "on-secondary-fixed-variant": "#494835",
+                        "on-primary-fixed": "#27180b",
+                        "outline": "#79776d",
+                        "on-tertiary-fixed-variant": "#464747",
+                        "on-tertiary-container": "#727272",
+                        "surface-variant": "#e4e3d7",
+                        "primary-fixed-dim": "#dec1ad",
+                        "surface-bright": "#fbfaee",
+                        "on-primary-fixed-variant": "#574333",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#48473e",
+                        "surface-container-highest": "#e4e3d7",
+                        "inverse-on-surface": "#f2f1e5",
+                        "surface-dim": "#dbdbcf",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#e4e0c7",
+                        "primary": "#705a4a",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#dec1ad",
+                        "tertiary-fixed-dim": "#c7c6c6",
+                        "primary-container": "#fff8f5",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#fbddc8",
+                        "surface": "#fbfaee",
+                        "tertiary": "#5e5e5e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        html {
+            scroll-behavior: smooth;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #fbfaee;
+            color: #1b1c15;
+            cursor: crosshair;
+        }
+        .terminal-block::after {
+            content: '_';
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .tonal-layering-no-lines {
+            border: none;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f5f4e8;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #79776d;
+        }
+    </style>
+</head>
+<body class="font-body selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar Navigation Shell -->
+<nav class="fixed top-0 w-full rounded-none border-b border-[#79776d]/20 bg-[#fbfaee] dark:bg-[#1b1c15] flex justify-between items-center px-6 py-4 max-w-full z-50">
+<div class="font-bold text-lg tracking-widest text-[#705a4a] dark:text-[#f5f4e8] font-['Space_Grotesk'] uppercase" style="">TERMINAL_V1.0
+        </div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="nav-link font-['Space_Grotesk'] tracking-tighter uppercase text-xs text-[#79776d] border-b-2 border-transparent hover:text-[#705a4a] pb-1 transition-colors duration-150" href="#articles" id="articles-link" style="">ARTICLES</a>
+<a class="nav-link font-['Space_Grotesk'] tracking-tighter uppercase text-xs text-[#79776d] border-b-2 border-transparent hover:text-[#705a4a] pb-1 transition-colors duration-150" href="#projects" id="projects-link" style="">PROJECTS</a>
+</div>
+</nav>
+<main class="pt-24 pb-12 px-6 max-w-7xl mx-auto space-y-24">
+<!-- Hero Section -->
+<section class="grid md:grid-cols-12 gap-12 items-center pt-6 md:pt-8">
+<div class="md:col-span-12 space-y-6">
+<h1 class="font-headline text-6xl md:text-8xl font-bold tracking-tighter text-on-surface leading-[0.9]" style="">CHINSKY&nbsp;<span class="text-primary" style="">LEE</span></h1>
+<p class="font-headline text-xl uppercase tracking-widest text-outline border-l-4 border-primary pl-6" style="">A STUDENT MAJOR IN PHYSICS</p>
+<div class="max-w-md pt-4">
+<p class="text-on-surface-variant leading-relaxed text-sm" style="">
+                        Decoding the fabric of space-time through mathematical elegance and computational rigor. Currently investigating non-linear dynamics in high-energy particle collisions.
+                    </p>
+</div>
+<div class="flex gap-4 pt-4">
+<a class="inline-flex items-center bg-primary text-on-primary px-8 py-3 text-sm font-label uppercase tracking-widest hover:bg-on-primary-container transition-all" href="#articles" style="">
+                        VIEW_ARTICLES
+                    </a>
+<button type="button" class="border border-outline text-on-surface px-8 py-3 text-sm font-label uppercase tracking-widest hover:bg-surface-container transition-all" style="">GET_IN_TOUCH</button>
+</div>
+</div>
+</section>
+<!-- About Me: Terminal Log -->
+<section class="bg-surface-container-low p-8 md:p-12 space-y-8">
+<div class="flex items-center justify-between border-b border-outline-variant pb-4">
+<h2 class="font-headline text-sm font-bold tracking-widest uppercase flex items-center gap-2" style="">
+<span class="material-symbols-outlined text-sm" style="">terminal</span> SYSTEM_REPORT_v2.log
+                </h2>
+<div class="flex gap-2">
+<div class="w-3 h-3 rounded-full bg-outline-variant"></div>
+<div class="w-3 h-3 rounded-full bg-outline-variant"></div>
+</div>
+</div>
+<div class="font-label text-sm space-y-4 text-on-surface-variant leading-relaxed">
+<div class="flex gap-4">
+<span class="text-outline shrink-0" style="">[10:42:01]</span>
+<p class="" style=""><span class="text-primary" style="">INITIALIZING_BIOGRAPHY:</span> Born in the intersection of mathematics and philosophy. Aris Thorne focuses on the structural anomalies of the universe. Education: PhD Theoretical Physics, ETH Zürich.</p>
+</div>
+<div class="flex gap-4">
+<span class="text-outline shrink-0" style="">[10:42:05]</span>
+<p class="" style=""><span class="text-primary" style="">RESEARCH_FOCUS:</span> Primary focus on Quantum Entanglement and its relation to Thermodynamic Entropy. Secondary interests include String Theory and Computational Fluid Dynamics.</p>
+</div>
+<div class="flex gap-4">
+<span class="text-outline shrink-0" style="">[10:42:12]</span>
+<p class="" style=""><span class="text-primary" style="">LOCATION_DATA:</span> Currently based in Sector 7G (Pacific Northwest). Operating out of a private observatory and digital workspace.</p>
+</div>
+<div class="flex gap-4">
+<span class="text-outline shrink-0" style="">[10:42:15]</span>
+<p class="" style=""><span class="text-primary" style="">CURRENT_STATUS:</span> Terminal input active. Monitoring for cosmic background radiation spikes. Ready for collaboration on open-source physics engines.</p>
+</div>
+<div class="pt-4 flex gap-4 text-primary">
+<span class="text-outline shrink-0" style="">aris@thorne:~$</span>
+<span class="terminal-block"></span>
+</div>
+</div>
+</section>
+<!-- Research Archive: Bento Grid -->
+<section class="space-y-8 scroll-mt-28" id="articles">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="font-headline text-4xl font-bold tracking-tight" style="">RESEARCH_ARCHIVE</h2>
+<p class="font-label text-xs text-outline uppercase tracking-widest mt-2" style="">Index of published papers &amp; experimental notes</p>
+</div>
+<a class="text-sm font-label border-b border-on-surface pb-1 hover:text-primary transition-colors" href="#" style="">VIEW_ALL_RECORDS</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Archive Item 1 -->
+<div class="group bg-surface-container p-4 flex flex-col gap-4 hover:bg-surface-container-highest transition-colors">
+<div class="space-y-2">
+<span class="font-label text-[10px] text-outline" style="">REF_NO: 2024_01</span>
+<h3 class="font-headline text-xl font-bold leading-tight" style="">Quantum Decoherence in Sub-Zero Vacuums</h3>
+<p class="text-xs text-on-surface-variant line-clamp-3" style="">A study of particle behavior in extreme isolation environments, focusing on the preservation of spin states.</p>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline/10">
+<span class="font-label text-[10px] uppercase" style="">PDF_DOWNLOAD</span>
+<span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" style="">arrow_forward</span>
+</div>
+</div>
+<!-- Archive Item 2 -->
+<div class="group bg-surface-container p-4 flex flex-col gap-4 hover:bg-surface-container-highest transition-colors">
+<div class="space-y-2">
+<span class="font-label text-[10px] text-outline" style="">REF_NO: 2023_42</span>
+<h3 class="font-headline text-xl font-bold leading-tight" style="">Entropy Cascades: A New Framework</h3>
+<p class="text-xs text-on-surface-variant line-clamp-3" style="">Proposing a hierarchical model for entropy distribution in closed-loop systems undergoing rapid thermal shifts.</p>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline/10">
+<span class="font-label text-[10px] uppercase" style="">BROWSE_DATA</span>
+<span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" style="">arrow_forward</span>
+</div>
+</div>
+<!-- Archive Item 3 -->
+<div class="group bg-primary text-on-primary p-4 flex flex-col gap-4 hover:bg-on-primary-container transition-colors">
+<div class="space-y-2">
+<span class="font-label text-[10px] opacity-70" style="">REF_NO: IN_PROGRESS</span>
+<h3 class="font-headline text-xl font-bold leading-tight" style="">Dark Matter Fluidity &amp; Gravitational Lensing</h3>
+<p class="text-xs opacity-80 line-clamp-3" style="">Experimental modeling of dark matter as a non-Newtonian fluid in galactic clusters.</p>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-on-primary/20">
+<span class="font-label text-[10px] uppercase" style="">WIP_DRAFT</span>
+<span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" style="">lock</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Source Code: GitHub Projects -->
+<section class="grid md:grid-cols-2 gap-12 border-t border-outline-variant pt-24 scroll-mt-28" id="projects">
+<div class="space-y-6">
+<h2 class="font-headline text-4xl font-bold tracking-tight" style="">GITHUB_PROJECTS</h2>
+<p class="text-on-surface-variant text-sm max-w-sm leading-relaxed" style="">
+                    Transparent research requires reproducible code. Explore my computational models, physics engines, and data analysis pipelines on GitHub.
+                </p>
+<div class="pt-4">
+<a class="inline-flex items-center gap-4 group" href="https://github.com/athorne_phys" rel="noopener noreferrer" style="" target="_blank">
+<div class="w-12 h-12 flex items-center justify-center border border-outline group-hover:bg-primary group-hover:text-on-primary transition-all">
+<span class="material-symbols-outlined" style="">code</span>
+</div>
+<div>
+<span class="block font-headline font-bold text-sm tracking-widest uppercase" style="">Visit Repository</span>
+<span class="text-[10px] font-label text-outline uppercase" style="">github.com/athorne_phys</span>
+</div>
+</a>
+</div>
+</div>
+<div class="space-y-4">
+<!-- Repo 1 -->
+<div class="bg-surface-container-low p-4 flex items-center justify-between hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" style="">folder</span>
+<div>
+<span class="block font-label text-sm font-bold" style="">quantum-sim-v3</span>
+<span class="text-[10px] text-outline uppercase" style="">Python / NumPy / C++</span>
+</div>
+</div>
+<div class="flex items-center gap-4 text-outline font-label text-[10px]">
+<span class="" style="">★ 1.2k</span>
+<span class="material-symbols-outlined text-xs" style="">fork_right</span>
+</div>
+</div>
+<!-- Repo 2 -->
+<div class="bg-surface-container-low p-4 flex items-center justify-between hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" style="">folder</span>
+<div>
+<span class="block font-label text-sm font-bold" style="">entropy-vis-engine</span>
+<span class="text-[10px] text-outline uppercase" style="">TypeScript / WebGL</span>
+</div>
+</div>
+<div class="flex items-center gap-4 text-outline font-label text-[10px]">
+<span class="" style="">★ 840</span>
+<span class="material-symbols-outlined text-xs" style="">fork_right</span>
+</div>
+</div>
+<!-- Repo 3 -->
+<div class="bg-surface-container-low p-4 flex items-center justify-between hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" style="">folder</span>
+<div>
+<span class="block font-label text-sm font-bold" style="">particle-track-ai</span>
+<span class="text-[10px] text-outline uppercase" style="">PyTorch / Rust</span>
+</div>
+</div>
+<div class="flex items-center gap-4 text-outline font-label text-[10px]">
+<span class="" style="">★ 2.4k</span>
+<span class="material-symbols-outlined text-xs" style="">fork_right</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Navigation Shell -->
+<footer class="w-full border-t border-[#79776d]/10 bg-[#f5f4e8] dark:bg-[#1b1c15] flex items-center justify-center px-8 py-6 gap-4 mt-24">
+<div class="font-['Space_Grotesk'] text-[10px] leading-tight text-[#705a4a] dark:text-[#f5f4e8]" style="">
+            © 2024 SYSTEM_ERR_NULL // ALL_EQUATIONS_RESERVED
+        </div>
+</footer>
+<script>
+        const navLinks = [
+            document.getElementById('articles-link'),
+            document.getElementById('projects-link'),
+        ].filter(Boolean);
+
+        const sections = [
+            document.getElementById('articles'),
+            document.getElementById('projects'),
+        ].filter(Boolean);
+
+        const setActiveNav = (hash) => {
+            navLinks.forEach((link) => {
+                const isActive = link.getAttribute('href') === hash;
+                link.classList.toggle('text-[#705a4a]', isActive);
+                link.classList.toggle('border-[#705a4a]', isActive);
+                link.classList.toggle('text-[#79776d]', !isActive);
+                link.classList.toggle('border-transparent', !isActive);
+
+                if (isActive) {
+                    link.setAttribute('aria-current', 'page');
+                } else {
+                    link.removeAttribute('aria-current');
+                }
+            });
+        };
+
+        const updateActiveNavByScroll = () => {
+            const nav = document.querySelector('nav');
+            const navHeight = nav ? nav.offsetHeight : 0;
+            const probeY = window.scrollY + navHeight + 24;
+            let activeHash = '';
+
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                const sectionBottom = sectionTop + section.offsetHeight;
+
+                if (probeY >= sectionTop && probeY < sectionBottom) {
+                    activeHash = `#${section.id}`;
+                }
+            });
+
+            setActiveNav(activeHash);
+        };
+
+        setActiveNav('');
+        updateActiveNavByScroll();
+
+        window.addEventListener('scroll', updateActiveNavByScroll, { passive: true });
+        window.addEventListener('resize', updateActiveNavByScroll);
+        window.addEventListener('hashchange', () => {
+            window.setTimeout(updateActiveNavByScroll, 120);
+        });
+    </script>
+</body></html>
