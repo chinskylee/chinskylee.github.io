@@ -143,6 +143,76 @@ const recentPosts = posts
       </div>
     </section>
   </main>
-  
+
+  <!-- Custom Scroll Snap Script -->
+  <script is:inline>
+    (function() {
+      // 等待 DOM 加载
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initScrollSnap);
+      } else {
+        initScrollSnap();
+      }
+
+      function initScrollSnap() {
+        const hero = document.querySelector('section'); // Hero 是第一个 section
+        const terminalLog = document.querySelector('.bg-surface-container-low'); // TerminalLog
+
+        if (!hero || !terminalLog) return;
+
+        let isSnapping = false;
+        let lastScrollY = window.scrollY;
+        const snapThreshold = 150; // 吸附触发距离（像素）
+        const snapDuration = 400; // 吸附动画时长（毫秒）
+
+        // 使用 requestAnimationFrame 节流
+        let ticking = false;
+
+        window.addEventListener('scroll', function() {
+          if (isSnapping || ticking) return;
+
+          ticking = true;
+          window.requestAnimationFrame(function() {
+            handleScroll();
+            ticking = false;
+          });
+        }, { passive: true });
+
+        function handleScroll() {
+          const currentScrollY = window.scrollY;
+          const scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
+          lastScrollY = currentScrollY;
+
+          // 只在向下滚动时处理
+          if (scrollDirection !== 'down') return;
+
+          const terminalRect = terminalLog.getBoundingClientRect();
+          const terminalTop = terminalRect.top;
+
+          // 如果 TerminalLog 接近视口顶部（在阈值范围内），吸附到它
+          if (terminalTop > 80 && terminalTop < 80 + snapThreshold) {
+            snapToElement(terminalLog);
+          }
+        }
+
+        function snapToElement(element) {
+          isSnapping = true;
+          const targetY = element.offsetTop - 80; // 80px 是 navbar 高度
+
+          // 使用原生 smooth scroll
+          window.scrollTo({
+            top: targetY,
+            behavior: 'smooth'
+          });
+
+          // 动画结束后重置标志
+          setTimeout(function() {
+            isSnapping = false;
+          }, snapDuration);
+        }
+      }
+    })();
+  </script>
+
   <Footer />
 </BaseLayout>
