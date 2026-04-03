@@ -5,7 +5,7 @@
 <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-40 opacity-0 pointer-events-none transition-opacity duration-300 md:hidden" aria-hidden="true"></div>
 
 <!-- Mobile Menu Sidebar -->
-<aside id="mobile-menu" class="fixed top-0 right-0 h-full w-72 bg-surface-container-high z-50 transform translate-x-full transition-transform duration-300 ease-out md:hidden" aria-label="Mobile navigation">
+<aside id="mobile-menu" class="fixed top-0 left-0 h-full w-72 bg-surface-container-high z-50 transform -translate-x-full transition-transform duration-300 ease-out md:hidden" aria-label="Mobile navigation">
   <!-- Close Button -->
   <button id="mobile-menu-close" class="absolute top-4 right-4 p-2 text-on-surface hover:text-primary transition-colors" aria-label="Close menu">
     <span class="material-symbols-outlined text-2xl">close</span>
@@ -67,14 +67,14 @@
 
     function openMenu() {
       isOpen = true;
-      menu.classList.remove('translate-x-full');
+      menu.classList.remove('-translate-x-full');
       overlay.classList.remove('opacity-0', 'pointer-events-none');
       document.body.style.overflow = 'hidden';
     }
 
     function closeMenu() {
       isOpen = false;
-      menu.classList.add('translate-x-full');
+      menu.classList.add('-translate-x-full');
       overlay.classList.add('opacity-0', 'pointer-events-none');
       document.body.style.overflow = '';
     }
@@ -131,12 +131,12 @@
       const swipeThreshold = 50;
       const diff = touchStartX - touchEndX;
 
-      // Right to left swipe (open menu) - only when near right edge
-      if (touchStartX > window.innerWidth - 50 && diff < -swipeThreshold && !isOpen) {
+      // Left to right swipe (open menu) - only when near left edge
+      if (touchStartX < 50 && diff < -swipeThreshold && !isOpen) {
         openMenu();
       }
       
-      // Left to right swipe (close menu) - only when menu is open
+      // Right to left swipe (close menu) - only when menu is open
       if (diff > swipeThreshold && isOpen) {
         closeMenu();
       }
