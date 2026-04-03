@@ -1,4 +1,6 @@
 ---
+import MobileMenu from '../components/MobileMenu.astro';
+
 export interface Props {
   title: string;
   description?: string;
@@ -45,6 +47,7 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
   </script>
 </head>
 <body class="font-body selection:bg-primary-fixed selection:text-on-primary-fixed">
+  <MobileMenu />
   <slot />
 </body>
 </html>
