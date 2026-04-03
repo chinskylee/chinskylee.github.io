@@ -45,6 +45,9 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
 <style is:global>
   html {
     scroll-behavior: smooth;
+    /* 防止滚动条导致的布局抖动 */
+    scrollbar-gutter: stable;
+    overflow-y: scroll;
   }
   @media (prefers-reduced-motion: reduce) {
     html {
@@ -53,6 +56,11 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
   }
   html.loading {
     scroll-behavior: auto !important;
+  }
+  /* 隐藏滚动条但保留滚动功能 */
+  html::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
   }
   .material-symbols-outlined {
     font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
@@ -194,91 +202,86 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
   });
 
   // Theme toggle functionality
-  const themeToggleButton = document.getElementById('theme-toggle');
-  const themeToggleIcon = document.getElementById('theme-toggle-icon');
-  const themeToggleLabel = document.getElementById('theme-toggle-label');
+  function initThemeToggle() {
+    const themeToggleButton = document.getElementById('theme-toggle');
+    const themeToggleIcon = document.getElementById('theme-toggle-icon');
+    const themeToggleLabel = document.getElementById('theme-toggle-label');
 
-  const readStoredTheme = () => {
-    try {
-      return window.localStorage.getItem('theme');
-    } catch {
-      return null;
-    }
-  };
+    if (!themeToggleButton || !themeToggleIcon || !themeToggleLabel) return;
 
-  const writeStoredTheme = (theme: string) => {
-    try {
-      window.localStorage.setItem('theme', theme);
-    } catch {
-      // Ignore
-    }
-  };
+    const writeStoredTheme = (theme) => {
+      try {
+        window.localStorage.setItem('theme', theme);
+      } catch {
+        // Ignore
+      }
+    };
 
-  const applyTheme = (theme: string, persistPreference: boolean) => {
-    const resolvedTheme = theme === 'dark' ? 'dark' : 'light';
-    const isDarkTheme = resolvedTheme === 'dark';
+    const updateToggleUI = (isDark) => {
+      themeToggleButton.setAttribute('aria-pressed', String(isDark));
+      themeToggleButton.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+      themeToggleIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
+      themeToggleLabel.textContent = isDark ? 'LIGHT' : 'DARK';
+    };
 
-    document.documentElement.classList.toggle('dark', isDarkTheme);
-    document.documentElement.classList.toggle('light', !isDarkTheme);
+    // Initialize button state based on current theme
+    const isCurrentlyDark = document.documentElement.classList.contains('dark');
+    updateToggleUI(isCurrentlyDark);
 
-    if (themeToggleButton) {
-      themeToggleButton.setAttribute('aria-pressed', String(isDarkTheme));
-      themeToggleButton.setAttribute('aria-label', isDarkTheme ? 'Switch to light mode' : 'Switch to dark mode');
-    }
-
-    if (themeToggleIcon) {
-      themeToggleIcon.textContent = isDarkTheme ? 'light_mode' : 'dark_mode';
-    }
-
-    if (themeToggleLabel) {
-      themeToggleLabel.textContent = isDarkTheme ? 'LIGHT' : 'DARK';
-    }
-
-    if (persistPreference) {
-      writeStoredTheme(resolvedTheme);
-    }
-  };
-
-  if (themeToggleButton) {
+    // Handle click
     themeToggleButton.addEventListener('click', () => {
-      const isCurrentlyDark = document.documentElement.classList.contains('dark');
-      applyTheme(isCurrentlyDark ? 'light' : 'dark', true);
+      const isDark = document.documentElement.classList.contains('dark');
+      const newTheme = isDark ? 'light' : 'dark';
+      
+      document.documentElement.classList.toggle('dark', !isDark);
+      document.documentElement.classList.toggle('light', isDark);
+      updateToggleUI(!isDark);
+      writeStoredTheme(newTheme);
     });
   }
 
+  // Initialize on page load
+  initThemeToggle();
+  // Re-initialize after Astro page transitions
+  document.addEventListener('astro:page-load', initThemeToggle);
+
   // Back to top button
-  const backToTopButton = document.getElementById('back-to-top');
-  
-  const updateBackToTopVisibility = () => {
+  function initBackToTop() {
+    const backToTopButton = document.getElementById('back-to-top');
     if (!backToTopButton) return;
     
-    const shouldShow = window.scrollY > 320;
-    if (shouldShow) {
-      backToTopButton.classList.remove('hidden');
-      backToTopButton.style.display = 'flex';
-    } else {
-      backToTopButton.classList.add('hidden');
-      backToTopButton.style.display = '';
-    }
-  };
+    const updateBackToTopVisibility = () => {
+      const shouldShow = window.scrollY > 320;
+      if (shouldShow) {
+        backToTopButton.classList.remove('hidden');
+        backToTopButton.style.display = 'flex';
+      } else {
+        backToTopButton.classList.add('hidden');
+        backToTopButton.style.display = '';
+      }
+    };
 
-  if (backToTopButton) {
     backToTopButton.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    // Scroll handling with RAF
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateBackToTopVisibility();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    updateBackToTopVisibility();
   }
 
-  // Scroll handling with RAF
-  let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        updateBackToTopVisibility();
-        ticking = false;
-      });
-      ticking = true;
-    }
-  }, { passive: true });
+  initBackToTop();
+  document.addEventListener('astro:page-load', initBackToTop);
 
   // Initialize
   updateBackToTopVisibility();
