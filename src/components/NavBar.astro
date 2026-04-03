@@ -12,7 +12,7 @@ const currentPath = Astro.url.pathname;
   <a href="/" class="font-bold text-lg tracking-widest text-[#705a4a] dark:text-[#f5f4e8] font-['Space_Grotesk'] uppercase">
     TERMINAL_V1.0
   </a>
-  <div class="flex items-center gap-5 md:gap-8">
+  <div class="flex items-center gap-3 md:gap-8">
     <div class="hidden md:flex gap-8 items-center pr-2 md:pr-4">
       {navLinks.map(link => {
         const isActive = currentPath === link.href || currentPath.startsWith(link.href + '/');
@@ -35,7 +35,7 @@ const currentPath = Astro.url.pathname;
     <button
       aria-label="Switch to dark mode"
       aria-pressed="false"
-      class="theme-toggle group border border-outline-variant bg-surface-container-low px-2 py-2 hover:bg-surface-container transition-colors w-[110px] shrink-0"
+      class="theme-toggle group border border-outline-variant bg-surface-container-low px-2 py-2 hover:bg-surface-container transition-colors w-[110px] shrink-0 hidden sm:block"
       id="theme-toggle"
       type="button"
       transition:persist
@@ -48,6 +48,10 @@ const currentPath = Astro.url.pathname;
           <span class="hidden dark:inline">LIGHT</span>
         </span>
       </span>
+    </button>
+    <!-- Mobile Menu Button -->
+    <button id="mobile-menu-toggle-nav" class="md:hidden p-2 text-on-surface hover:text-primary transition-colors" aria-label="Open menu">
+      <span class="material-symbols-outlined text-2xl">menu</span>
     </button>
   </div>
 </nav>
