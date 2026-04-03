@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NavBar from '../../components/NavBar.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// Get all unique tags
+const allTags = [...new Set(sortedPosts.flatMap(post => post.data.tags || []))];
+---
+
+<BaseLayout title="Articles // PHYSICIST_TERMINAL_V1.0">
+  <NavBar />
+  
+  <main class="pt-24 pb-12 px-6 max-w-7xl mx-auto space-y-12">
+    <!-- Header -->
+    <section class="space-y-4">
+      <h1 class="font-headline text-4xl font-bold tracking-tight">ARTICLES</h1>
+      <p class="font-label text-base text-outline uppercase tracking-widest">All published research notes and technical writings</p>
+    </section>
+    
+    <!-- Tags -->
+    {allTags.length > 0 && (
+      <section class="flex flex-wrap gap-2">
+        <span class="font-label text-sm text-outline uppercase mr-2">TAGS:</span>
+        {allTags.map(tag => (
+          <a 
+            href={`/tags/${tag.toLowerCase().replace(/\s+/g, '-')}/`}
+            class="px-3 py-1 bg-surface-container text-sm font-label uppercase tracking-wider hover:bg-surface-container-highest transition-colors"
+          >
+            {tag}
+          </a>
+        ))}
+      </section>
+    )}
+    
+    <!-- Posts List -->
+    <section class="space-y-6">
+      {sortedPosts.map(post => (
+        <article class="bg-surface-container p-6 flex flex-col md:flex-row md:items-start gap-4 hover:bg-surface-container-highest transition-colors">
+          <div class="md:w-32 shrink-0">
+            <time class="font-label text-sm text-outline uppercase" datetime={post.data.pubDate.toISOString()}>
+              {post.data.pubDate.toISOString().split('T')[0]}
+            </time>
+          </div>
+          <div class="flex-1 space-y-2">
+            <h2 class="font-headline text-2xl font-bold leading-tight">
+              <a href={`/blog/${post.slug}/`} class="hover:text-primary transition-colors">
+                {post.data.title}
+              </a>
+            </h2>
+            <p class="text-base text-on-surface-variant">{post.data.description}</p>
+            {post.data.tags && post.data.tags.length > 0 && (
+              <div class="flex flex-wrap gap-2 pt-2">
+                {post.data.tags.map(tag => (
+                  <a 
+                    href={`/tags/${tag.toLowerCase().replace(/\s+/g, '-')}/`}
+                    class="text-xs font-label uppercase tracking-wider text-outline hover:text-primary transition-colors"
+                  >
+                    #{tag}
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+          <a href={`/blog/${post.slug}/`} class="shrink-0 flex items-center gap-2 text-outline hover:text-primary transition-colors">
+            <span class="font-label text-sm uppercase">READ</span>
+            <span class="material-symbols-outlined text-base">arrow_forward</span>
+          </a>
+        </article>
+      ))}
+      
+      {sortedPosts.length === 0 && (
+        <div class="text-center py-24 text-on-surface-variant">
+          <p class="text-lg">No posts yet. Check back soon!</p>
+        </div>
+      )}
+    </section>
+  </main>
+  
+  <Footer />
+</BaseLayout>

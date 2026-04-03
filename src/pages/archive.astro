@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import NavBar from '../components/NavBar.astro';
+import Footer from '../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// Group posts by year
+const postsByYear = sortedPosts.reduce((acc, post) => {
+  const year = post.data.pubDate.getFullYear();
+  if (!acc[year]) {
+    acc[year] = [];
+  }
+  acc[year].push(post);
+  return acc;
+}, {} as Record<number, typeof posts>);
+
+const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a));
+---
+
+<BaseLayout title="Archive // PHYSICIST_TERMINAL_V1.0">
+  <NavBar />
+  
+  <main class="pt-24 pb-12 px-6 max-w-4xl mx-auto space-y-12">
+    <!-- Header -->
+    <section class="space-y-4">
+      <h1 class="font-headline text-4xl font-bold tracking-tight">ARCHIVE</h1>
+      <p class="font-label text-base text-outline uppercase tracking-widest">Timeline of all published articles</p>
+    </section>
+    
+    <!-- Archive Timeline -->
+    <section class="space-y-12">
+      {years.map(year => (
+        <div class="space-y-6">
+          <h2 class="font-headline text-2xl font-bold tracking-tight text-outline border-b border-outline-variant pb-4">
+            {year}
+          </h2>
+          <div class="space-y-4 pl-4 border-l-2 border-outline-variant">
+            {postsByYear[parseInt(year)].map(post => (
+              <article class="group">
+                <a href={`/blog/${post.slug}/`} class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6 py-2 hover:pl-2 transition-all">
+                  <time class="font-label text-sm text-outline uppercase w-24 shrink-0" datetime={post.data.pubDate.toISOString()}>
+                    {post.data.pubDate.toISOString().split('T')[0].slice(5)}
+                  </time>
+                  <h3 class="font-headline text-lg font-semibold tracking-tight group-hover:text-primary transition-colors">
+                    {post.data.title}
+                  </h3>
+                </a>
+              </article>
+            ))}
+          </div>
+        </div>
+      ))}
+      
+      {years.length === 0 && (
+        <div class="text-center py-24 text-on-surface-variant">
+          <p class="text-lg">No posts yet. Check back soon!</p>
+        </div>
+      )}
+    </section>
+  </main>
+  
+  <Footer />
+</BaseLayout>

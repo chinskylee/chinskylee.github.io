@@ -1,0 +1,285 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Physics Student Blog' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&display=block" rel="stylesheet">
+  
+  <!-- Theme Init Script -->
+  <script is:inline>
+    (() => {
+      let storedTheme = null;
+      try {
+        storedTheme = window.localStorage.getItem('theme');
+      } catch {
+        storedTheme = null;
+      }
+      const prefersDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initialTheme = storedTheme === 'dark' || storedTheme === 'light'
+        ? storedTheme
+        : (prefersDarkTheme ? 'dark' : 'light');
+      document.documentElement.classList.toggle('dark', initialTheme === 'dark');
+      document.documentElement.classList.toggle('light', initialTheme !== 'dark');
+    })();
+  </script>
+</head>
+<body class="font-body selection:bg-primary-fixed selection:text-on-primary-fixed">
+  <slot />
+</body>
+</html>
+
+<style is:global>
+  html {
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  html.loading {
+    scroll-behavior: auto !important;
+  }
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  body {
+    background-color: #fbfaee;
+    color: #1b1c15;
+    cursor: crosshair;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .dark body {
+    background-color: #15160f;
+    color: #edeadf;
+  }
+  .terminal-block::after {
+    content: '_';
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f5f4e8;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #79776d;
+  }
+  .dark .custom-scrollbar::-webkit-scrollbar-track {
+    background: #1f2019;
+  }
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #6e6a5f;
+  }
+  .dark .bg-surface-container-low {
+    background-color: #1f2019;
+  }
+  .dark .bg-surface-container {
+    background-color: #262821;
+  }
+  .dark .bg-surface-container-highest {
+    background-color: #2f3128;
+  }
+  .dark .hover\:bg-surface-container:hover {
+    background-color: #262821;
+  }
+  .dark .hover\:bg-surface-container-highest:hover {
+    background-color: #2f3128;
+  }
+  .dark .text-on-surface {
+    color: #f1eee2;
+  }
+  .dark .text-on-surface-variant {
+    color: #c1beb2;
+  }
+  .dark .text-outline {
+    color: #9f9c90;
+  }
+  .dark .border-outline {
+    border-color: #6f6c60;
+  }
+  .dark .border-outline-variant {
+    border-color: #59574d;
+  }
+  .dark .bg-background {
+    background-color: #1b1c15;
+  }
+  .theme-toggle {
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 0 1px rgba(121, 119, 109, 0.18);
+  }
+  .theme-toggle::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(112, 90, 74, 0) 0%, rgba(112, 90, 74, 0.18) 48%, rgba(112, 90, 74, 0) 100%);
+    transform: translateX(-140%);
+    transition: transform 0.45s ease;
+    pointer-events: none;
+  }
+  .theme-toggle:hover::before,
+  .theme-toggle:focus-visible::before {
+    transform: translateX(0%);
+  }
+  .theme-toggle:focus-visible {
+    outline: 1px solid #705a4a;
+    outline-offset: 2px;
+  }
+  .theme-toggle .theme-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: #705a4a;
+    box-shadow: 0 0 0 rgba(112, 90, 74, 0.55);
+    animation: terminalPulse 2.2s ease-in-out infinite;
+  }
+  .dark .theme-toggle {
+    box-shadow: inset 0 0 0 1px rgba(159, 156, 144, 0.24);
+  }
+  .dark .theme-toggle::before {
+    background: linear-gradient(120deg, rgba(222, 193, 173, 0) 0%, rgba(222, 193, 173, 0.2) 50%, rgba(222, 193, 173, 0) 100%);
+  }
+  .dark .theme-toggle:focus-visible {
+    outline-color: #dec1ad;
+  }
+  .dark .theme-toggle .theme-dot {
+    background: #dec1ad;
+    box-shadow: 0 0 0 rgba(222, 193, 173, 0.55);
+  }
+  @keyframes terminalPulse {
+    0%, 100% {
+      opacity: 0.62;
+      box-shadow: 0 0 0 rgba(112, 90, 74, 0);
+    }
+    50% {
+      opacity: 1;
+      box-shadow: 0 0 10px rgba(112, 90, 74, 0.5);
+    }
+  }
+</style>
+
+<script>
+  // Page load handling
+  document.documentElement.classList.add('loading');
+  window.addEventListener('load', () => {
+    document.documentElement.classList.remove('loading');
+  });
+
+  // Theme toggle functionality
+  const themeToggleButton = document.getElementById('theme-toggle');
+  const themeToggleIcon = document.getElementById('theme-toggle-icon');
+  const themeToggleLabel = document.getElementById('theme-toggle-label');
+
+  const readStoredTheme = () => {
+    try {
+      return window.localStorage.getItem('theme');
+    } catch {
+      return null;
+    }
+  };
+
+  const writeStoredTheme = (theme: string) => {
+    try {
+      window.localStorage.setItem('theme', theme);
+    } catch {
+      // Ignore
+    }
+  };
+
+  const applyTheme = (theme: string, persistPreference: boolean) => {
+    const resolvedTheme = theme === 'dark' ? 'dark' : 'light';
+    const isDarkTheme = resolvedTheme === 'dark';
+
+    document.documentElement.classList.toggle('dark', isDarkTheme);
+    document.documentElement.classList.toggle('light', !isDarkTheme);
+
+    if (themeToggleButton) {
+      themeToggleButton.setAttribute('aria-pressed', String(isDarkTheme));
+      themeToggleButton.setAttribute('aria-label', isDarkTheme ? 'Switch to light mode' : 'Switch to dark mode');
+    }
+
+    if (themeToggleIcon) {
+      themeToggleIcon.textContent = isDarkTheme ? 'light_mode' : 'dark_mode';
+    }
+
+    if (themeToggleLabel) {
+      themeToggleLabel.textContent = isDarkTheme ? 'LIGHT' : 'DARK';
+    }
+
+    if (persistPreference) {
+      writeStoredTheme(resolvedTheme);
+    }
+  };
+
+  if (themeToggleButton) {
+    themeToggleButton.addEventListener('click', () => {
+      const isCurrentlyDark = document.documentElement.classList.contains('dark');
+      applyTheme(isCurrentlyDark ? 'light' : 'dark', true);
+    });
+  }
+
+  // Back to top button
+  const backToTopButton = document.getElementById('back-to-top');
+  
+  const updateBackToTopVisibility = () => {
+    if (!backToTopButton) return;
+    
+    const shouldShow = window.scrollY > 320;
+    if (shouldShow) {
+      backToTopButton.classList.remove('hidden');
+      backToTopButton.style.display = 'flex';
+    } else {
+      backToTopButton.classList.add('hidden');
+      backToTopButton.style.display = '';
+    }
+  };
+
+  if (backToTopButton) {
+    backToTopButton.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // Scroll handling with RAF
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        updateBackToTopVisibility();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // Initialize
+  updateBackToTopVisibility();
+</script>

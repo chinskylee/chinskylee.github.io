@@ -1,0 +1,108 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NavBar from '../../components/NavBar.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: post,
+  }));
+}
+
+type Props = CollectionEntry<'blog'>;
+
+const post = Astro.props;
+const { Content } = await post.render();
+---
+
+<BaseLayout title={`${post.data.title} // PHYSICIST_TERMINAL_V1.0`} description={post.data.description}>
+  <NavBar />
+  
+  <main class="pt-24 pb-12 px-6 max-w-3xl mx-auto">
+    <!-- Article Header -->
+    <article class="space-y-8">
+      <header class="space-y-4 border-b border-outline-variant pb-8">
+        <div class="flex flex-wrap gap-2">
+          {post.data.tags?.map(tag => (
+            <a 
+              href={`/tags/${tag.toLowerCase().replace(/\s+/g, '-')}/`}
+              class="px-3 py-1 bg-surface-container text-xs font-label uppercase tracking-wider hover:bg-surface-container-highest transition-colors"
+            >
+              {tag}
+            </a>
+          ))}
+        </div>
+        <h1 class="font-headline text-4xl md:text-5xl font-bold tracking-tight">{post.data.title}</h1>
+        <p class="text-lg text-on-surface-variant">{post.data.description}</p>
+        <div class="flex items-center gap-4 text-sm text-outline">
+          <time datetime={post.data.pubDate.toISOString()}>
+            {post.data.pubDate.toISOString().split('T')[0]}
+          </time>
+          {post.data.updatedDate && (
+            <>
+              <span>•</span>
+              <span>Updated: {post.data.updatedDate.toISOString().split('T')[0]}</span>
+            </>
+          )}
+        </div>
+      </header>
+      
+      <!-- Article Content -->
+      <div class="prose prose-lg dark:prose-invert max-w-none prose-headings:font-headline prose-headings:tracking-tight prose-a:text-primary prose-a:no-underline hover:prose-a:underline">
+        <Content />
+      </div>
+    </article>
+    
+    <!-- Navigation -->
+    <nav class="mt-16 pt-8 border-t border-outline-variant flex justify-between">
+      <a href="/blog" class="inline-flex items-center gap-2 text-outline hover:text-primary transition-colors">
+        <span class="material-symbols-outlined">arrow_back</span>
+        <span class="font-label uppercase tracking-wider">All Articles</span>
+      </a>
+    </nav>
+  </main>
+  
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* Custom prose styles for our color scheme */
+  :global(.prose) {
+    --tw-prose-body: #1b1c15;
+    --tw-prose-headings: #1b1c15;
+    --tw-prose-links: #705a4a;
+    --tw-prose-bold: #1b1c15;
+    --tw-prose-counters: #79776d;
+    --tw-prose-bullets: #79776d;
+    --tw-prose-hr: #e4e3d7;
+    --tw-prose-quotes: #48473e;
+    --tw-prose-quote-borders: #705a4a;
+    --tw-prose-captions: #48473e;
+    --tw-prose-code: #1b1c15;
+    --tw-prose-pre-code: #edeadf;
+    --tw-prose-pre-bg: #1b1c15;
+    --tw-prose-th-borders: #e4e3d7;
+    --tw-prose-td-borders: #e4e3d7;
+  }
+  
+  :global(.dark .prose) {
+    --tw-prose-body: #edeadf;
+    --tw-prose-headings: #edeadf;
+    --tw-prose-links: #dec1ad;
+    --tw-prose-bold: #edeadf;
+    --tw-prose-counters: #9f9c90;
+    --tw-prose-bullets: #9f9c90;
+    --tw-prose-hr: #2f3128;
+    --tw-prose-quotes: #c1beb2;
+    --tw-prose-quote-borders: #dec1ad;
+    --tw-prose-captions: #c1beb2;
+    --tw-prose-code: #edeadf;
+    --tw-prose-pre-code: #edeadf;
+    --tw-prose-pre-bg: #15160f;
+    --tw-prose-th-borders: #2f3128;
+    --tw-prose-td-borders: #2f3128;
+  }
+</style>

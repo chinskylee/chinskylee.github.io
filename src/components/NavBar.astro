@@ -1,0 +1,49 @@
+---
+const navLinks = [
+  { href: '/blog', label: 'ARTICLES' },
+  { href: '/archive', label: 'ARCHIVE' },
+  { href: '/#projects', label: 'PROJECTS' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="fixed top-0 w-full rounded-none border-b border-[#79776d]/20 dark:border-[#9f9c90]/20 bg-[#fbfaee] dark:bg-[#1b1c15] flex justify-between items-center px-6 py-4 max-w-full z-50">
+  <a href="/" class="font-bold text-lg tracking-widest text-[#705a4a] dark:text-[#f5f4e8] font-['Space_Grotesk'] uppercase">
+    TERMINAL_V1.0
+  </a>
+  <div class="flex items-center gap-5 md:gap-8">
+    <div class="hidden md:flex gap-8 items-center pr-2 md:pr-4">
+      {navLinks.map(link => {
+        const isActive = currentPath === link.href || currentPath.startsWith(link.href + '/');
+        return (
+          <a 
+            href={link.href}
+            class:list={[
+              "nav-link font-['Space_Grotesk'] tracking-tight uppercase text-base pb-1 transition-colors duration-150 border-b-2",
+              isActive 
+                ? "text-[#705a4a] border-[#705a4a] dark:text-[#dec1ad] dark:border-[#dec1ad]"
+                : "text-[#79776d] dark:text-[#a9a596] border-transparent hover:text-[#705a4a] dark:hover:text-[#dec1ad]"
+            ]}
+            aria-current={isActive ? 'page' : undefined}
+          >
+            {link.label}
+          </a>
+        );
+      })}
+    </div>
+    <button 
+      aria-label="Switch to dark mode" 
+      aria-pressed="false" 
+      class="theme-toggle group border border-outline-variant bg-surface-container-low px-3 py-2 hover:bg-surface-container transition-colors" 
+      id="theme-toggle" 
+      type="button"
+    >
+      <span class="inline-flex items-center gap-2">
+        <span class="material-symbols-outlined text-base text-on-surface" id="theme-toggle-icon">dark_mode</span>
+        <span class="theme-dot" aria-hidden="true"></span>
+        <span class="font-label text-sm tracking-widest uppercase text-on-surface" id="theme-toggle-label">DARK</span>
+      </span>
+    </button>
+  </div>
+</nav>
