@@ -155,61 +155,35 @@ const recentPosts = posts
       }
 
       function initScrollSnap() {
-        const hero = document.querySelector('section');
         const terminalLog = document.querySelector('.bg-surface-container-low');
+        if (!terminalLog) return;
 
-        if (!hero || !terminalLog) return;
-
-        let isSnapping = false;
-        let lastScrollY = window.scrollY;
-        let lastScrollTime = Date.now();
-        const snapThreshold = 350; // 增大触发范围到 350px
-        const snapDuration = 250; // 缩短动画时间到 250ms，更干脆
+        let hasSnapped = false;
         const navbarHeight = 80;
+        const triggerOffset = 100; // 当 TerminalLog 顶部距离视口顶部 100px 时触发
 
-        // 直接监听滚动，不使用 RAF 节流以获得更快响应
-        window.addEventListener('scroll', handleScroll, { passive: true });
+        window.addEventListener('scroll', function() {
+          if (hasSnapped) return;
 
-        function handleScroll() {
-          if (isSnapping) return;
+          const rect = terminalLog.getBoundingClientRect();
+          const terminalTop = rect.top;
 
-          const currentScrollY = window.scrollY;
-          const currentTime = Date.now();
-          const scrollDelta = currentScrollY - lastScrollY;
-          const timeDelta = currentTime - lastScrollTime;
-          const scrollSpeed = Math.abs(scrollDelta) / timeDelta; // 滚动速度
+          // 向下滚动时，当 TerminalLog 接近视口顶部，强制吸附
+          if (terminalTop > navbarHeight && terminalTop < navbarHeight + triggerOffset + 200) {
+            hasSnapped = true;
+            const targetY = terminalLog.offsetTop - navbarHeight - 20;
 
-          lastScrollY = currentScrollY;
-          lastScrollTime = currentTime;
+            window.scrollTo({
+              top: targetY,
+              behavior: 'smooth'
+            });
 
-          // 只在向下滚动时处理
-          if (scrollDelta <= 0) return;
-
-          const terminalRect = terminalLog.getBoundingClientRect();
-          const terminalTop = terminalRect.top;
-
-          // 检测条件：TerminalLog 在视口内且接近顶部
-          // 速度较慢时（< 2px/ms）更容易触发
-          const speedThreshold = scrollSpeed < 2 ? 350 : 200;
-
-          if (terminalTop > navbarHeight && terminalTop < navbarHeight + speedThreshold) {
-            snapToElement(terminalLog);
+            // 3秒后重置，允许再次吸附
+            setTimeout(function() {
+              hasSnapped = false;
+            }, 3000);
           }
-        }
-
-        function snapToElement(element) {
-          isSnapping = true;
-          const targetY = element.offsetTop - navbarHeight;
-
-          window.scrollTo({
-            top: targetY,
-            behavior: 'smooth'
-          });
-
-          setTimeout(function() {
-            isSnapping = false;
-          }, snapDuration);
-        }
+        }, { passive: true });
       }
     })();
   </script>
