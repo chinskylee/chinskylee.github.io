@@ -1,11 +1,10 @@
-<!DOCTYPE html><html class="light" lang="en"><head>
+<!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>PHYSICIST_TERMINAL_V1.0 // Aris Thorne</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&display=block" rel="stylesheet">
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -98,9 +97,25 @@
         html {
             scroll-behavior: smooth;
         }
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+        }
+        /* 防止页面加载时的滚动恢复与 smooth scroll 冲突 */
+        html.loading {
+            scroll-behavior: auto !important;
+        }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
             vertical-align: middle;
+            font-size: 24px;
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
         body {
             background-color: #fbfaee;
@@ -233,14 +248,14 @@
         </div>
 <div class="flex items-center gap-5 md:gap-8">
 <div class="hidden md:flex gap-8 items-center pr-2 md:pr-4">
-<a class="nav-link font-['Space_Grotesk'] tracking-tighter uppercase text-xs text-[#79776d] dark:text-[#a9a596] border-b-2 border-transparent hover:text-[#705a4a] dark:hover:text-[#dec1ad] pb-1 transition-colors duration-150" href="#articles-heading" id="articles-link" style="">ARTICLES</a>
-<a class="nav-link font-['Space_Grotesk'] tracking-tighter uppercase text-xs text-[#79776d] dark:text-[#a9a596] border-b-2 border-transparent hover:text-[#705a4a] dark:hover:text-[#dec1ad] pb-1 transition-colors duration-150" href="#projects-heading" id="projects-link" style="">PROJECTS</a>
+<a class="nav-link font-['Space_Grotesk'] tracking-tight uppercase text-base text-[#79776d] dark:text-[#a9a596] border-b-2 border-transparent hover:text-[#705a4a] dark:hover:text-[#dec1ad] pb-1 transition-colors duration-150" href="#articles-heading" id="articles-link" style="">ARTICLES</a>
+<a class="nav-link font-['Space_Grotesk'] tracking-tight uppercase text-base text-[#79776d] dark:text-[#a9a596] border-b-2 border-transparent hover:text-[#705a4a] dark:hover:text-[#dec1ad] pb-1 transition-colors duration-150" href="#projects-heading" id="projects-link" style="">PROJECTS</a>
 </div>
 <button aria-label="Switch to dark mode" aria-pressed="false" class="theme-toggle group border border-outline-variant bg-surface-container-low px-3 py-2 hover:bg-surface-container transition-colors" id="theme-toggle" type="button">
 <span class="inline-flex items-center gap-2">
 <span class="material-symbols-outlined text-base text-on-surface" id="theme-toggle-icon" style="">dark_mode</span>
 <span class="theme-dot" aria-hidden="true"></span>
-<span class="font-label text-[10px] tracking-widest uppercase text-on-surface" id="theme-toggle-label" style="">DARK</span>
+<span class="font-label text-sm tracking-widest uppercase text-on-surface" id="theme-toggle-label" style="">DARK</span>
 </span>
 </button>
 </div>
@@ -250,32 +265,32 @@
 <section class="grid md:grid-cols-12 gap-12 items-center pt-6 md:pt-8">
 <div class="md:col-span-12 space-y-6">
 <h1 class="font-headline text-6xl md:text-8xl font-bold tracking-tighter text-on-surface leading-[0.9]" style="">CHINSKY&nbsp;<span class="text-primary" style="">LEE</span></h1>
-<p class="font-headline text-xl uppercase tracking-widest text-outline border-l-4 border-primary pl-6" style="">A STUDENT MAJORING IN PHYSICS</p>
+<p class="font-headline text-2xl uppercase tracking-widest text-outline border-l-4 border-primary pl-6" style="">A STUDENT MAJORING IN PHYSICS</p>
 <div class="max-w-md pt-4">
-<p class="text-on-surface-variant leading-relaxed text-sm" style="">
+<p class="text-on-surface-variant leading-relaxed text-lg" style="">
                         Harnessing subwavelength flow of light through mathematical elegance and nanophotonic rigor. Currently investigating LSPR effect in AuNPs and its application in biosensing.
                     </p>
 </div>
 <div class="flex gap-4 pt-4">
-<a class="inline-flex items-center bg-primary text-on-primary px-8 py-3 text-sm font-label uppercase tracking-widest hover:bg-on-primary-container transition-all" href="#articles-heading" style="">
+<a class="inline-flex items-center bg-primary text-on-primary px-8 py-3 text-base font-label uppercase tracking-widest hover:bg-on-primary-container transition-all" href="#articles-heading" style="">
                         VIEW_ARTICLES
                     </a>
-<a class="inline-flex items-center border border-outline text-on-surface px-8 py-3 text-sm font-label uppercase tracking-widest hover:bg-surface-container transition-all" href="#contact" style="">GET_IN_TOUCH</a>
+<a class="inline-flex items-center border border-outline text-on-surface px-8 py-3 text-base font-label uppercase tracking-widest hover:bg-surface-container transition-all" href="#contact" style="">GET_IN_TOUCH</a>
 </div>
 </div>
 </section>
 <!-- About Me: Terminal Log -->
 <section class="bg-surface-container-low p-8 md:p-12 space-y-8">
 <div class="flex items-center justify-between border-b border-outline-variant pb-4">
-<h2 class="font-headline text-sm font-bold tracking-widest uppercase flex items-center gap-2" style="">
-<span class="material-symbols-outlined text-sm" style="">terminal</span> SYSTEM_REPORT_v2.log
+<h2 class="font-headline text-lg font-bold tracking-widest uppercase flex items-center gap-2" style="">
+<span class="material-symbols-outlined" style="">terminal</span> SYSTEM_REPORT_v2.log
                 </h2>
 <div class="flex gap-2">
 <div class="w-3 h-3 rounded-full bg-outline-variant"></div>
 <div class="w-3 h-3 rounded-full bg-outline-variant"></div>
 </div>
 </div>
-<div class="font-label text-sm space-y-4 text-on-surface-variant leading-relaxed">
+<div class="font-label text-base space-y-4 text-on-surface-variant leading-relaxed">
 <div class="flex gap-4">
 <span class="text-outline shrink-0" style="">[10:41:53]</span>
 <p class="" style=""><span class="text-primary" style="">INITIALIZING_SYSTEM:</span> Start my physics study as a little boy full of curiosity. </p>
@@ -303,45 +318,45 @@
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
 <div>
 <h2 class="font-headline text-4xl font-bold tracking-tight scroll-mt-28" id="articles-heading" style="">FEATURED_POSTS</h2>
-<p class="font-label text-xs text-outline uppercase tracking-widest mt-2" style="">Modest insights into physics &amp; tech notes</p>
+<p class="font-label text-sm text-outline uppercase tracking-widest mt-2" style="">Modest insights into physics &amp; tech notes</p>
 </div>
-<a class="text-sm font-label border-b border-on-surface pb-1 hover:text-primary transition-colors" href="#" style="">VIEW_ALL_RECORDS</a>
+<a class="text-base font-label border-b border-on-surface pb-1 hover:text-primary transition-colors" href="#" style="">VIEW_ALL_RECORDS</a>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 <!-- Archive Item 1 -->
-<div class="group bg-surface-container p-4 flex flex-col gap-4 hover:bg-surface-container-highest transition-colors">
-<div class="space-y-2">
-<span class="font-label text-[10px] text-outline" style="">REF_NO: 2024_01</span>
-<h3 class="font-headline text-xl font-bold leading-tight" style="">Quantum Decoherence in Sub-Zero Vacuums</h3>
-<p class="text-xs text-on-surface-variant line-clamp-3" style="">A study of particle behavior in extreme isolation environments, focusing on the preservation of spin states.</p>
+<div class="group bg-surface-container p-4 flex flex-col gap-4 hover:bg-surface-container-highest transition-colors min-h-[200px]">
+<div class="space-y-2 flex-1">
+<span class="font-label text-xs text-outline block h-5" style="">REF_NO: 2024_01</span>
+<h3 class="font-headline text-2xl font-bold leading-tight min-h-[64px]" style="">Quantum Decoherence in Sub-Zero Vacuums</h3>
+<p class="text-base text-on-surface-variant line-clamp-3 min-h-[72px]" style="">A study of particle behavior in extreme isolation environments, focusing on the preservation of spin states.</p>
 </div>
-<div class="mt-auto flex items-center justify-between pt-4 border-t border-outline/10">
-<span class="font-label text-[10px] uppercase" style="">PDF_DOWNLOAD</span>
-<span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" style="">arrow_forward</span>
+<div class="flex items-center justify-between pt-4 border-t border-outline/10 mt-auto">
+<span class="font-label text-sm uppercase" style="">PDF_DOWNLOAD</span>
+<span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform flex-shrink-0" style="">arrow_forward</span>
 </div>
 </div>
 <!-- Archive Item 2 -->
-<div class="group bg-surface-container p-4 flex flex-col gap-4 hover:bg-surface-container-highest transition-colors">
-<div class="space-y-2">
-<span class="font-label text-[10px] text-outline" style="">REF_NO: 2023_42</span>
-<h3 class="font-headline text-xl font-bold leading-tight" style="">Entropy Cascades: A New Framework</h3>
-<p class="text-xs text-on-surface-variant line-clamp-3" style="">Proposing a hierarchical model for entropy distribution in closed-loop systems undergoing rapid thermal shifts.</p>
+<div class="group bg-surface-container p-4 flex flex-col gap-4 hover:bg-surface-container-highest transition-colors min-h-[200px]">
+<div class="space-y-2 flex-1">
+<span class="font-label text-xs text-outline block h-5" style="">REF_NO: 2023_42</span>
+<h3 class="font-headline text-2xl font-bold leading-tight min-h-[64px]" style="">Entropy Cascades: A New Framework</h3>
+<p class="text-base text-on-surface-variant line-clamp-3 min-h-[72px]" style="">Proposing a hierarchical model for entropy distribution in closed-loop systems undergoing rapid thermal shifts.</p>
 </div>
-<div class="mt-auto flex items-center justify-between pt-4 border-t border-outline/10">
-<span class="font-label text-[10px] uppercase" style="">BROWSE_DATA</span>
-<span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" style="">arrow_forward</span>
+<div class="flex items-center justify-between pt-4 border-t border-outline/10 mt-auto">
+<span class="font-label text-sm uppercase" style="">BROWSE_DATA</span>
+<span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform flex-shrink-0" style="">arrow_forward</span>
 </div>
 </div>
 <!-- Archive Item 3 -->
-<div class="group bg-primary text-on-primary p-4 flex flex-col gap-4 hover:bg-on-primary-container transition-colors">
-<div class="space-y-2">
-<span class="font-label text-[10px] opacity-70" style="">REF_NO: IN_PROGRESS</span>
-<h3 class="font-headline text-xl font-bold leading-tight" style="">Dark Matter Fluidity &amp; Gravitational Lensing</h3>
-<p class="text-xs opacity-80 line-clamp-3" style="">Experimental modeling of dark matter as a non-Newtonian fluid in galactic clusters.</p>
+<div class="group bg-primary text-on-primary p-4 flex flex-col gap-4 hover:bg-on-primary-container transition-colors min-h-[200px]">
+<div class="space-y-2 flex-1">
+<span class="font-label text-xs opacity-70 block h-5" style="">REF_NO: IN_PROGRESS</span>
+<h3 class="font-headline text-2xl font-bold leading-tight min-h-[64px]" style="">Dark Matter Fluidity &amp; Gravitational Lensing</h3>
+<p class="text-base opacity-80 line-clamp-3 min-h-[72px]" style="">Experimental modeling of dark matter as a non-Newtonian fluid in galactic clusters.</p>
 </div>
-<div class="mt-auto flex items-center justify-between pt-4 border-t border-on-primary/20">
-<span class="font-label text-[10px] uppercase" style="">WIP_DRAFT</span>
-<span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" style="">lock</span>
+<div class="flex items-center justify-between pt-4 border-t border-on-primary/20 mt-auto">
+<span class="font-label text-sm uppercase" style="">WIP_DRAFT</span>
+<span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform flex-shrink-0" style="">lock</span>
 </div>
 </div>
 </div>
@@ -350,7 +365,7 @@
 <section class="grid md:grid-cols-2 gap-12 border-t border-outline-variant pt-24 scroll-mt-28" id="projects">
 <div class="space-y-6">
 <h2 class="font-headline text-4xl font-bold tracking-tight scroll-mt-28" id="projects-heading" style="">GITHUB_PROJECTS</h2>
-<p class="text-on-surface-variant text-sm max-w-sm leading-relaxed" style="">
+<p class="text-on-surface-variant text-lg max-w-md leading-relaxed" style="">
                     Lately, I’ve been leaning into the intuition of vibe coding. On GitHub, you'll find my modest attempts at AI-assisted programming—rough prototypes and evolving experiments as I learn to co-create with LLMs.
                 </p>
 <div class="pt-4">
@@ -359,8 +374,8 @@
 <span class="material-symbols-outlined" style="">code</span>
 </div>
 <div>
-<span class="block font-headline font-bold text-sm tracking-widest uppercase" style="">Visit Repository</span>
-<span class="text-[10px] font-label text-outline uppercase" style="">github.com/chinskylee</span>
+<span class="block font-headline font-bold text-lg tracking-widest uppercase" style="">Visit Repository</span>
+<span class="text-sm font-label text-outline uppercase" style="">github.com/chinskylee</span>
 </div>
 </a>
 </div>
@@ -371,13 +386,13 @@
 <div class="flex items-center gap-4">
 <span class="material-symbols-outlined text-primary" style="">folder</span>
 <div>
-<span class="block font-label text-sm font-bold" style="">quantum-sim-v3</span>
-<span class="text-[10px] text-outline uppercase" style="">Python / NumPy / C++</span>
+<span class="block font-label text-lg font-bold" style="">quantum-sim-v3</span>
+<span class="text-sm text-outline uppercase" style="">Python / NumPy / C++</span>
 </div>
 </div>
-<div class="flex items-center gap-4 text-outline font-label text-[10px]">
+<div class="flex items-center gap-4 text-outline font-label text-sm">
 <span class="" style="">★ 1.2k</span>
-<span class="material-symbols-outlined text-xs" style="">fork_right</span>
+<span class="material-symbols-outlined text-base" style="">fork_right</span>
 </div>
 </div>
 <!-- Repo 2 -->
@@ -385,13 +400,13 @@
 <div class="flex items-center gap-4">
 <span class="material-symbols-outlined text-primary" style="">folder</span>
 <div>
-<span class="block font-label text-sm font-bold" style="">entropy-vis-engine</span>
-<span class="text-[10px] text-outline uppercase" style="">TypeScript / WebGL</span>
+<span class="block font-label text-lg font-bold" style="">entropy-vis-engine</span>
+<span class="text-sm text-outline uppercase" style="">TypeScript / WebGL</span>
 </div>
 </div>
-<div class="flex items-center gap-4 text-outline font-label text-[10px]">
+<div class="flex items-center gap-4 text-outline font-label text-sm">
 <span class="" style="">★ 840</span>
-<span class="material-symbols-outlined text-xs" style="">fork_right</span>
+<span class="material-symbols-outlined text-base" style="">fork_right</span>
 </div>
 </div>
 <!-- Repo 3 -->
@@ -399,13 +414,13 @@
 <div class="flex items-center gap-4">
 <span class="material-symbols-outlined text-primary" style="">folder</span>
 <div>
-<span class="block font-label text-sm font-bold" style="">particle-track-ai</span>
-<span class="text-[10px] text-outline uppercase" style="">PyTorch / Rust</span>
+<span class="block font-label text-lg font-bold" style="">particle-track-ai</span>
+<span class="text-sm text-outline uppercase" style="">PyTorch / Rust</span>
 </div>
 </div>
-<div class="flex items-center gap-4 text-outline font-label text-[10px]">
+<div class="flex items-center gap-4 text-outline font-label text-sm">
 <span class="" style="">★ 2.4k</span>
-<span class="material-symbols-outlined text-xs" style="">fork_right</span>
+<span class="material-symbols-outlined text-base" style="">fork_right</span>
 </div>
 </div>
 </div>
@@ -413,20 +428,20 @@
 <section class="border-t border-outline-variant pt-24 scroll-mt-28" id="contact">
 <div class="space-y-4">
 <h2 class="font-headline text-4xl font-bold tracking-tight" style="">GET_IN_TOUCH</h2>
-<p class="font-label text-xs text-outline uppercase tracking-widest" style="">Direct channels for collaboration</p>
+<p class="font-label text-base text-outline uppercase tracking-widest" style="">Direct channels for collaboration</p>
 </div>
 <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
 <a class="group bg-surface-container p-5 flex items-center justify-between hover:bg-surface-container-highest transition-colors" href="mailto:chinskylee@outlook.com" style="">
 <div class="space-y-1">
-<span class="font-label text-[10px] text-outline uppercase" style="">Email</span>
-<span class="block font-headline text-lg font-semibold tracking-tight" style="">chinskylee@outlook.com</span>
+<span class="font-label text-sm text-outline uppercase" style="">Email</span>
+<span class="block font-headline text-xl font-semibold tracking-tight" style="">chinskylee@outlook.com</span>
 </div>
 <span class="material-symbols-outlined text-sm text-outline group-hover:translate-x-1 transition-transform" style="">north_east</span>
 </a>
 <a class="group bg-surface-container p-5 flex items-center justify-between hover:bg-surface-container-highest transition-colors" href="https://github.com/chinskylee" rel="noopener noreferrer" style="" target="_blank">
 <div class="space-y-1">
-<span class="font-label text-[10px] text-outline uppercase" style="">GitHub</span>
-<span class="block font-headline text-lg font-semibold tracking-tight" style="">github.com/chinskylee</span>
+<span class="font-label text-sm text-outline uppercase" style="">GitHub</span>
+<span class="block font-headline text-xl font-semibold tracking-tight" style="">github.com/chinskylee</span>
 </div>
 <span class="material-symbols-outlined text-sm text-outline group-hover:translate-x-1 transition-transform" style="">north_east</span>
 </a>
@@ -435,7 +450,7 @@
 </main>
 <!-- Footer Navigation Shell -->
 <footer class="w-full border-t border-[#79776d]/10 bg-[#f5f4e8] dark:bg-[#1b1c15] flex items-center justify-center px-8 py-6 gap-4 mt-24">
-<div class="font-['Space_Grotesk'] text-[10px] leading-tight text-[#705a4a] dark:text-[#f5f4e8]" style="">
+<div class="font-['Space_Grotesk'] text-sm leading-tight text-[#705a4a] dark:text-[#f5f4e8]" style="">
             © 2026 SYSTEM_ERR_NULL // ALL_EQUATIONS_RESERVED
         </div>
 </footer>
@@ -443,6 +458,12 @@
 <span class="material-symbols-outlined text-base" style="">arrow_upward</span>
 </button>
 <script>
+        // 页面加载期间禁用 smooth scroll，防止刷新时的滚动回滚问题
+        document.documentElement.classList.add('loading');
+        window.addEventListener('load', () => {
+            document.documentElement.classList.remove('loading');
+        });
+
         const navLinks = [
             document.getElementById('articles-link'),
             document.getElementById('projects-link'),
@@ -571,10 +592,15 @@
             }
 
             const shouldShow = window.scrollY > 320;
-            backToTopButton.classList.toggle('hidden', !shouldShow);
-            backToTopButton.classList.toggle('flex', shouldShow);
-            backToTopButton.classList.toggle('items-center', shouldShow);
-            backToTopButton.classList.toggle('justify-center', shouldShow);
+            if (shouldShow) {
+                backToTopButton.classList.remove('hidden');
+                backToTopButton.style.display = 'flex';
+                backToTopButton.style.alignItems = 'center';
+                backToTopButton.style.justifyContent = 'center';
+            } else {
+                backToTopButton.classList.add('hidden');
+                backToTopButton.style.display = '';
+            }
         };
 
         setActiveNav('');
@@ -582,9 +608,17 @@
         updateActiveNavByScroll();
         updateBackToTopVisibility();
 
+        // 使用 requestAnimationFrame 节流滚动事件，防止性能抖动
+        let ticking = false;
         window.addEventListener('scroll', () => {
-            updateActiveNavByScroll();
-            updateBackToTopVisibility();
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    updateActiveNavByScroll();
+                    updateBackToTopVisibility();
+                    ticking = false;
+                });
+                ticking = true;
+            }
         }, { passive: true });
         window.addEventListener('resize', () => {
             updateActiveNavByScroll();
