@@ -96,6 +96,14 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
     content: '_';
     animation: blink 1s step-end infinite;
   }
+  /* 竖长方形光标样式 */
+  .terminal-cursor {
+    display: inline-block;
+    width: 10px;
+    height: 22px;
+    background-color: currentColor;
+    animation: blink 1s step-end infinite;
+  }
   @keyframes blink {
     from, to { opacity: 1; }
     50% { opacity: 0; }
