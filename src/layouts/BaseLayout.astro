@@ -220,8 +220,17 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
     const updateToggleUI = (isDark) => {
       themeToggleButton.setAttribute('aria-pressed', String(isDark));
       themeToggleButton.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
-      themeToggleIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
-      themeToggleLabel.textContent = isDark ? 'LIGHT' : 'DARK';
+      
+      // Fade out, change, then fade in for smooth transition
+      themeToggleLabel.style.opacity = '0';
+      themeToggleIcon.style.transform = 'scale(0.8)';
+      
+      setTimeout(() => {
+        themeToggleIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
+        themeToggleLabel.textContent = isDark ? 'LIGHT' : 'DARK';
+        themeToggleLabel.style.opacity = '1';
+        themeToggleIcon.style.transform = 'scale(1)';
+      }, 75);
     };
 
     // Initialize button state based on current theme
