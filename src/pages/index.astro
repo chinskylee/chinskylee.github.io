@@ -155,9 +155,7 @@ const recentPosts = posts
       }
 
       function initScrollSnap() {
-        // 使用更精确的选择器 - TerminalLog 是第二个 section
-        const sections = document.querySelectorAll('main > section');
-        const terminalLog = sections[1]; // Hero 是第一个，TerminalLog 是第二个
+        const terminalLog = document.getElementById('terminal-log');
         if (!terminalLog) {
           console.log('TerminalLog not found');
           return;
