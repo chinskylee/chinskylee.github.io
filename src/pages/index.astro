@@ -155,57 +155,57 @@ const recentPosts = posts
       }
 
       function initScrollSnap() {
-        const hero = document.querySelector('section'); // Hero 是第一个 section
-        const terminalLog = document.querySelector('.bg-surface-container-low'); // TerminalLog
+        const hero = document.querySelector('section');
+        const terminalLog = document.querySelector('.bg-surface-container-low');
 
         if (!hero || !terminalLog) return;
 
         let isSnapping = false;
         let lastScrollY = window.scrollY;
-        const snapThreshold = 150; // 吸附触发距离（像素）
-        const snapDuration = 400; // 吸附动画时长（毫秒）
+        let lastScrollTime = Date.now();
+        const snapThreshold = 350; // 增大触发范围到 350px
+        const snapDuration = 250; // 缩短动画时间到 250ms，更干脆
+        const navbarHeight = 80;
 
-        // 使用 requestAnimationFrame 节流
-        let ticking = false;
-
-        window.addEventListener('scroll', function() {
-          if (isSnapping || ticking) return;
-
-          ticking = true;
-          window.requestAnimationFrame(function() {
-            handleScroll();
-            ticking = false;
-          });
-        }, { passive: true });
+        // 直接监听滚动，不使用 RAF 节流以获得更快响应
+        window.addEventListener('scroll', handleScroll, { passive: true });
 
         function handleScroll() {
+          if (isSnapping) return;
+
           const currentScrollY = window.scrollY;
-          const scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
+          const currentTime = Date.now();
+          const scrollDelta = currentScrollY - lastScrollY;
+          const timeDelta = currentTime - lastScrollTime;
+          const scrollSpeed = Math.abs(scrollDelta) / timeDelta; // 滚动速度
+
           lastScrollY = currentScrollY;
+          lastScrollTime = currentTime;
 
           // 只在向下滚动时处理
-          if (scrollDirection !== 'down') return;
+          if (scrollDelta <= 0) return;
 
           const terminalRect = terminalLog.getBoundingClientRect();
           const terminalTop = terminalRect.top;
 
-          // 如果 TerminalLog 接近视口顶部（在阈值范围内），吸附到它
-          if (terminalTop > 80 && terminalTop < 80 + snapThreshold) {
+          // 检测条件：TerminalLog 在视口内且接近顶部
+          // 速度较慢时（< 2px/ms）更容易触发
+          const speedThreshold = scrollSpeed < 2 ? 350 : 200;
+
+          if (terminalTop > navbarHeight && terminalTop < navbarHeight + speedThreshold) {
             snapToElement(terminalLog);
           }
         }
 
         function snapToElement(element) {
           isSnapping = true;
-          const targetY = element.offsetTop - 80; // 80px 是 navbar 高度
+          const targetY = element.offsetTop - navbarHeight;
 
-          // 使用原生 smooth scroll
           window.scrollTo({
             top: targetY,
             behavior: 'smooth'
           });
 
-          // 动画结束后重置标志
           setTimeout(function() {
             isSnapping = false;
           }, snapDuration);
