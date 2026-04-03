@@ -19,7 +19,7 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&display=block" rel="stylesheet">
   
-  <!-- Theme Init Script - Set HTML class only -->
+  <!-- Theme Init Script - Set HTML class and initial icon -->
   <script is:inline>
     (function() {
       var storedTheme = null;
@@ -35,6 +35,12 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
       var isDark = initialTheme === 'dark';
       document.documentElement.classList.toggle('dark', isDark);
       document.documentElement.classList.toggle('light', !isDark);
+      
+      // Sync initial icon to match theme (icon shows what clicking will do)
+      var icon = document.getElementById('theme-toggle-icon');
+      if (icon) {
+        icon.textContent = isDark ? 'light_mode' : 'dark_mode';
+      }
     })();
   </script>
 </head>
@@ -237,7 +243,7 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
       document.documentElement.classList.toggle('dark', !isDark);
       document.documentElement.classList.toggle('light', isDark);
 
-      // Update icon and aria
+      // Update icon - icon shows current state (light mode = light_mode icon)
       themeToggleIcon.textContent = !isDark ? 'light_mode' : 'dark_mode';
       themeToggleButton.setAttribute('aria-pressed', String(!isDark));
       themeToggleButton.setAttribute('aria-label', !isDark ? 'Switch to light mode' : 'Switch to dark mode');
