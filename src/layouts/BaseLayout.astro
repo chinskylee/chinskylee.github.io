@@ -222,16 +222,25 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
       }
     };
 
-    // Sync button state with current theme (no animation)
+    // Sync button state with current theme (no animation, only if needed)
     const syncButtonState = () => {
       const isDark = document.documentElement.classList.contains('dark');
+      const expectedText = isDark ? 'LIGHT' : 'DARK';
+      const expectedIcon = isDark ? 'light_mode' : 'dark_mode';
+      
+      // Only update if actually different (prevents flash)
+      if (themeToggleLabel.textContent !== expectedText) {
+        themeToggleLabel.textContent = expectedText;
+      }
+      if (themeToggleIcon.textContent !== expectedIcon) {
+        themeToggleIcon.textContent = expectedIcon;
+      }
+      
       themeToggleButton.setAttribute('aria-pressed', String(isDark));
       themeToggleButton.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
-      themeToggleIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
-      themeToggleLabel.textContent = isDark ? 'LIGHT' : 'DARK';
     };
 
-    // Initial sync
+    // Initial sync only if needed
     syncButtonState();
 
     // Handle click
