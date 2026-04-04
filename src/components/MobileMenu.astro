@@ -33,7 +33,7 @@
     <div class="pt-4 pb-2">
       <button id="theme-toggle-mobile" class="w-full flex items-center justify-center gap-3 py-3 px-4 border border-outline-variant text-on-surface hover:bg-surface-container transition-colors rounded">
         <span class="material-symbols-outlined text-xl">&#xe51c;</span>
-        <span class="font-label text-sm tracking-widest uppercase">DARK</span>
+        <span class="font-label text-sm tracking-widest uppercase notranslate" translate="no">DARK</span>
       </button>
     </div>
 
@@ -112,17 +112,22 @@
         // Update main toggle button if exists
         const mainToggleIcon = document.getElementById('theme-toggle-icon');
         const mainToggleLabel = document.getElementById('theme-toggle-label');
-        if (mainToggleIcon) mainToggleIcon.textContent = !isDark ? 'light_mode' : 'dark_mode';
+        if (mainToggleIcon) mainToggleIcon.textContent = !isDark ? '\ue518' : '\ue51c';
         if (mainToggleLabel) {
-          mainToggleLabel.querySelector('.dark\\:hidden').style.display = !isDark ? 'none' : 'inline';
-          mainToggleLabel.querySelector('.hidden.dark\\:inline').style.display = !isDark ? 'inline' : 'none';
+          const darkHidden = mainToggleLabel.querySelector('.dark\\:hidden');
+          const darkInline = mainToggleLabel.querySelector('.hidden.dark\\:inline');
+          if (darkHidden) darkHidden.style.display = !isDark ? 'none' : 'inline';
+          if (darkInline) darkInline.style.display = !isDark ? 'inline' : 'none';
         }
         
         // Update mobile toggle button
         const mobileIcon = themeToggleMobile.querySelector('.material-symbols-outlined');
-        const mobileLabel = themeToggleMobile.querySelector('span:last-child');
+        const mobileLabel = themeToggleMobile.querySelector('span.notranslate, span:last-child');
         if (mobileIcon) mobileIcon.textContent = !isDark ? '\ue518' : '\ue51c';
-        if (mobileLabel) mobileLabel.textContent = !isDark ? 'LIGHT' : 'DARK';
+        if (mobileLabel) {
+          mobileLabel.textContent = !isDark ? 'LIGHT' : 'DARK';
+          mobileLabel.setAttribute('translate', 'no');
+        }
         
         try {
           window.localStorage.setItem('theme', newTheme);
