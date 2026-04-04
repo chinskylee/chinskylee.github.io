@@ -13,8 +13,8 @@ Welcome to my physics blog! This is a space where I'll be documenting my journey
 Here, you'll find:
 
 - **Research Notes**: Detailed write-ups of interesting physics concepts I encounter
-- **Technical Tutorials**: Step-by-step guides on computational physics techniques
-- **Project Showcases**: Updates on my physics-related coding projects
+- **Technical Tutorials**: Step-by-step guides on some up to date techniques.
+- **Project Showcases**: Updates on my physics-related coding and also some interesting vibe coding projects
 - **Reflections**: Personal thoughts on learning physics and the scientific process
 
 ## Background
@@ -33,8 +33,8 @@ If you're new here, I recommend checking out:
 2. The [tags](/blog) page to browse by topic
 3. My [GitHub](https://github.com/chinskylee) for code repositories
 
-Stay tuned for more content as I continue exploring the quantum realm!
+Stay tuned for more content as I continue exploring physics and tech!
 
 ---
 
-*Last updated: April 3, 2026*
+*Last updated: April 4, 2026*

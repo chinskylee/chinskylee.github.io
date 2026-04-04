@@ -8,6 +8,8 @@ draft: false
 
 最近我用 Astro 框架搭建了这个个人博客，并部署到了 GitHub Pages。整个过程比想象中简单，而且完全免费。这篇博客记录了完整的部署流程和后续维护方法，希望能帮助到有同样需求的朋友。
 
+![博客截图](/images/astro-blog.png)
+
 ## 技术栈选择
 
 在搭建博客之前，我对比了几种主流方案：
@@ -105,7 +107,7 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
-  site: 'https://lyralex.qzz.io',  // 你的域名
+  site: 'https://yourdomain.com',  // 你的域名
   base: '/',                        // 如果是子目录，改为 '/blog/'
   integrations: [tailwind()],
   output: 'static',
@@ -128,12 +130,12 @@ export default defineConfig({
 
 1. 在 `public/` 目录下创建 `CNAME` 文件，内容为域名：
    ```
-   lyralex.qzz.io
+   yourdomain.com
    ```
 
 2. 在域名服务商处添加 DNS 记录：
    - 类型: CNAME
-   - 主机: 你的子域名（如 `lyralex`）
+   - 主机: 你的子域名（如 `yoursubdomain`）
    - 值: `username.github.io`
 
 3. 等待 DNS 生效（通常几分钟到几小时）
@@ -305,6 +307,4 @@ GitHub Pages 自动为自定义域名提供 HTTPS 证书，无需额外配置。
 **参考链接：**
 - [Astro 官方文档](https://docs.astro.build/)
 - [GitHub Pages 文档](https://docs.github.com/en/pages)
-- [本博客源码](https://github.com/chinskylee/blog)（假设的链接）
-
-*有问题欢迎在评论区留言讨论*
+- [本博客源码](https://github.com/chinskylee/chinskylee.github.io)
