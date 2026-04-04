@@ -8,7 +8,7 @@ draft: false
 
 最近我用 Astro 框架搭建了这个个人博客，并部署到了 GitHub Pages。整个过程比想象中简单，而且完全免费。这篇博客记录了完整的部署流程和后续维护方法，希望能帮助到有同样需求的朋友。
 
-![博客截图](/images/astro-blog.png)
+![本文框架](/images/astro-blog.webp)
 
 ## 技术栈选择
 
