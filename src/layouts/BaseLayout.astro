@@ -259,7 +259,7 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
       document.documentElement.classList.toggle('light', isDark);
 
       // Update icon - icon shows current state (light mode = light_mode icon)
-      themeToggleIcon.textContent = !isDark ? 'light_mode' : 'dark_mode';
+      themeToggleIcon.textContent = !isDark ? '\ue518' : '\ue51c';
       themeToggleButton.setAttribute('aria-pressed', String(!isDark));
       themeToggleButton.setAttribute('aria-label', !isDark ? 'Switch to light mode' : 'Switch to dark mode');
 

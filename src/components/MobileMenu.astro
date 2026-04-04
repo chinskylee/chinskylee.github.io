@@ -8,7 +8,7 @@
 <aside id="mobile-menu" class="fixed top-0 left-0 h-full w-72 bg-surface-container-high z-50 transform -translate-x-full transition-transform duration-300 ease-out md:hidden" aria-label="Mobile navigation">
   <!-- Close Button -->
   <button id="mobile-menu-close" class="absolute top-4 right-4 p-2 text-on-surface hover:text-primary transition-colors" aria-label="Close menu">
-    <span class="material-symbols-outlined text-2xl">close</span>
+    <span class="material-symbols-outlined text-2xl">&#xe5cd;</span>
   </button>
 
   <!-- Menu Content -->
@@ -32,7 +32,7 @@
     <!-- Dark Mode Toggle (Mobile) -->
     <div class="pt-4 pb-2">
       <button id="theme-toggle-mobile" class="w-full flex items-center justify-center gap-3 py-3 px-4 border border-outline-variant text-on-surface hover:bg-surface-container transition-colors rounded">
-        <span class="material-symbols-outlined text-xl">dark_mode</span>
+        <span class="material-symbols-outlined text-xl">&#xe51c;</span>
         <span class="font-label text-sm tracking-widest uppercase">DARK</span>
       </button>
     </div>
@@ -45,7 +45,7 @@
         </svg>
       </a>
       <a href="mailto:chinskylee@outlook.com" class="p-3 text-on-surface hover:text-primary transition-colors" aria-label="Email">
-        <span class="material-symbols-outlined text-3xl">mail</span>
+        <span class="material-symbols-outlined text-3xl">&#xe158;</span>
       </a>
     </div>
   </div>
@@ -72,7 +72,7 @@
       overlay.classList.remove('opacity-0', 'pointer-events-none');
       document.body.style.overflow = 'hidden';
       // 切换图标为 close
-      if (menuIcon) menuIcon.textContent = 'close';
+      if (menuIcon) menuIcon.textContent = '\ue5cd';
     }
 
     function closeMenu() {
@@ -81,7 +81,7 @@
       overlay.classList.add('opacity-0', 'pointer-events-none');
       document.body.style.overflow = '';
       // 切换图标为 menu
-      if (menuIcon) menuIcon.textContent = 'menu';
+      if (menuIcon) menuIcon.textContent = '\ue5d2';
     }
 
     function toggleMenu() {
@@ -121,7 +121,7 @@
         // Update mobile toggle button
         const mobileIcon = themeToggleMobile.querySelector('.material-symbols-outlined');
         const mobileLabel = themeToggleMobile.querySelector('span:last-child');
-        if (mobileIcon) mobileIcon.textContent = !isDark ? 'light_mode' : 'dark_mode';
+        if (mobileIcon) mobileIcon.textContent = !isDark ? '\ue518' : '\ue51c';
         if (mobileLabel) mobileLabel.textContent = !isDark ? 'LIGHT' : 'DARK';
         
         try {
