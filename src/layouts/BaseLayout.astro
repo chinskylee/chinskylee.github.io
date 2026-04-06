@@ -130,6 +130,11 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
     margin: 1.5rem 0;
     text-align: center;
     overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .katex-display::-webkit-scrollbar {
+    display: none;
   }
   .katex-display > .katex {
     display: inline-block;
