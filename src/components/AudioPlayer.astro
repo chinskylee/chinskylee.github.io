@@ -1,0 +1,194 @@
+---
+export interface Props {
+  src: string;
+  title?: string;
+  bitrate?: string;
+}
+
+const { 
+  src, 
+  title = "AUDIO_STREAM.wav", 
+  bitrate = "320KBPS" 
+} = Astro.props;
+---
+
+<div class="audio-player bg-surface-container-low border-l-4 border-primary p-3 md:p-4 w-full flex flex-col gap-3 shadow-sm my-6" data-src={src} data-title={title} data-bitrate={bitrate}>
+  <audio class="audio-element" preload="metadata">
+    <source src={src} type="audio/mpeg" />
+    您的浏览器不支持音频播放。
+  </audio>
+
+  <div class="flex justify-between items-start md:items-center">
+    <div class="flex items-center gap-3">
+      <button class="play-btn bg-primary text-on-primary p-2 hover:bg-on-primary-container transition-colors focus:outline-none flex-shrink-0 relative w-10 h-10 flex items-center justify-center" aria-label="播放/暂停">
+        <span class="material-symbols-outlined notranslate play-icon absolute" translate="no">&#xe037;</span>
+        <span class="material-symbols-outlined notranslate pause-icon absolute hidden" translate="no">&#xe034;</span>
+      </button>
+      
+      <div class="flex flex-col">
+        <div class="font-label text-[11px] md:text-xs text-primary font-bold tracking-tight truncate max-w-[200px] md:max-w-[300px]">
+          {title}
+        </div>
+        <div class="font-label text-[9px] text-outline uppercase tracking-widest mt-0.5">
+          BITRATE: {bitrate}
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col items-end">
+      <span class="font-label text-[9px] text-outline uppercase tracking-widest">STATUS</span>
+      <span class="font-label text-[9px] text-primary flex items-center gap-1 uppercase tracking-widest font-bold status-text">
+        <span class="w-1.5 h-1.5 bg-primary status-dot"></span>
+        STANDBY
+      </span>
+    </div>
+  </div>
+
+  <div class="waveform h-6 w-full flex items-center gap-[2px] opacity-80 overflow-hidden">
+    {Array.from({length: 38}).map((_, i) => (
+      <div 
+        class="wave-bar w-1 flex-shrink-0 transition-all duration-300 bg-outline-variant"
+        style={{ height: `${[20, 30, 60, 80, 50, 20, 10, 30, 90, 60, 20, 50, 80, 60, 30, 100, 70, 50, 20, 30, 60, 80, 50, 20, 30, 60, 90, 60, 30, 80, 100, 70, 30, 20, 50, 90, 60, 30][i]}%` }}
+      />
+    ))}
+  </div>
+
+  <div class="flex items-center gap-3">
+    <span class="font-label text-[10px] text-outline tracking-widest tabular-nums current-time">00:00</span>
+    
+    <div class="flex-grow h-4 flex items-center relative group progress-container">
+      <div class="w-full h-[2px] bg-outline-variant/50 absolute pointer-events-none"></div>
+      <div class="progress-fill h-[2px] bg-primary absolute pointer-events-none" style="width: 0%"></div>
+      <div class="progress-thumb w-2 h-2 bg-primary absolute pointer-events-none transform -translate-y-1/2 group-hover:scale-125 transition-transform" style="top: 50%; left: -4px"></div>
+      <input type="range" min="0" max="100" value="0" class="seek-slider w-full h-full opacity-0 cursor-pointer z-10 absolute" aria-label="音频进度" />
+    </div>
+
+    <span class="font-label text-[10px] text-outline tracking-widest tabular-nums duration-time">00:00</span>
+
+    <div class="flex items-center pl-2 ml-1 border-l border-outline-variant">
+      <button class="mute-btn text-outline hover:text-primary transition-colors focus:outline-none relative w-8 h-8 flex items-center justify-center" aria-label="静音/取消静音">
+        <span class="material-symbols-outlined notranslate volume-icon absolute" translate="no">&#xe050;</span>
+        <span class="material-symbols-outlined notranslate volume-mute-icon absolute hidden" translate="no">&#xe04f;</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function formatTime(time) {
+    if (isNaN(time)) return "00:00";
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+
+  document.querySelectorAll('.audio-player').forEach(player => {
+    const audio = player.querySelector('.audio-element');
+    const playBtn = player.querySelector('.play-btn');
+    const playIcon = player.querySelector('.play-icon');
+    const pauseIcon = player.querySelector('.pause-icon');
+    const statusText = player.querySelector('.status-text');
+    const currentTimeEl = player.querySelector('.current-time');
+    const durationEl = player.querySelector('.duration-time');
+    const seekSlider = player.querySelector('.seek-slider');
+    const progressFill = player.querySelector('.progress-fill');
+    const progressThumb = player.querySelector('.progress-thumb');
+    const muteBtn = player.querySelector('.mute-btn');
+    const volumeIcon = player.querySelector('.volume-icon');
+    const volumeMuteIcon = player.querySelector('.volume-mute-icon');
+    const waveBars = player.querySelectorAll('.wave-bar');
+
+    let isPlaying = false;
+    let isMuted = false;
+
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        document.querySelectorAll('.audio-player audio').forEach(a => {
+          if (a !== audio) a.pause();
+        });
+        audio.play();
+        isPlaying = true;
+        playIcon.classList.add('hidden');
+        pauseIcon.classList.remove('hidden');
+        statusText.innerHTML = '<span class="w-1.5 h-1.5 bg-primary status-dot animate-pulse"></span>SYNCHRONIZED';
+        waveBars.forEach((bar, i) => {
+          setTimeout(() => bar.classList.add('bg-primary'), i * 20);
+        });
+      } else {
+        audio.pause();
+        isPlaying = false;
+        playIcon.classList.remove('hidden');
+        pauseIcon.classList.add('hidden');
+        statusText.innerHTML = '<span class="w-1.5 h-1.5 bg-primary status-dot"></span>PAUSED';
+        waveBars.forEach(bar => bar.classList.remove('bg-primary'));
+      }
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      currentTimeEl.textContent = formatTime(audio.currentTime);
+      const percent = (audio.currentTime / audio.duration) * 100 || 0;
+      progressFill.style.width = `${percent}%`;
+      progressThumb.style.left = `calc(${percent}% - 4px)`;
+      seekSlider.value = audio.currentTime;
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      durationEl.textContent = formatTime(audio.duration);
+      seekSlider.max = audio.duration;
+    });
+
+    seekSlider.addEventListener('input', (e) => {
+      audio.currentTime = e.target.value;
+    });
+
+    audio.addEventListener('ended', () => {
+      isPlaying = false;
+      playIcon.classList.remove('hidden');
+      pauseIcon.classList.add('hidden');
+      statusText.innerHTML = '<span class="w-1.5 h-1.5 bg-primary status-dot"></span>COMPLETED';
+      waveBars.forEach(bar => bar.classList.remove('bg-primary'));
+      progressFill.style.width = '0%';
+      progressThumb.style.left = '-4px';
+    });
+
+    muteBtn.addEventListener('click', () => {
+      audio.muted = !isMuted;
+      isMuted = !isMuted;
+      if (isMuted) {
+        volumeIcon.classList.add('hidden');
+        volumeMuteIcon.classList.remove('hidden');
+      } else {
+        volumeIcon.classList.remove('hidden');
+        volumeMuteIcon.classList.add('hidden');
+      }
+    });
+  });
+</script>
+
+<style>
+  .audio-player .hidden { display: none !important; }
+  
+  @keyframes waveform-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+  
+  .audio-player .wave-bar.bg-primary {
+    animation: waveform-pulse 1s ease-in-out infinite;
+  }
+  
+  .dark .audio-player {
+    background-color: #1f2019;
+    border-left-color: #dec1ad;
+  }
+  
+  .dark .audio-player .wave-bar {
+    background-color: #4a4a4a;
+  }
+  
+  .dark .audio-player .wave-bar.bg-primary {
+    background-color: #dec1ad;
+  }
+  
+  .audio-element { display: none; }
+</style>
