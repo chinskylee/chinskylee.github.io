@@ -1,0 +1,531 @@
+<div id="reading-progress-nav" class="reading-progress-nav" aria-hidden="true">
+  <div class="reading-progress-track" aria-hidden="true"></div>
+  <nav id="reading-progress-list" class="reading-progress-list" aria-label="Article section progress"></nav>
+</div>
+
+<script is:inline>
+  (() => {
+    const NARROW_BREAKPOINT = 900;
+    const RING_RADIUS = 12;
+    const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
+    const PAGE_LOAD_BIND_FLAG = '__readingProgressPageLoadBound';
+    const READING_PROGRESS_KEY = 'readingProgressNavEnabledMobile';
+    const READING_PROGRESS_EVENT = 'reading-progress-visibility-change';
+
+    const slugify = (value) => {
+      return value
+        .toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-');
+    };
+
+    const getScrollBehavior = () => {
+      if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+        return 'smooth';
+      }
+
+      return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ? 'auto'
+        : 'smooth';
+    };
+
+    const ensureHeadingIds = (headings) => {
+      const used = new Set();
+      headings.forEach((heading, index) => {
+        const originalId = heading.id?.trim();
+        const baseId = originalId || slugify(heading.textContent || '') || `section-${index + 1}`;
+        let uniqueId = baseId;
+        let suffix = 2;
+
+        while (true) {
+          const existing = document.getElementById(uniqueId);
+          const conflictInBatch = used.has(uniqueId);
+          const conflictInDocument = Boolean(existing && existing !== heading);
+
+          if (!conflictInBatch && !conflictInDocument) {
+            break;
+          }
+
+          uniqueId = `${baseId}-${suffix}`;
+          suffix += 1;
+        }
+
+        used.add(uniqueId);
+        heading.id = uniqueId;
+      });
+    };
+
+    const setupReadingProgress = () => {
+      if (typeof window === 'undefined') return;
+
+      if (typeof window.__readingProgressCleanup === 'function') {
+        window.__readingProgressCleanup();
+      }
+
+      const container = document.getElementById('reading-progress-nav');
+      const list = document.getElementById('reading-progress-list');
+      const articleContent = document.querySelector('[data-article-content]');
+
+      if (!container || !list || !articleContent) return;
+
+      const headings = Array.from(articleContent.querySelectorAll('h2, h3, h4'))
+        .filter((heading) => heading.textContent && heading.textContent.trim().length > 0);
+
+      if (headings.length === 0) {
+        container.style.display = 'none';
+        return;
+      }
+
+      container.style.display = '';
+      container.setAttribute('aria-hidden', 'false');
+
+      ensureHeadingIds(headings);
+      list.innerHTML = '';
+
+      const items = [];
+      const circles = [];
+
+      headings.forEach((heading, index) => {
+        const label = heading.textContent.trim();
+        const item = document.createElement('button');
+        item.className = 'reading-progress-item';
+        item.type = 'button';
+        item.setAttribute('aria-label', `Jump to ${label}`);
+        item.dataset.index = String(index);
+
+        const tooltip = document.createElement('div');
+        tooltip.className = 'reading-progress-label';
+        tooltip.textContent = label;
+
+        const dot = document.createElement('div');
+        dot.className = 'reading-progress-dot';
+
+        const ring = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        ring.setAttribute('class', 'reading-progress-ring');
+        ring.setAttribute('width', '40');
+        ring.setAttribute('height', '40');
+        ring.setAttribute('viewBox', '0 0 40 40');
+
+        const ringBg = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        ringBg.setAttribute('class', 'reading-progress-ring__bg');
+        ringBg.setAttribute('cx', '20');
+        ringBg.setAttribute('cy', '20');
+        ringBg.setAttribute('r', String(RING_RADIUS));
+
+        const ringFg = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        ringFg.setAttribute('class', 'reading-progress-ring__fg');
+        ringFg.setAttribute('cx', '20');
+        ringFg.setAttribute('cy', '20');
+        ringFg.setAttribute('r', String(RING_RADIUS));
+        ringFg.style.strokeDasharray = String(RING_CIRCUMFERENCE);
+        ringFg.style.strokeDashoffset = String(RING_CIRCUMFERENCE);
+
+        ring.append(ringBg, ringFg);
+        item.append(tooltip, dot, ring);
+
+        item.addEventListener('click', () => {
+          heading.scrollIntoView({
+            behavior: getScrollBehavior(),
+            block: 'start',
+            inline: 'nearest',
+          });
+        });
+
+        list.appendChild(item);
+        items.push(item);
+        circles.push(ringFg);
+      });
+
+      let rafId = 0;
+      let needsMeasure = true;
+      let sectionBoundaries = [];
+      let resizeObserver = null;
+
+      const readMobileToggleEnabled = () => {
+        try {
+          return window.localStorage.getItem(READING_PROGRESS_KEY) !== 'false';
+        } catch {
+          return true;
+        }
+      };
+
+      const applyVisibility = () => {
+        const isNarrow = window.innerWidth <= NARROW_BREAKPOINT;
+        const shouldShow = !isNarrow || readMobileToggleEnabled();
+        container.style.display = shouldShow ? '' : 'none';
+      };
+
+      const measureLayout = () => {
+        const scrollY = window.scrollY;
+        const articleRect = articleContent.getBoundingClientRect();
+        const articleBottom = scrollY + articleRect.bottom;
+        const headingTops = headings.map((heading) => heading.getBoundingClientRect().top + scrollY);
+
+        sectionBoundaries = headingTops.map((top, index) => ({
+          top,
+          nextTop: index < headingTops.length - 1 ? headingTops[index + 1] : articleBottom,
+        }));
+      };
+
+      const update = () => {
+        applyVisibility();
+        if (container.style.display === 'none') {
+          return;
+        }
+
+        if (needsMeasure || sectionBoundaries.length === 0) {
+          measureLayout();
+          needsMeasure = false;
+        }
+
+        if (sectionBoundaries.length === 0) {
+          return;
+        }
+
+        const isNarrow = window.innerWidth <= NARROW_BREAKPOINT;
+        const scrollY = window.scrollY;
+        const viewportHeight = window.innerHeight;
+        const probeY = scrollY + viewportHeight * 0.5;
+
+        let activeIndex = -1;
+
+        sectionBoundaries.forEach(({ top: currentTop, nextTop }, index) => {
+
+          const sectionStart = currentTop - viewportHeight * 0.6;
+          const sectionEnd = Math.max(nextTop - viewportHeight * 0.2, sectionStart + 1);
+          const rawProgress = (scrollY - sectionStart) / (sectionEnd - sectionStart);
+          const progress = Math.min(Math.max(rawProgress, 0), 1);
+
+          circles[index].style.strokeDasharray = String(RING_CIRCUMFERENCE);
+          circles[index].style.strokeDashoffset = String(RING_CIRCUMFERENCE - progress * RING_CIRCUMFERENCE);
+
+          if (probeY >= currentTop && probeY < nextTop) {
+            activeIndex = index;
+          }
+        });
+
+        items.forEach((item, index) => {
+          item.classList.remove('active', 'near-active');
+          if (index === activeIndex) {
+            item.classList.add('active');
+            return;
+          }
+
+          if (!isNarrow && activeIndex !== -1 && Math.abs(index - activeIndex) === 1) {
+            item.classList.add('near-active');
+          }
+        });
+      };
+
+      const queueUpdate = (measure = false) => {
+        needsMeasure = needsMeasure || measure;
+        if (rafId) return;
+        rafId = window.requestAnimationFrame(() => {
+          update();
+          rafId = 0;
+        });
+      };
+
+      const handleScroll = () => queueUpdate(false);
+      const handleResize = () => queueUpdate(true);
+
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      window.addEventListener('resize', handleResize);
+      window.addEventListener(READING_PROGRESS_EVENT, handleResize);
+
+      if (typeof ResizeObserver !== 'undefined') {
+        resizeObserver = new ResizeObserver(() => queueUpdate(true));
+        resizeObserver.observe(articleContent);
+      }
+
+      window.addEventListener('load', () => queueUpdate(true), { once: true });
+      applyVisibility();
+      queueUpdate(true);
+
+      window.__readingProgressCleanup = () => {
+        window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('resize', handleResize);
+        window.removeEventListener(READING_PROGRESS_EVENT, handleResize);
+        if (resizeObserver) {
+          resizeObserver.disconnect();
+          resizeObserver = null;
+        }
+        if (rafId) {
+          window.cancelAnimationFrame(rafId);
+          rafId = 0;
+        }
+      };
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupReadingProgress, { once: true });
+    } else {
+      setupReadingProgress();
+    }
+
+    if (!window[PAGE_LOAD_BIND_FLAG]) {
+      document.addEventListener('astro:page-load', setupReadingProgress);
+      window[PAGE_LOAD_BIND_FLAG] = true;
+    }
+  })();
+</script>
+
+<style is:global>
+  :root {
+    --reading-progress-accent: #705a4a;
+    --reading-progress-dot: #79776d;
+    --reading-progress-track: #e4e3d7;
+    --reading-progress-pill: rgba(251, 250, 238, 0.74);
+    --reading-progress-label-bg: rgba(27, 28, 21, 0.92);
+    --reading-progress-label-text: #f5f4e8;
+  }
+
+  .dark {
+    --reading-progress-accent: #dec1ad;
+    --reading-progress-dot: #9f9c90;
+    --reading-progress-track: #43453c;
+    --reading-progress-pill: rgba(21, 22, 15, 0.78);
+    --reading-progress-label-bg: rgba(241, 238, 226, 0.9);
+    --reading-progress-label-text: #15160f;
+  }
+
+  .reading-progress-nav {
+    position: fixed;
+    right: max(18px, calc((100vw - 48rem) / 4));
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 0;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    transition: right 0.35s cubic-bezier(0.2, 1, 0.3, 1);
+  }
+
+  .reading-progress-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    position: relative;
+  }
+
+  .reading-progress-track {
+    position: absolute;
+    left: 50%;
+    top: 22px;
+    bottom: 22px;
+    width: 1px;
+    background: var(--reading-progress-track);
+    transform: translateX(-50%);
+    opacity: 0.72;
+    pointer-events: none;
+  }
+
+  .reading-progress-item {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    transform: scale(0.7);
+    opacity: 0.45;
+    transition: transform 0.45s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.45s cubic-bezier(0.2, 1, 0.3, 1);
+  }
+
+  .reading-progress-item:focus-visible {
+    outline: 1px solid var(--reading-progress-accent);
+    outline-offset: 3px;
+    border-radius: 999px;
+  }
+
+  .reading-progress-item.active,
+  .reading-progress-item.near-active {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  .reading-progress-item.active {
+    transform: scale(1.16);
+  }
+
+  .reading-progress-ring {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    transform: rotate(-90deg);
+    pointer-events: none;
+    transition: opacity 0.24s ease;
+  }
+
+  .reading-progress-item:not(.active):not(.near-active) .reading-progress-ring {
+    opacity: 0;
+  }
+
+  .reading-progress-ring__bg {
+    fill: none;
+    stroke: var(--reading-progress-track);
+    stroke-width: 1.5;
+  }
+
+  .reading-progress-ring__fg {
+    fill: none;
+    stroke: var(--reading-progress-accent);
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.1s linear;
+  }
+
+  .reading-progress-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--reading-progress-dot);
+    transition: transform 0.36s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease;
+    z-index: 2;
+  }
+
+  .reading-progress-item.active .reading-progress-dot {
+    background-color: var(--reading-progress-accent);
+    transform: scale(1.7);
+    box-shadow: 0 0 10px color-mix(in srgb, var(--reading-progress-accent) 42%, transparent);
+  }
+
+  .reading-progress-label {
+    position: absolute;
+    right: 62px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    background: var(--reading-progress-label-bg);
+    color: var(--reading-progress-label-text);
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(10px) scale(calc(1 / var(--reading-item-scale, 1)));
+    transform-origin: right center;
+    pointer-events: none;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .reading-progress-item:hover .reading-progress-label,
+  .reading-progress-item:focus-visible .reading-progress-label {
+    opacity: 1;
+    transform: translateX(0) scale(calc(1 / var(--reading-item-scale, 1)));
+  }
+
+  .reading-progress-item:hover,
+  .reading-progress-item:focus-visible {
+    opacity: 1;
+  }
+
+  .reading-progress-item {
+    --reading-item-scale: 0.7;
+  }
+
+  .reading-progress-item.near-active {
+    --reading-item-scale: 1;
+  }
+
+  .reading-progress-item.active {
+    --reading-item-scale: 1.16;
+  }
+
+  [data-article-content] :where(h2, h3, h4) {
+    scroll-margin-top: 6rem;
+  }
+
+  @media (max-width: 1280px) {
+    .reading-progress-nav {
+      right: max(14px, calc((100vw - 48rem) / 5));
+    }
+  }
+
+  @media (max-width: 900px) {
+    .reading-progress-nav {
+      right: 8px;
+      left: auto;
+      top: 50%;
+      bottom: auto;
+      transform: translateY(-50%);
+      width: 26px;
+      padding: 2px 0;
+      border-radius: 0;
+      border: none;
+      background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      box-shadow: none;
+    }
+
+    .reading-progress-list {
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .reading-progress-track {
+      top: 12px;
+      bottom: 12px;
+      width: 1px;
+      opacity: 0.82;
+    }
+
+    .reading-progress-item {
+      width: 24px;
+      height: 24px;
+      min-height: 24px;
+      transform: none !important;
+      opacity: 1 !important;
+      border-radius: 999px;
+      padding: 0;
+      --reading-item-scale: 1;
+    }
+
+    .reading-progress-ring {
+      width: 24px;
+      height: 24px;
+      opacity: 1 !important;
+    }
+
+    .reading-progress-item:not(.active):not(.near-active) .reading-progress-ring {
+      opacity: 1;
+    }
+
+    .reading-progress-ring__bg {
+      stroke-width: 1.7;
+    }
+
+    .reading-progress-ring__fg {
+      stroke-width: 2.4;
+    }
+
+    .reading-progress-dot {
+      width: 7px;
+      height: 7px;
+    }
+
+    .reading-progress-item.active .reading-progress-dot {
+      transform: scale(1.62);
+    }
+
+    .reading-progress-label {
+      display: none;
+    }
+  }
+</style>

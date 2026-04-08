@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import NavBar from '../../components/NavBar.astro';
 import Footer from '../../components/Footer.astro';
 import AudioPlayer from '../../components/AudioPlayer.astro';
+import ReadingProgressNav from '../../components/ReadingProgressNav.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -21,6 +22,7 @@ const { Content } = await post.render();
 
 <BaseLayout title={`${post.data.title} // PHYSICIST_TERMINAL_V1.0`} description={post.data.description}>
   <NavBar />
+  <ReadingProgressNav />
   
   <main class="pt-24 pb-12 px-6 max-w-3xl mx-auto">
     <!-- Article Header -->
@@ -60,7 +62,7 @@ const { Content } = await post.render();
       )}
       
       <!-- Article Content -->
-      <div class="prose prose-lg dark:prose-invert max-w-none prose-headings:font-headline prose-headings:tracking-tight prose-a:text-primary prose-a:no-underline hover:prose-a:underline">
+      <div data-article-content class="prose prose-lg dark:prose-invert max-w-none prose-headings:font-headline prose-headings:tracking-tight prose-a:text-primary prose-a:no-underline hover:prose-a:underline">
         <Content />
       </div>
     </article>
@@ -80,7 +82,7 @@ const { Content } = await post.render();
 <script>
   // 为代码块添加复制按钮
   (function() {
-    const codeBlocks = document.querySelectorAll('pre.astro-code');
+    const codeBlocks = document.querySelectorAll<HTMLElement>('pre.astro-code');
     
     codeBlocks.forEach(pre => {
       // 创建复制按钮
