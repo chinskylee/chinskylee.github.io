@@ -29,6 +29,19 @@
       </a>
     </nav>
 
+    <div id="reading-progress-toggle-mobile-wrapper" class="pt-2 pb-2 hidden">
+      <button
+        id="reading-progress-toggle-mobile"
+        class="w-full flex items-center justify-center gap-3 py-3 px-4 border border-outline-variant text-on-surface hover:bg-surface-container transition-colors rounded"
+        type="button"
+        aria-label="Toggle reading progress navigation"
+        aria-pressed="true"
+      >
+        <span class="material-symbols-outlined text-xl" data-role="icon">&#xe06a;</span>
+        <span class="font-label text-sm tracking-widest uppercase notranslate" translate="no" data-role="label">NAV ON</span>
+      </button>
+    </div>
+
     <!-- Dark Mode Toggle (Mobile) -->
     <div class="pt-4 pb-2">
       <button id="theme-toggle-mobile" class="w-full flex items-center justify-center gap-3 py-3 px-4 border border-outline-variant text-on-surface hover:bg-surface-container transition-colors rounded">
@@ -59,8 +72,18 @@
     const menuIcon = document.getElementById('menu-icon');
     const closeBtn = document.getElementById('mobile-menu-close');
     const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+    const readingProgressToggleMobile = document.getElementById('reading-progress-toggle-mobile');
+    const readingProgressToggleWrapper = document.getElementById('reading-progress-toggle-mobile-wrapper');
+
+    const READING_PROGRESS_KEY = 'readingProgressNavEnabledMobile';
+    const READING_PROGRESS_EVENT = 'reading-progress-visibility-change';
+    const isBlogArticlePage = /^\/blog\/.+/.test(window.location.pathname) && !/^\/blog\/?$/.test(window.location.pathname);
     
     if (!menu) return;
+
+    if (readingProgressToggleWrapper) {
+      readingProgressToggleWrapper.classList.toggle('hidden', !isBlogArticlePage);
+    }
 
     let isOpen = false;
     let touchStartX = 0;
@@ -71,6 +94,7 @@
       menu.classList.remove('-translate-x-full');
       overlay.classList.remove('opacity-0', 'pointer-events-none');
       document.body.style.overflow = 'hidden';
+      syncMobileThemeToggle();
       // 切换图标为 close
       if (menuIcon) menuIcon.textContent = '\ue5cd';
     }
@@ -102,7 +126,34 @@
     if (overlay) overlay.addEventListener('click', closeMenu);
 
     // Mobile theme toggle
+    const syncMobileThemeToggle = () => {
+      if (!themeToggleMobile) {
+        return;
+      }
+
+      const isDark = document.documentElement.classList.contains('dark');
+      const mobileIcon = themeToggleMobile.querySelector<HTMLElement>('.material-symbols-outlined');
+      const mobileLabel = themeToggleMobile.querySelector<HTMLElement>('span.notranslate, span:last-child');
+
+      if (mobileIcon) {
+        // icon/label show what clicking will do next
+        mobileIcon.textContent = isDark ? '\ue518' : '\ue51c';
+      }
+
+      if (mobileLabel) {
+        mobileLabel.textContent = isDark ? 'LIGHT' : 'DARK';
+        mobileLabel.setAttribute('translate', 'no');
+      }
+
+      themeToggleMobile.setAttribute(
+        'aria-label',
+        isDark ? 'Switch to light mode' : 'Switch to dark mode',
+      );
+    };
+
     if (themeToggleMobile) {
+      syncMobileThemeToggle();
+
       themeToggleMobile.addEventListener('click', function() {
         const isDark = document.documentElement.classList.contains('dark');
         const newTheme = isDark ? 'light' : 'dark';
@@ -111,27 +162,63 @@
         
         // Update main toggle button if exists
         const mainToggleIcon = document.getElementById('theme-toggle-icon');
-        const mainToggleLabel = document.getElementById('theme-toggle-label');
         if (mainToggleIcon) mainToggleIcon.textContent = !isDark ? '\ue518' : '\ue51c';
-        if (mainToggleLabel) {
-          const darkHidden = mainToggleLabel.querySelector('.dark\\:hidden');
-          const darkInline = mainToggleLabel.querySelector('.hidden.dark\\:inline');
-          if (darkHidden) darkHidden.style.display = !isDark ? 'none' : 'inline';
-          if (darkInline) darkInline.style.display = !isDark ? 'inline' : 'none';
-        }
-        
-        // Update mobile toggle button
-        const mobileIcon = themeToggleMobile.querySelector('.material-symbols-outlined');
-        const mobileLabel = themeToggleMobile.querySelector('span.notranslate, span:last-child');
-        if (mobileIcon) mobileIcon.textContent = !isDark ? '\ue518' : '\ue51c';
-        if (mobileLabel) {
-          mobileLabel.textContent = !isDark ? 'LIGHT' : 'DARK';
-          mobileLabel.setAttribute('translate', 'no');
-        }
+        syncMobileThemeToggle();
         
         try {
           window.localStorage.setItem('theme', newTheme);
         } catch {}
+      });
+    }
+
+    // Reading progress toggle (only rendered on blog detail pages)
+    if (readingProgressToggleMobile && isBlogArticlePage) {
+      const readProgressEnabled = () => {
+        try {
+          return window.localStorage.getItem(READING_PROGRESS_KEY) !== 'false';
+        } catch {
+          return true;
+        }
+      };
+
+      const writeProgressEnabled = (enabled) => {
+        try {
+          window.localStorage.setItem(READING_PROGRESS_KEY, enabled ? 'true' : 'false');
+        } catch {
+          // Ignore write failures
+        }
+      };
+
+      const updateProgressToggleUI = (enabled) => {
+        const icon = readingProgressToggleMobile.querySelector('[data-role="icon"]');
+        const label = readingProgressToggleMobile.querySelector('[data-role="label"]');
+
+        readingProgressToggleMobile.setAttribute('aria-pressed', String(enabled));
+
+        if (icon) {
+          icon.textContent = enabled ? '\ue06a' : '\ue8f5';
+        }
+
+        if (label) {
+          label.textContent = enabled ? 'NAV ON' : 'NAV OFF';
+        }
+      };
+
+      let progressEnabled = readProgressEnabled();
+      updateProgressToggleUI(progressEnabled);
+
+      window.dispatchEvent(new CustomEvent(READING_PROGRESS_EVENT, {
+        detail: { enabled: progressEnabled },
+      }));
+
+      readingProgressToggleMobile.addEventListener('click', () => {
+        progressEnabled = !progressEnabled;
+        updateProgressToggleUI(progressEnabled);
+        writeProgressEnabled(progressEnabled);
+
+        window.dispatchEvent(new CustomEvent(READING_PROGRESS_EVENT, {
+          detail: { enabled: progressEnabled },
+        }));
       });
     }
 
