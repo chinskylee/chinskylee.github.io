@@ -70,8 +70,12 @@
 
       if (!container || !list || !articleContent) return;
 
-      const headings = Array.from(articleContent.querySelectorAll('h2, h3, h4'))
+      const level2Headings = Array.from(articleContent.querySelectorAll('h2'))
         .filter((heading) => heading.textContent && heading.textContent.trim().length > 0);
+      const headings = level2Headings.length > 0
+        ? level2Headings
+        : Array.from(articleContent.querySelectorAll('h3'))
+          .filter((heading) => heading.textContent && heading.textContent.trim().length > 0);
 
       if (headings.length === 0) {
         container.style.display = 'none';
