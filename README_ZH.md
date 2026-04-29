@@ -18,6 +18,16 @@
 
 ---
 
+## Fork 部署
+
+如果你 fork 此项目，只需修改 **3 个文件**即可成功部署：
+
+1. **删除 `public/CNAME`** - 移除自定义域名绑定
+2. **编辑 `astro.config.mjs`**（第 5 行）- 更新 `site` URL 为你的 fork 地址
+3. **编辑 `src/pages/subscribe.astro`**（第 6 行）- 修复 RSS feed URL
+
+> 📖 **详细指南：** 完整的逐步说明（包括所有可选修改和常见问题）请查看 [FORK_DEPLOY_ZH.md](FORK_DEPLOY_ZH.md)。
+
 ## 功能特性
 
 - **极速加载** - Astro 默认零 JS 输出，采用 Islands 架构

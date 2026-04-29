@@ -18,6 +18,16 @@
 
 ---
 
+## Fork & Deploy
+
+If you fork this project, only **3 files need to be modified** for successful deployment:
+
+1. **Delete `public/CNAME`** - Remove custom domain binding
+2. **Edit `astro.config.mjs`** (line 5) - Update `site` URL to your fork
+3. **Edit `src/pages/subscribe.astro`** (line 6) - Fix RSS feed URL
+
+> 📖 **Detailed guide:** See [FORK_DEPLOY.md](FORK_DEPLOY.md) for complete step-by-step instructions, including all optional modifications and common issues.
+
 ## Features
 
 - **Blazing Fast** - Astro's zero-JS default output with islands architecture
