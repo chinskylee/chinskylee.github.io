@@ -1,4 +1,4 @@
-# 🌌 lyralex-blog（中文版）
+<h1 align="center">lyralex-blog（中文版）</h1>
 
 <p align="center">
   <a href="README.md">🇺🇸 English Version</a> |
@@ -165,14 +165,6 @@ npm run build
 - 💻 **氛围编程** - AI 辅助编程指南
 - 🛠️ **技术教程** - Astro、GitHub Pages、工具使用
 - 📝 **个人笔记** - 学习历程与思考
-
-## 🤝 贡献
-
-欢迎贡献！你可以：
-- 🐛 通过 [Issues](https://github.com/chinskylee/chinskylee.github.io/issues) 报告问题
-- 💡 建议新功能
-- 📖 改进文档
-- 🔧 提交 Pull Requests
 
 ## 📜 许可证
 

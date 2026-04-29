@@ -1,4 +1,4 @@
-# 🌌 lyralex-blog
+<h1 align="center">lyralex-blog</h1>
 
 <p align="center">
   <a href="README_ZH.md">🇨🇳 中文版本</a> |
@@ -165,14 +165,6 @@ npm run build
 - 💻 **Vibe Coding** - AI-assisted programming guides
 - 🛠️ **Tech Tutorials** - Astro, GitHub Pages, tooling
 - 📝 **Personal Notes** - Learning journey and reflections
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to:
-- 🐛 Report bugs via [Issues](https://github.com/chinskylee/chinskylee.github.io/issues)
-- 💡 Suggest features
-- 📖 Improve documentation
-- 🔧 Submit pull requests
 
 ## 📜 License
 
