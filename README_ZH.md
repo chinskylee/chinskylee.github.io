@@ -1,9 +1,8 @@
 <h1 align="center">lyralex-blog（中文版）</h1>
 
 <p align="center">
-  <a href="README.md">🇺🇸 English Version</a> |
-  <a href="https://lyralex.qzz.io">🌐 在线演示</a> |
-  <a href="https://github.com/chinskylee/chinskylee.github.io/issues">🐛 报告问题</a>
+  <a href="README.md">English Version</a> |
+  <a href="https://lyralex.qzz.io">在线演示</a>
 </p>
 
 <p align="center">
@@ -19,19 +18,19 @@
 
 ---
 
-## ✨ 功能特性
+## 功能特性
 
-- 🚀 **极速加载** - Astro 默认零 JS 输出，采用 Islands 架构
-- 🌓 **深色模式** - 系统感知主题，支持手动切换（亮色/暗色）
-- 📝 **内容集合** - 类型安全的 Markdown/MDX 博客文章，支持标签系统
-- 🔊 **音频支持** - 内置音频播放器，支持带旁白的文章
-- 📖 **数学渲染** - 集成 KaTeX，支持 LaTeX 公式
-- 🔍 **全文搜索** - Pagefind 静态搜索集成
-- 📡 **RSS 订阅** - 自动生成 RSS，支持音频附件
-- 📊 **阅读进度** - 带进度跟踪的导航
-- 🏷️ **响应式设计** - 移动端优先，支持可折叠菜单
+- **极速加载** - Astro 默认零 JS 输出，采用 Islands 架构
+- **深色模式** - 系统感知主题，支持手动切换（亮色/暗色）
+- **内容集合** - 类型安全的 Markdown/MDX 博客文章，支持标签系统
+- **音频支持** - 内置音频播放器，支持带旁白的文章
+- **数学渲染** - 集成 KaTeX，支持 LaTeX 公式
+- **全文搜索** - Pagefind 静态搜索集成
+- **RSS 订阅** - 自动生成 RSS，支持音频附件
+- **阅读进度** - 带进度跟踪的导航
+- **响应式设计** - 移动端优先，支持可折叠菜单
 
-## 🛠️ 技术栈
+## 技术栈
 
 - **框架**: [Astro 5.0](https://astro.build)
 - **样式**: [Tailwind CSS 3.4](https://tailwindcss.com) + Typography 插件
@@ -41,7 +40,7 @@
 - **搜索**: [Pagefind](https://pagefind.app)
 - **部署**: GitHub Actions → GitHub Pages
 
-## 🚀 快速开始
+## 快速开始
 
 ```bash
 # 克隆仓库
@@ -61,7 +60,7 @@ npm run build
 npm run preview
 ```
 
-## 📁 项目结构
+## 项目结构
 
 ```
 chinskylee.github.io/
@@ -88,7 +87,7 @@ chinskylee.github.io/
 └── package.json        # 依赖项
 ```
 
-## ✍️ 撰写文章
+## 撰写文章
 
 在 `src/content/blog/` 目录下创建新的 Markdown 文件：
 
@@ -112,7 +111,7 @@ E = mc^2
 $$
 ```
 
-## 🎨 自定义配置
+## 自定义配置
 
 ### 站点信息
 编辑 `astro.config.mjs`：
@@ -142,14 +141,14 @@ theme: {
 - **页面**: `src/pages/`
 - **组件**: `src/components/`
 
-## 📡 RSS 订阅
+## RSS 订阅
 
 博客自动生成 RSS 订阅源 `/rss.xml`，包含：
 - RSS 项目完整内容
 - 带旁白文章的音频附件
 - 标准 Atom 格式
 
-## 🚀 部署
+## 部署
 
 每次推送到 `main` 分支时，通过 GitHub Actions 自动部署到 GitHub Pages。
 
@@ -159,18 +158,18 @@ npm run build
 # 将 dist/ 文件夹上传到你的托管服务商
 ```
 
-## 📊 内容分类
+## 内容分类
 
-- 🔬 **物理研究** - 纳米光子学、LSPR、量子光学
-- 💻 **氛围编程** - AI 辅助编程指南
-- 🛠️ **技术教程** - Astro、GitHub Pages、工具使用
-- 📝 **个人笔记** - 学习历程与思考
+- **物理研究** - 纳米光子学、LSPR、量子光学
+- **氛围编程** - AI 辅助编程指南
+- **技术教程** - Astro、GitHub Pages、工具使用
+- **个人笔记** - 学习历程与思考
 
-## 📜 许可证
+## 许可证
 
 本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件。
 
-## 🔗 相关链接
+## 相关链接
 
 - **在线访问**: [lyralex.qzz.io](https://lyralex.qzz.io)
 - **GitHub**: [@chinskylee](https://github.com/chinskylee)

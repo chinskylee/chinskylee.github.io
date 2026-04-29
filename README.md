@@ -1,9 +1,8 @@
 <h1 align="center">lyralex-blog</h1>
 
 <p align="center">
-  <a href="README_ZH.md">🇨🇳 中文版本</a> |
-  <a href="https://lyralex.qzz.io">🌐 Live Demo</a> |
-  <a href="https://github.com/chinskylee/chinskylee.github.io/issues">🐛 Report Issue</a>
+  <a href="README_ZH.md">中文版本</a> |
+  <a href="https://lyralex.qzz.io">Live Demo</a>
 </p>
 
 <p align="center">
@@ -19,19 +18,19 @@
 
 ---
 
-## ✨ Features
+## Features
 
-- 🚀 **Blazing Fast** - Astro's zero-JS default output with islands architecture
-- 🌓 **Dark Mode** - System-aware theme with manual toggle (light/dark)
-- 📝 **Content Collections** - Type-safe Markdown/MDX blog posts with tags
-- 🔊 **Audio Support** - Built-in audio player for narrated articles
-- 📖 **Math Rendering** - KaTeX support for LaTeX formulas
-- 🔍 **Full-Text Search** - Pagefind integration for static search
-- 📡 **RSS Feed** - Auto-generated RSS with audio enclosures
-- 📊 **Reading Progress** - Navigation with progress tracking
-- 🏷️ **Responsive Design** - Mobile-first with collapsible menu
+- **Blazing Fast** - Astro's zero-JS default output with islands architecture
+- **Dark Mode** - System-aware theme with manual toggle (light/dark)
+- **Content Collections** - Type-safe Markdown/MDX blog posts with tags
+- **Audio Support** - Built-in audio player for narrated articles
+- **Math Rendering** - KaTeX support for LaTeX formulas
+- **Full-Text Search** - Pagefind integration for static search
+- **RSS Feed** - Auto-generated RSS with audio enclosures
+- **Reading Progress** - Navigation with progress tracking
+- **Responsive Design** - Mobile-first with collapsible menu
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Framework**: [Astro 5.0](https://astro.build)
 - **Styling**: [Tailwind CSS 3.4](https://tailwindcss.com) + Typography plugin
@@ -41,7 +40,7 @@
 - **Search**: [Pagefind](https://pagefind.app) for static search
 - **Deployment**: GitHub Actions → GitHub Pages
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # Clone the repository
@@ -61,7 +60,7 @@ npm run build
 npm run preview
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 chinskylee.github.io/
@@ -88,7 +87,7 @@ chinskylee.github.io/
 └── package.json        # Dependencies
 ```
 
-## ✍️ Writing Posts
+## Writing Posts
 
 Create a new Markdown file in `src/content/blog/`:
 
@@ -112,7 +111,7 @@ E = mc^2
 $$
 ```
 
-## 🎨 Customization
+## Customization
 
 ### Site Info
 Edit `astro.config.mjs`:
@@ -142,14 +141,14 @@ theme: {
 - **Pages**: `src/pages/`
 - **Components**: `src/components/`
 
-## 📡 RSS Feed
+## RSS Feed
 
 The blog automatically generates RSS feed at `/rss.xml` with:
 - Full content in RSS items
 - Audio enclosures for narrated posts
 - Proper Atom formatting
 
-## 🚀 Deployment
+## Deployment
 
 Automatically deployed to GitHub Pages via GitHub Actions on every push to `main` branch.
 
@@ -159,18 +158,18 @@ npm run build
 # Upload dist/ folder to your hosting provider
 ```
 
-## 📊 Content Categories
+## Content Categories
 
-- 🔬 **Physics Research** - Nanophotonics, LSPR, quantum optics
-- 💻 **Vibe Coding** - AI-assisted programming guides
-- 🛠️ **Tech Tutorials** - Astro, GitHub Pages, tooling
-- 📝 **Personal Notes** - Learning journey and reflections
+- **Physics Research** - Nanophotonics, LSPR, quantum optics
+- **Vibe Coding** - AI-assisted programming guides
+- **Tech Tutorials** - Astro, GitHub Pages, tooling
+- **Personal Notes** - Learning journey and reflections
 
-## 📜 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🔗 Links
+## Links
 
 - **Live Site**: [lyralex.qzz.io](https://lyralex.qzz.io)
 - **GitHub**: [@chinskylee](https://github.com/chinskylee)
