@@ -1,0 +1,407 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import NavBar from '../components/NavBar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="WELCOME // Chinsky Lee">
+  <NavBar />
+
+  <main class="pt-24 pb-12 px-6 max-w-4xl mx-auto">
+    <!-- Welcome Section -->
+    <section class="flex flex-col items-center justify-center min-h-[70vh] space-y-12">
+      <!-- Welcome Message -->
+      <div class="text-center space-y-4">
+        <h1 class="font-headline text-4xl md:text-5xl font-bold tracking-tight">WELCOME</h1>
+        <p class="font-label text-lg md:text-xl text-outline uppercase tracking-widest" id="welcome-message">
+          Welcome, friend from around the world!
+        </p>
+      </div>
+
+      <!-- Search Box -->
+      <div class="w-full max-w-2xl relative z-10">
+        <form id="search-form" class="relative" novalidate>
+          <div class="flex items-center bg-surface-container border border-outline-variant overflow-hidden">
+            <!-- Engine Text Button -->
+            <button 
+              type="button" 
+              id="engine-btn"
+              class="flex items-center justify-center px-2 h-12 md:px-4 md:h-14 bg-surface-container-low border-r border-outline-variant hover:bg-surface-container-highest transition-colors shrink-0 min-w-[60px] md:min-w-[100px]"
+              aria-label="Switch search engine"
+            >
+              <span id="engine-name" class="font-label text-xs md:text-sm uppercase tracking-wider">Google</span>
+              <span class="material-symbols-outlined text-xs ml-1">&#xe5c5;</span>
+            </button>
+            
+            <!-- Search Input -->
+            <input 
+              type="text" 
+              id="search-input"
+              name="q" 
+              placeholder="Press / to search..." 
+              class="flex-1 min-w-0 bg-transparent px-3 py-3 md:px-4 md:py-4 font-body text-base md:text-lg focus:outline-none"
+            />
+            
+            <!-- Search Button -->
+            <button 
+              type="submit" 
+              class="flex items-center justify-center w-10 h-12 md:w-14 md:h-14 text-outline hover:text-primary transition-colors shrink-0"
+              aria-label="Search"
+            >
+              <span class="material-symbols-outlined text-xl">&#xe8b6;</span>
+            </button>
+          </div>
+          
+          <!-- Engine Dropdown -->
+          <div id="engine-dropdown" class="absolute top-full left-0 mt-1 w-48 bg-surface-container border border-outline-variant shadow-xl z-[100] hidden">
+            <button type="button" class="engine-option flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-highest transition-colors" data-engine="google" data-url="https://www.google.com/search?q=" data-name="Google">
+              <span class="font-label text-sm uppercase text-on-surface">Google</span>
+            </button>
+            <button type="button" class="engine-option flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-highest transition-colors" data-engine="bing" data-url="https://www.bing.com/search?q=" data-name="Bing">
+              <span class="font-label text-sm uppercase text-on-surface">Bing</span>
+            </button>
+            <button type="button" class="engine-option flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-highest transition-colors" data-engine="duckduckgo" data-url="https://duckduckgo.com/?q=" data-name="DuckDuckGo">
+              <span class="font-label text-sm uppercase text-on-surface">DuckDuckGo</span>
+            </button>
+            <button type="button" class="engine-option flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-highest transition-colors" data-engine="github" data-url="https://github.com/search?q=" data-name="GitHub">
+              <span class="font-label text-sm uppercase text-on-surface">GitHub</span>
+            </button>
+            <div class="border-t border-outline-variant"></div>
+            <button type="button" class="engine-option flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-highest transition-colors" data-engine="chatgpt" data-url="https://chat.openai.com/?q=" data-name="ChatGPT">
+              <span class="font-label text-sm uppercase text-on-surface">ChatGPT</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Clock Section -->
+      <div class="w-full max-w-md">
+        <div class="bg-surface-container p-8 md:p-12 text-center cursor-pointer select-none" id="clock-container" title="Click to toggle clock style">
+          <!-- Digital Clock (default) -->
+          <div id="digital-clock" class="space-y-2">
+            <div class="font-headline text-5xl md:text-7xl font-bold tracking-tight" id="time">--:--:--</div>
+            <div class="font-label text-sm md:text-base text-outline uppercase tracking-widest" id="date">----/--/--</div>
+          </div>
+          
+          <!-- Analog Clock (hidden by default) -->
+          <div id="analog-clock" class="hidden">
+            <svg viewBox="0 0 200 200" class="w-48 h-48 md:w-64 md:h-64 mx-auto">
+              <!-- Square Clock face -->
+              <rect x="5" y="5" width="190" height="190" fill="none" stroke="currentColor" stroke-width="2" class="text-outline-variant" />
+              
+              <!-- Hour markers -->
+              <g class="text-on-surface">
+                <line x1="100" y1="10" x2="100" y2="25" stroke="currentColor" stroke-width="2" />
+                <line x1="150" y1="10" x2="145" y2="25" stroke="currentColor" stroke-width="2" />
+                <line x1="190" y1="50" x2="175" y2="55" stroke="currentColor" stroke-width="2" />
+                <line x1="190" y1="100" x2="175" y2="100" stroke="currentColor" stroke-width="2" />
+                <line x1="190" y1="150" x2="175" y2="145" stroke="currentColor" stroke-width="2" />
+                <line x1="150" y1="190" x2="145" y2="175" stroke="currentColor" stroke-width="2" />
+                <line x1="100" y1="190" x2="100" y2="175" stroke="currentColor" stroke-width="2" />
+                <line x1="50" y1="190" x2="55" y2="175" stroke="currentColor" stroke-width="2" />
+                <line x1="10" y1="150" x2="25" y2="145" stroke="currentColor" stroke-width="2" />
+                <line x1="10" y1="100" x2="25" y2="100" stroke="currentColor" stroke-width="2" />
+                <line x1="10" y1="50" x2="25" y2="55" stroke="currentColor" stroke-width="2" />
+                <line x1="50" y1="10" x2="55" y2="25" stroke="currentColor" stroke-width="2" />
+              </g>
+              
+              <!-- Hour hand -->
+              <line id="hour-hand" x1="100" y1="100" x2="100" y2="55" stroke="currentColor" stroke-width="3" stroke-linecap="round" class="text-on-surface" />
+              
+              <!-- Minute hand -->
+              <line id="minute-hand" x1="100" y1="100" x2="100" y2="35" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="text-on-surface" />
+              
+              <!-- Second hand -->
+              <line id="second-hand" x1="100" y1="100" x2="100" y2="30" stroke="currentColor" stroke-width="1" stroke-linecap="round" class="text-primary" />
+              
+              <!-- Center dot -->
+              <circle cx="100" cy="100" r="3" fill="currentColor" class="text-on-surface" />
+            </svg>
+          </div>
+          
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  // Search engine configuration
+  const searchEngines: Record<string, { url: string; name: string }> = {
+    google: { url: 'https://www.google.com/search?q=', name: 'Google' },
+    bing: { url: 'https://www.bing.com/search?q=', name: 'Bing' },
+    duckduckgo: { url: 'https://duckduckgo.com/?q=', name: 'DuckDuckGo' },
+    github: { url: 'https://github.com/search?q=', name: 'GitHub' },
+    chatgpt: { url: 'https://chat.openai.com/?q=', name: 'ChatGPT' }
+  };
+  
+  let currentEngine = 'google';
+  let userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  let isDigitalClock = true;
+  let clockInterval: number | null = null;
+  
+  // Initialize search functionality
+  function initSearch() {
+    const searchForm = document.getElementById('search-form');
+    const engineBtn = document.getElementById('engine-btn');
+    const engineDropdown = document.getElementById('engine-dropdown');
+    const engineOptions = document.querySelectorAll('.engine-option');
+    const searchInput = document.getElementById('search-input') as HTMLInputElement;
+    
+    if (!searchForm || !engineBtn || !engineDropdown) return;
+    
+    // Toggle dropdown
+    engineBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      engineDropdown.classList.toggle('hidden');
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!engineBtn.contains(e.target as Node) && !engineDropdown.contains(e.target as Node)) {
+        engineDropdown.classList.add('hidden');
+      }
+    });
+    
+    // Engine selection
+    engineOptions.forEach(option => {
+      option.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLElement;
+        const engine = target.dataset.engine;
+        const name = target.dataset.name;
+        if (!engine) return;
+        
+        currentEngine = engine;
+        updateEngineName(name || '');
+        engineDropdown.classList.add('hidden');
+        searchInput?.focus();
+      });
+    });
+    
+    // Form submission
+    searchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(searchForm as HTMLFormElement);
+      const query = formData.get('q') as string;
+      
+      if (query && query.trim() && searchEngines[currentEngine]) {
+        const url = searchEngines[currentEngine].url + encodeURIComponent(query);
+        window.open(url, '_blank');
+      }
+    });
+    
+    // Keyboard shortcut: / to focus search
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement !== searchInput) {
+        e.preventDefault();
+        searchInput?.focus();
+      }
+    });
+  }
+  
+  // Update engine name display
+  function updateEngineName(name: string) {
+    const nameEl = document.getElementById('engine-name');
+    if (nameEl) {
+      nameEl.textContent = name;
+    }
+  }
+  
+  // Toggle clock mode
+  function toggleClockMode() {
+    isDigitalClock = !isDigitalClock;
+    const digitalClock = document.getElementById('digital-clock');
+    const analogClock = document.getElementById('analog-clock');
+    
+    if (digitalClock && analogClock) {
+      if (isDigitalClock) {
+        digitalClock.classList.remove('hidden');
+        analogClock.classList.add('hidden');
+      } else {
+        digitalClock.classList.add('hidden');
+        analogClock.classList.remove('hidden');
+      }
+    }
+  }
+  
+  // Update digital clock
+  function updateDigitalClock(now: Date) {
+    const timeEl = document.getElementById('time');
+    const dateEl = document.getElementById('date');
+    
+    if (timeEl) {
+      timeEl.textContent = now.toLocaleTimeString('en-US', {
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        timeZone: userTimezone
+      });
+    }
+    
+    if (dateEl) {
+      dateEl.textContent = now.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        weekday: 'short',
+        timeZone: userTimezone
+      });
+    }
+  }
+  
+  // Update analog clock
+  function updateAnalogClock(now: Date) {
+    const hours = parseInt(now.toLocaleTimeString('en-US', { hour: '2-digit', hour12: false, timeZone: userTimezone }));
+    const minutes = parseInt(now.toLocaleTimeString('en-US', { minute: '2-digit', timeZone: userTimezone }));
+    const seconds = parseInt(now.toLocaleTimeString('en-US', { second: '2-digit', timeZone: userTimezone }));
+    
+    const hourDeg = (hours % 12) * 30 + minutes * 0.5;
+    const minuteDeg = minutes * 6 + seconds * 0.1;
+    const secondDeg = seconds * 6;
+    
+    const hourHand = document.getElementById('hour-hand');
+    const minuteHand = document.getElementById('minute-hand');
+    const secondHand = document.getElementById('second-hand');
+    
+    if (hourHand) {
+      hourHand.setAttribute('transform', `rotate(${hourDeg} 100 100)`);
+    }
+    if (minuteHand) {
+      minuteHand.setAttribute('transform', `rotate(${minuteDeg} 100 100)`);
+    }
+    if (secondHand) {
+      secondHand.setAttribute('transform', `rotate(${secondDeg} 100 100)`);
+    }
+  }
+  
+  // Update clock
+  function updateClock() {
+    const now = new Date();
+    
+    if (isDigitalClock) {
+      updateDigitalClock(now);
+    } else {
+      updateAnalogClock(now);
+    }
+  }
+  
+  // Initialize when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    initSearch();
+    
+    // Clock toggle
+    const clockContainer = document.getElementById('clock-container');
+    if (clockContainer) {
+      clockContainer.addEventListener('click', toggleClockMode);
+    }
+    
+    // Start clock
+    updateClock();
+    clockInterval = setInterval(updateClock, 1000);
+  });
+  
+  // Re-initialize on Astro page transitions
+  document.addEventListener('astro:page-load', () => {
+    initSearch();
+    
+    // Clock toggle
+    const clockContainer = document.getElementById('clock-container');
+    if (clockContainer) {
+      clockContainer.addEventListener('click', toggleClockMode);
+    }
+    
+    // Start clock
+    updateClock();
+    if (clockInterval) clearInterval(clockInterval);
+    clockInterval = setInterval(updateClock, 1000);
+  });
+</script>
+
+<style>
+  /* Search input styles */
+  #search-input::placeholder {
+    color: #79776d;
+    font-style: italic;
+  }
+  
+  .dark #search-input::placeholder {
+    color: #9f9c90;
+  }
+  
+  /* Engine button hover */
+  #engine-btn:hover {
+    background-color: #e4e3d7;
+    color: #1b1c15;
+  }
+  
+  .dark #engine-btn:hover {
+    background-color: #2f3128;
+    color: #f1eee2;
+  }
+  
+
+  
+  /* Dropdown styles */
+  .engine-option:hover {
+    background-color: #e4e3d7;
+  }
+  
+  .engine-option:hover span {
+    color: #1b1c15;
+  }
+  
+  .dark .engine-option:hover {
+    background-color: #2f3128;
+  }
+  
+  .dark .engine-option:hover span {
+    color: #f1eee2;
+  }
+  
+  /* Digital clock display */
+  #time {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.05em;
+  }
+  
+  /* Analog clock styles */
+  #analog-clock svg {
+    color: #1b1c15;
+  }
+  
+  .dark #analog-clock svg {
+    color: #edeadf;
+  }
+  
+  /* Dark mode clock elements */
+  .dark #analog-clock svg text {
+    fill: #edeadf;
+  }
+  
+  .dark #analog-clock svg line {
+    stroke: #edeadf;
+  }
+  
+  .dark #analog-clock svg circle {
+    fill: #edeadf;
+    stroke: #edeadf;
+  }
+  
+  .dark #analog-clock svg rect {
+    stroke: #edeadf;
+  }
+  
+  .dark #analog-clock svg #second-hand {
+    stroke: #dec1ad;
+  }
+  
+  /* Clock container - no hover effect */
+  #clock-container {
+    cursor: pointer;
+  }
+</style>
