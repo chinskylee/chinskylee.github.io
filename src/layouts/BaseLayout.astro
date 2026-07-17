@@ -27,7 +27,7 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
     default-src 'self';
     script-src 'self' https://cdn.jsdelivr.net https://static.cloudflareinsights.com 'unsafe-inline' 'unsafe-eval';
     style-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com 'unsafe-inline';
-    font-src 'self' https://fonts.gstatic.com https://cloudflareinsights.com;
+    font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net https://cloudflareinsights.com;
     img-src 'self' data:;
     connect-src 'self' https://static.cloudflareinsights.com https://cloudflareinsights.com;
     media-src 'self';
@@ -40,12 +40,14 @@ const { title, description = 'Physics Student Blog' } = Astro.props;
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       if (typeof renderMathInElement !== 'undefined') {
-        renderMathInElement(document.body, {
+        var target = document.querySelector('[data-article-content]') || document.body;
+        renderMathInElement(target, {
           delimiters: [
             {left: "$$", right: "$$", display: true},
             {left: "$", right: "$", display: false}
           ],
-          throwOnError: false
+          throwOnError: false,
+          strict: false
         });
       }
     });
