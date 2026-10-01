@@ -5,9 +5,10 @@ export interface Props {
   title: string;
   description?: string;
   needsMath?: boolean;
+  noindex?: boolean;
 }
 
-const { title, description = 'Physics Student Blog', needsMath = false } = Astro.props;
+const { title, description = 'Physics Student Blog', needsMath = false, noindex = false } = Astro.props;
 
 // CSP is delivered via <meta>, so directives unsupported there (frame-ancestors,
 // report-uri) are intentionally omitted. 'unsafe-eval' is only relaxed in dev for
@@ -59,6 +60,7 @@ const csp = [
   <meta name="theme-color" content="#15160f" media="(prefers-color-scheme: dark)">
   <title>{title}</title>
   <meta name="description" content={description}>
+  {noindex && <meta name="robots" content="noindex, follow">}
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -1,0 +1,297 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import NavBar from '../components/NavBar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="404 // SIGNAL_LOST" description="Page not found" noindex>
+  <div class="min-h-[100svh] flex flex-col pt-16">
+    <NavBar />
+
+    <main class="flex-1 flex flex-col justify-center px-6 pb-4">
+      <div class="max-w-xl w-full mx-auto space-y-4">
+        <!-- Terminal readout: log lines, the particle 404, and the prompt -->
+        <section class="bg-surface-container-low border border-outline-variant">
+          <div class="flex items-center justify-between border-b border-outline-variant px-4 py-2.5">
+            <h2 class="font-headline text-sm md:text-base font-bold tracking-widest uppercase flex items-center gap-2 min-w-0">
+              <span class="material-symbols-outlined text-base shrink-0">&#xe002;</span>
+              <span class="truncate">ERROR_TRACE.log</span>
+            </h2>
+            <div class="flex gap-1.5 shrink-0">
+              <div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+              <div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+            </div>
+          </div>
+
+          <div id="trace" class="px-4 py-3 font-label text-xs md:text-sm space-y-1.5 text-on-surface-variant">
+            <p><span class="text-outline">[00:00:00.000]</span> <span class="text-primary">SYS_ROUTER:</span> resolving requested path...</p>
+            <p><span class="text-outline">[00:00:00.271]</span> <span class="text-primary">QUANTUM:</span> the wavefunction of this URL has decohered</p>
+            <p><span class="text-outline">[00:00:00.404]</span> <span class="text-primary">RESULT:</span> nothing to observe here — yet</p>
+          </div>
+
+          <!-- The 404 is drawn as a cloud of particles that assembles itself
+               and scatters away from the pointer -->
+          <canvas
+            id="particle-404"
+            class="block w-full h-[124px] sm:h-[180px] md:h-[230px] cursor-crosshair"
+            aria-hidden="true"
+          ></canvas>
+
+          <div class="px-4 pb-4 text-center space-y-2">
+            <h1 class="font-headline text-base md:text-xl font-bold tracking-widest uppercase">
+              <span class="sr-only">404: </span>SIGNAL_LOST
+            </h1>
+            <p class="font-label text-[11px] md:text-xs text-outline tracking-wider break-all">
+              requested: <span id="missing-path" class="text-primary">…</span>
+            </p>
+          </div>
+
+          <div class="px-4 pb-3 flex items-center gap-2 font-label text-xs md:text-sm">
+            <span class="text-outline font-bold">lyra@nancy:~$</span>
+            <span class="terminal-cursor"></span>
+          </div>
+        </section>
+
+        <!-- Escape routes -->
+        <nav class="grid grid-cols-3 gap-2">
+          <a href="/" class="group flex items-center justify-center gap-1.5 border border-outline-variant bg-surface-container-low px-3 py-2.5 hover:bg-surface-container transition-colors">
+            <span class="font-label uppercase tracking-widest text-xs md:text-sm">HOME</span>
+            <span class="material-symbols-outlined text-base text-outline group-hover:translate-x-1 transition-transform">&#xe5c8;</span>
+          </a>
+          <a href="/blog" class="group flex items-center justify-center gap-1.5 border border-outline-variant bg-surface-container-low px-3 py-2.5 hover:bg-surface-container transition-colors">
+            <span class="font-label uppercase tracking-widest text-xs md:text-sm">ARTICLES</span>
+            <span class="material-symbols-outlined text-base text-outline group-hover:translate-x-1 transition-transform">&#xe5c8;</span>
+          </a>
+          <a href="/archive" class="group flex items-center justify-center gap-1.5 border border-outline-variant bg-surface-container-low px-3 py-2.5 hover:bg-surface-container transition-colors">
+            <span class="font-label uppercase tracking-widest text-xs md:text-sm">ARCHIVE</span>
+            <span class="material-symbols-outlined text-base text-outline group-hover:translate-x-1 transition-transform">&#xe5c8;</span>
+          </a>
+        </nav>
+      </div>
+    </main>
+
+    <Footer noTopMargin />
+  </div>
+</BaseLayout>
+
+<script>
+  // Show the path that actually failed (a static 404 cannot know it at build time)
+  const missingPath = document.getElementById('missing-path');
+  if (missingPath) {
+    const raw = window.location.pathname + window.location.search;
+    missingPath.textContent = raw.length > 60 ? raw.slice(0, 57) + '…' : raw;
+  }
+
+  // Render "404" as a cloud of particles that flies in, drifts gently, and is
+  // pushed away by the pointer before springing back.
+  const canvas = document.getElementById('particle-404') as HTMLCanvasElement | null;
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const FONT_FAMILY = '"Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif';
+
+    type Particle = {
+      tx: number; ty: number; x: number; y: number;
+      vx: number; vy: number;
+      r: number; ph: number; sp: number; amp: number;
+      spring: number; damp: number; alpha: number;
+    };
+
+    let particles: Particle[] = [];
+    let W = 0;
+    let H = 0;
+    let raf = 0;
+    let startTime = 0;
+    let resizeTimer = 0;
+    let repelRadius = 130;
+
+    // Pointer state, in canvas-local CSS pixels
+    const pointer = { x: 0, y: 0, active: false };
+
+    const themeColor = () =>
+      document.documentElement.classList.contains('dark') ? [222, 193, 173] : [112, 90, 74];
+
+    const build = () => {
+      const rect = canvas.getBoundingClientRect();
+      W = Math.max(1, Math.round(rect.width));
+      H = Math.max(1, Math.round(rect.height));
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+      if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      repelRadius = Math.max(80, H * 0.62);
+
+      // Sample the glyphs from an offscreen canvas to get particle targets
+      const off = document.createElement('canvas');
+      off.width = W;
+      off.height = H;
+      const octx = off.getContext('2d');
+      if (!octx) return;
+
+      let fontSize = H * 0.92;
+      octx.font = `700 ${fontSize}px ${FONT_FAMILY}`;
+      const measured = octx.measureText('404').width;
+      if (measured > W * 0.96) {
+        fontSize *= (W * 0.96) / measured;
+        octx.font = `700 ${fontSize}px ${FONT_FAMILY}`;
+      }
+      octx.textAlign = 'center';
+      octx.textBaseline = 'middle';
+      octx.fillStyle = '#000';
+      octx.fillText('404', W / 2, H / 2 + fontSize * 0.02);
+
+      const data = octx.getImageData(0, 0, W, H).data;
+      const gap = Math.max(3, Math.round(fontSize / 26));
+      const targets: Array<[number, number]> = [];
+      for (let y = 0; y < H; y += gap) {
+        for (let x = 0; x < W; x += gap) {
+          if (data[(y * W + x) * 4 + 3] > 140) {
+            targets.push([x + (Math.random() - 0.5) * gap * 0.6, y + (Math.random() - 0.5) * gap * 0.6]);
+          }
+        }
+      }
+
+      particles = targets.map(([tx, ty]) => {
+        const angle = Math.random() * Math.PI * 2;
+        const dist = Math.max(W, H) * (0.55 + Math.random() * 0.6);
+        return {
+          tx,
+          ty,
+          x: reduceMotion ? tx : W / 2 + Math.cos(angle) * dist,
+          y: reduceMotion ? ty : H / 2 + Math.sin(angle) * dist,
+          vx: 0,
+          vy: 0,
+          r: Math.max(0.7, gap * 0.3),
+          ph: Math.random() * Math.PI * 2,
+          sp: 0.4 + Math.random() * 0.7,
+          amp: 0.6 + Math.random() * 1.5,
+          spring: 0.035 + Math.random() * 0.025,
+          damp: 0.82 + Math.random() * 0.06,
+          alpha: 0.5 + Math.random() * 0.5,
+        };
+      });
+
+      if (reduceMotion) draw(0);
+    };
+
+    const draw = (time: number) => {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, W, H);
+      const [cr, cg, cb] = themeColor();
+      ctx.fillStyle = `rgb(${cr},${cg},${cb})`;
+
+      const R = repelRadius;
+      const R2 = R * R;
+
+      for (const p of particles) {
+        if (!reduceMotion) {
+          // Spring back to the glyph position
+          let ax = (p.tx - p.x) * p.spring;
+          let ay = (p.ty - p.y) * p.spring;
+
+          // Pointer pushes particles out of its way
+          if (pointer.active) {
+            const dx = p.x - pointer.x;
+            const dy = p.y - pointer.y;
+            const d2 = dx * dx + dy * dy;
+            if (d2 < R2 && d2 > 0.01) {
+              const d = Math.sqrt(d2);
+              const force = (1 - d / R) * 2.2;
+              ax += (dx / d) * force;
+              ay += (dy / d) * force;
+            }
+          }
+
+          p.vx = (p.vx + ax) * p.damp;
+          p.vy = (p.vy + ay) * p.damp;
+          p.x += p.vx;
+          p.y += p.vy;
+        }
+
+        const ox = reduceMotion ? 0 : Math.cos(time * 0.0012 * p.sp + p.ph) * p.amp;
+        const oy = reduceMotion ? 0 : Math.sin(time * 0.0016 * p.sp + p.ph) * p.amp;
+        ctx.globalAlpha = p.alpha;
+        ctx.beginPath();
+        ctx.arc(p.x + ox, p.y + oy, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    };
+
+    const loop = (t: number) => {
+      if (!startTime) startTime = t;
+      draw(t - startTime);
+      raf = requestAnimationFrame(loop);
+    };
+
+    const start = () => {
+      cancelAnimationFrame(raf);
+      build();
+      if (!reduceMotion) {
+        startTime = 0;
+        raf = requestAnimationFrame(loop);
+      }
+    };
+
+    const trackPointer = (e: PointerEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      pointer.x = e.clientX - rect.left;
+      pointer.y = e.clientY - rect.top;
+      pointer.active = true;
+    };
+
+    canvas.addEventListener('pointermove', trackPointer);
+    canvas.addEventListener('pointerdown', trackPointer);
+    canvas.addEventListener('pointerleave', () => { pointer.active = false; });
+    canvas.addEventListener('pointerup', () => { pointer.active = false; });
+    canvas.addEventListener('pointercancel', () => { pointer.active = false; });
+
+    start();
+
+    // Re-sample on resize (debounced) and after the webfont is available
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(start, 160);
+    });
+
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(start);
+    }
+
+    // Repaint immediately when the site theme changes
+    new MutationObserver(() => {
+      if (reduceMotion) draw(0);
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+    // Do not burn CPU while the tab is in the background
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      } else if (!reduceMotion && !raf) {
+        startTime = 0;
+        raf = requestAnimationFrame(loop);
+      }
+    });
+  }
+</script>
+
+<style>
+  /* Log lines drop in one by one */
+  #trace p {
+    opacity: 0;
+    transform: translateY(5px);
+    animation: trace-in 0.5s ease forwards;
+  }
+  #trace p:nth-child(1) { animation-delay: 0.05s; }
+  #trace p:nth-child(2) { animation-delay: 0.25s; }
+  #trace p:nth-child(3) { animation-delay: 0.45s; }
+  @keyframes trace-in {
+    to { opacity: 1; transform: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #trace p { opacity: 1; transform: none; animation: none; }
+  }
+</style>
