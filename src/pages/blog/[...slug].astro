@@ -18,9 +18,16 @@ type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
 const { Content } = await post.render();
+// Only pull in KaTeX when the post actually contains math ($...$ / $$...$$).
+// Fenced blocks and inline code are stripped first: auto-render ignores them,
+// so a lone '$' inside code (e.g. GitHub Actions '${{ ... }}') is not math.
+const proseBody = (post.body ?? '')
+  .replace(/```[\s\S]*?```/g, '')
+  .replace(/`[^`\n]*`/g, '');
+const needsMath = /\$/.test(proseBody);
 ---
 
-<BaseLayout title={`${post.data.title} // PHYSICIST_TERMINAL_V1.0`} description={post.data.description}>
+<BaseLayout title={`${post.data.title} // PHYSICIST_TERMINAL_V1.0`} description={post.data.description} needsMath={needsMath}>
   <NavBar />
   <ReadingProgressNav />
   
