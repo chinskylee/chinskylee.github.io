@@ -6,7 +6,7 @@ export async function GET(context) {
   const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
   return rss({
-    title: 'PHYSICIST_TERMINAL_V1.0 // Chinsky Lee',
+    title: 'PHYSICIST_TERMINAL_V2.0 // Chinsky Lee',
     description: 'A physics student\'s blog about quantum optics, computational physics, and tech notes.',
     site: context.site,
     items: sortedPosts.map((post) => {

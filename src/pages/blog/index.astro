@@ -12,7 +12,7 @@ const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDa
 const allTags = [...new Set(sortedPosts.flatMap(post => post.data.tags || []))];
 ---
 
-<BaseLayout title="Articles // PHYSICIST_TERMINAL_V1.0">
+<BaseLayout title="Articles // PHYSICIST_TERMINAL_V2.0">
   <NavBar />
   
   <main class="pt-24 pb-12 px-6 max-w-7xl mx-auto space-y-12">
