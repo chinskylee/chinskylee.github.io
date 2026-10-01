@@ -77,7 +77,11 @@ chinskylee.github.io/
 ├── public/
 │   ├── images/          # Static images
 │   ├── audio/           # Audio files for narrated posts
-│   ├── favicon.ico      # Multi-size favicon
+│   ├── favicon.svg      # Adaptive favicon (inverts with prefers-color-scheme)
+│   ├── favicon.ico      # Multi-size fallback favicon (16/32/48/64)
+│   ├── apple-touch-icon.png   # iOS home-screen icon
+│   ├── icon-192.png / icon-512.png  # PWA icons
+│   ├── site.webmanifest # Web app manifest
 │   └── CNAME           # Custom domain
 ├── src/
 │   ├── components/      # Astro components (NavBar, Footer, etc.)

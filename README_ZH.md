@@ -77,7 +77,11 @@ chinskylee.github.io/
 ├── public/
 │   ├── images/          # 静态图片
 │   ├── audio/           # 文章音频文件
-│   ├── favicon.ico      # 多尺寸网站图标
+│   ├── favicon.svg      # 自适应图标（随系统深浅色反白）
+│   ├── favicon.ico      # 多尺寸兑底图标（16/32/48/64）
+│   ├── apple-touch-icon.png   # iOS 主屏图标
+│   ├── icon-192.png / icon-512.png  # PWA 图标
+│   ├── site.webmanifest # Web 应用清单
 │   └── CNAME           # 自定义域名
 ├── src/
 │   ├── components/      # Astro 组件（导航栏、页脚等）
