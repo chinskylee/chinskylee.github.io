@@ -71,15 +71,13 @@ body {
   border-radius: 9999px;
 }
 
-/* Floating navigation bar */
-.glass-bar {
-  background-image: linear-gradient(180deg, var(--glass-sheen) 0%, transparent 55%);
+/* Sticky header: full-bleed frosted bar, no floating frame */
+.glass-header {
+  background-image: linear-gradient(180deg, var(--glass-sheen) 0%, transparent 100%);
   background-color: var(--glass-bg-strong);
-  border: 1px solid var(--glass-border);
-  border-radius: 0.875rem;
-  box-shadow: var(--glass-shadow), var(--glass-inner);
-  -webkit-backdrop-filter: blur(22px) saturate(180%);
-  backdrop-filter: blur(22px) saturate(180%);
+  border-bottom: 1px solid var(--glass-border);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
 }
 
 /* Interactive pills (buttons, toggles) */
@@ -118,7 +116,7 @@ body {
 @supports not ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) {
   .glass,
   .glass-soft,
-  .glass-bar,
+  .glass-header,
   .glass-btn {
     background-color: var(--glass-bg-strong);
   }
@@ -155,7 +153,7 @@ body {
 }
 
 #site-nav.nav-hidden {
-  transform: translateY(calc(-100% - 1rem));
+  transform: translateY(-100%);
   box-shadow: none;
 }
 
