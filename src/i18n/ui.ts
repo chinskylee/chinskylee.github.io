@@ -29,13 +29,6 @@ export const ui: Record<Lang, Record<string, string>> = {
     'nav.theme_aria_dark': 'Switch to dark mode',
     'nav.theme_aria_light': 'Switch to light mode',
 
-    // hero
-    'hero.subtitle': 'A STUDENT MAJORING IN PHYSICS',
-    'hero.bio':
-      'Harnessing subwavelength flow of light through mathematical elegance and nanophotonic rigor. Currently investigating LSPR effect in AuNPs and its application in biosensing.',
-    'hero.view_articles': 'VIEW_ARTICLES',
-    'hero.get_in_touch': 'GET_IN_TOUCH',
-
     // home
     'home.featured': 'FEATURED_POSTS',
     'home.featured_sub': 'Modest insights into physics & tech notes',
@@ -52,19 +45,6 @@ export const ui: Record<Lang, Record<string, string>> = {
 
     // footer
     'footer.back_to_top': 'Back to top',
-
-    // terminal log
-    'log.title': 'SYSTEM_REPORT_v2.log',
-    'log.init_label': 'INITIALIZING_SYSTEM:',
-    'log.init_text': 'Start my physics study as a little boy full of curiosity.',
-    'log.focus_label': 'RESEARCH_FOCUS:',
-    'log.focus_text':
-      'Primary focus on Quantum Optics and Nanophotonic, with a specific emphasis on their applications in biosensing. Secondary interests include Quantum Communication and Computational Physics.',
-    'log.loc_label': 'LOCATION_DATA:',
-    'log.loc_text': 'Currently based in China. Operating out of a university and digital workspace.',
-    'log.status_label': 'CURRENT_STATUS:',
-    'log.status_text':
-      'Terminal input active. Monitoring for mode coupling and plasmonic resonance. Executing: vibe coding and nanophotonic simulations.',
 
     // blog listing
     'blog.title': 'ARTICLES',
@@ -171,13 +151,6 @@ export const ui: Record<Lang, Record<string, string>> = {
     'nav.theme_aria_dark': '切换到深色模式',
     'nav.theme_aria_light': '切换到浅色模式',
 
-    // hero
-    'hero.subtitle': '一名物理专业的学生',
-    'hero.bio':
-      '以数学的优雅与纳米光子的严谨，驾驭光的亚波长流动。目前研究金纳米颗粒的局域表面等离激元共振（LSPR）及其在生物传感中的应用。',
-    'hero.view_articles': '查看文章',
-    'hero.get_in_touch': '联系我',
-
     // home
     'home.featured': '精选文章',
     'home.featured_sub': '关于物理与技术的些许笔记',
@@ -194,18 +167,6 @@ export const ui: Record<Lang, Record<string, string>> = {
 
     // footer
     'footer.back_to_top': '返回顶部',
-
-    // terminal log
-    'log.title': 'SYSTEM_REPORT_v2.log',
-    'log.init_label': '系统初始化：',
-    'log.init_text': '从一个充满好奇的小男孩开始学习物理。',
-    'log.focus_label': '研究方向：',
-    'log.focus_text':
-      '主要关注量子光学与纳米光子学，尤其侧重其在生物传感中的应用；其次对量子通信与计算物理感兴趣。',
-    'log.loc_label': '位置数据：',
-    'log.loc_text': '目前常驻中国，活动范围包括校园与数字工作空间。',
-    'log.status_label': '当前状态：',
-    'log.status_text': '终端输入已激活。持续监测模式耦合与等离激元共振。正在执行：氛围编程与纳米光子仿真。',
 
     // blog listing
     'blog.title': '文章',
