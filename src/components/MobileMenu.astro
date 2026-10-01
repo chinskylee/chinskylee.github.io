@@ -5,7 +5,7 @@
 <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-40 opacity-0 pointer-events-none transition-opacity duration-300 md:hidden" aria-hidden="true"></div>
 
 <!-- Mobile Menu Sidebar -->
-<aside id="mobile-menu" class="fixed top-0 left-0 h-full w-72 bg-surface-container-high z-50 transform -translate-x-full transition-transform duration-300 ease-out md:hidden" aria-label="Mobile navigation">
+<aside id="mobile-menu" class="fixed top-0 left-0 h-full w-72 bg-surface-container-high z-50 transform -translate-x-full transition-transform duration-300 ease-out md:hidden" aria-label="Mobile navigation" aria-hidden="true" inert>
   <!-- Close Button -->
   <button id="mobile-menu-close" class="absolute top-4 right-4 p-2 text-on-surface hover:text-primary transition-colors" aria-label="Close menu">
     <span class="material-symbols-outlined text-2xl">&#xe5cd;</span>
@@ -92,21 +92,40 @@
     let touchStartX = 0;
     let touchEndX = 0;
 
+    function syncMenuA11y(open) {
+      menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+      if (open) {
+        menu.removeAttribute('inert');
+      } else {
+        menu.setAttribute('inert', '');
+      }
+      if (toggleBtnNav) {
+        toggleBtnNav.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+    }
+
     function openMenu() {
       isOpen = true;
       menu.classList.remove('-translate-x-full');
       overlay.classList.remove('opacity-0', 'pointer-events-none');
       document.body.style.overflow = 'hidden';
+      syncMenuA11y(true);
       syncMobileThemeToggle();
       // 切换图标为 close
       if (menuIcon) menuIcon.textContent = '\ue5cd';
     }
 
     function closeMenu() {
+      const focusWasInside = Boolean(document.activeElement && menu.contains(document.activeElement));
       isOpen = false;
       menu.classList.add('-translate-x-full');
       overlay.classList.add('opacity-0', 'pointer-events-none');
       document.body.style.overflow = '';
+      syncMenuA11y(false);
+      // Move focus out of the now-hidden menu so keyboard users are not stranded
+      if (focusWasInside && toggleBtnNav) {
+        toggleBtnNav.focus();
+      }
       // 切换图标为 menu
       if (menuIcon) menuIcon.textContent = '\ue5d2';
     }
