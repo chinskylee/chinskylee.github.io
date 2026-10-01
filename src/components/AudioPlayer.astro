@@ -106,7 +106,18 @@ const {
         document.querySelectorAll('.audio-player audio').forEach(a => {
           if (a !== audio) a.pause();
         });
-        audio.play();
+        const playPromise = audio.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+          // Autoplay may be blocked (e.g. by browser policy or CSP); keep UI in sync.
+          playPromise.catch((err) => {
+            console.error('音频播放失败:', err);
+            isPlaying = false;
+            playIcon.classList.remove('hidden');
+            pauseIcon.classList.add('hidden');
+            statusText.innerHTML = '<span class="w-1.5 h-1.5 bg-primary status-dot"></span>STANDBY';
+            waveBars.forEach(bar => bar.classList.remove('bg-primary'));
+          });
+        }
         isPlaying = true;
         playIcon.classList.add('hidden');
         pauseIcon.classList.remove('hidden');
@@ -126,19 +137,27 @@ const {
 
     audio.addEventListener('timeupdate', () => {
       currentTimeEl.textContent = formatTime(audio.currentTime);
-      const percent = (audio.currentTime / audio.duration) * 100 || 0;
-      progressFill.style.width = `${percent}%`;
-      progressThumb.style.left = `calc(${percent}% - 4px)`;
+      if (Number.isFinite(audio.duration) && audio.duration > 0) {
+        const percent = (audio.currentTime / audio.duration) * 100;
+        progressFill.style.width = `${percent}%`;
+        progressThumb.style.left = `calc(${percent}% - 4px)`;
+      }
       seekSlider.value = audio.currentTime;
     });
 
     audio.addEventListener('loadedmetadata', () => {
       durationEl.textContent = formatTime(audio.duration);
-      seekSlider.max = audio.duration;
+      if (Number.isFinite(audio.duration) && audio.duration > 0) {
+        seekSlider.max = String(audio.duration);
+      }
     });
 
     seekSlider.addEventListener('input', (e) => {
-      audio.currentTime = e.target.value;
+      const target = e.target as HTMLInputElement;
+      const value = Number(target.value);
+      if (Number.isFinite(value)) {
+        audio.currentTime = value;
+      }
     });
 
     audio.addEventListener('ended', () => {
