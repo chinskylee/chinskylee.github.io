@@ -14,7 +14,7 @@ const {
 } = Astro.props;
 ---
 
-<div class="audio-player bg-surface-container-low border-l-4 border-primary p-3 md:p-4 w-full flex flex-col gap-3 shadow-sm my-6" data-src={src} data-title={title} data-bitrate={bitrate}>
+<div class="audio-player glass p-3 md:p-4 w-full flex flex-col gap-3 my-6" data-src={src} data-title={title} data-bitrate={bitrate}>
   <audio class="audio-element" preload="metadata">
     <source src={src} type="audio/mpeg" />
     您的浏览器不支持音频播放。
@@ -22,7 +22,7 @@ const {
 
   <div class="flex justify-between items-start md:items-center">
     <div class="flex items-center gap-3">
-      <button class="play-btn bg-primary text-on-primary p-2 hover:bg-on-primary-container transition-colors focus:outline-none flex-shrink-0 relative w-10 h-10 flex items-center justify-center" data-i18n-attr="aria-label:audio.play_pause_aria" aria-label="Play/pause">
+      <button class="play-btn bg-primary text-on-primary p-2 rounded-full hover:bg-on-primary-container transition-colors focus:outline-none flex-shrink-0 relative w-10 h-10 flex items-center justify-center" data-i18n-attr="aria-label:audio.play_pause_aria" aria-label="Play/pause">
         <span class="material-symbols-outlined notranslate play-icon absolute" translate="no">&#xe037;</span>
         <span class="material-symbols-outlined notranslate pause-icon absolute hidden" translate="no">&#xe034;</span>
       </button>
@@ -68,7 +68,7 @@ const {
     <span class="font-label text-[10px] text-outline tracking-widest tabular-nums duration-time">00:00</span>
 
     <div class="flex items-center pl-2 ml-1 border-l border-outline-variant">
-      <button class="mute-btn text-outline hover:text-primary transition-colors focus:outline-none relative w-8 h-8 flex items-center justify-center" data-i18n-attr="aria-label:audio.mute_aria" aria-label="Mute/unmute">
+      <button class="mute-btn text-outline hover:text-primary rounded-full transition-colors focus:outline-none relative w-8 h-8 flex items-center justify-center" data-i18n-attr="aria-label:audio.mute_aria" aria-label="Mute/unmute">
         <span class="material-symbols-outlined notranslate volume-icon absolute" translate="no">&#xe050;</span>
         <span class="material-symbols-outlined notranslate volume-mute-icon absolute hidden" translate="no">&#xe04f;</span>
       </button>

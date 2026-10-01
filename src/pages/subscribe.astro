@@ -13,7 +13,7 @@ const rssUrl = new URL('/rss.xml', Astro.site ?? Astro.url.origin).toString();
   <main class="pt-24 pb-12 px-6 max-w-4xl mx-auto space-y-12">
     <!-- Header -->
     <section class="space-y-4 text-center">
-      <div class="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-primary text-on-primary mb-4">
+      <div class="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-primary text-on-primary mb-4">
         <span class="material-symbols-outlined text-3xl md:text-4xl">&#xe0e5;</span>
       </div>
       <h1 class="font-headline text-2xl md:text-5xl font-bold tracking-tight"><T k="subscribe.title" /></h1>
@@ -21,15 +21,15 @@ const rssUrl = new URL('/rss.xml', Astro.site ?? Astro.url.origin).toString();
     </section>
 
     <!-- RSS URL Section -->
-    <section class="bg-surface-container p-6 md:p-8 space-y-4 md:space-y-6">
+    <section class="glass p-6 md:p-8 space-y-4 md:space-y-6">
       <h2 class="font-headline text-lg md:text-2xl font-bold tracking-tight"><T k="subscribe.feed_url" /></h2>
       <div class="flex flex-col md:flex-row gap-4">
-        <code class="flex-1 bg-surface-container-low p-3 md:p-4 font-mono text-sm md:text-base break-all">
+        <code class="flex-1 rounded-xl bg-black/5 dark:bg-white/5 p-3 md:p-4 font-mono text-sm md:text-base break-all">
           {rssUrl}
         </code>
         <button 
           id="copy-btn"
-          class="inline-flex items-center justify-center gap-2 bg-primary text-on-primary px-4 md:px-6 py-2.5 md:py-3 text-sm md:text-lg font-label uppercase tracking-widest hover:bg-on-primary-container transition-all"
+          class="inline-flex items-center justify-center gap-2 rounded-full bg-primary text-on-primary px-4 md:px-6 py-2.5 md:py-3 text-sm md:text-lg font-label uppercase tracking-widest hover:bg-on-primary-container transition-all"
           data-url={rssUrl}
         >
           <span class="material-symbols-outlined text-sm md:text-base">&#xe14d;</span>
@@ -58,7 +58,7 @@ const rssUrl = new URL('/rss.xml', Astro.site ?? Astro.url.origin).toString();
       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <!-- Desktop/Web -->
-        <div class="bg-surface-container p-4 md:p-6 space-y-3 md:space-y-4 w-full">
+        <div class="glass-soft p-4 md:p-6 space-y-3 md:space-y-4 w-full">
           <h3 class="font-headline text-base md:text-xl font-bold flex items-center gap-2">
             <span class="material-symbols-outlined text-primary text-sm md:text-base">&#xe30a;</span>
             <T k="subscribe.desktop" />
@@ -89,7 +89,7 @@ const rssUrl = new URL('/rss.xml', Astro.site ?? Astro.url.origin).toString();
         </div>
 
         <!-- Mobile -->
-        <div class="bg-surface-container p-4 md:p-6 space-y-3 md:space-y-4 w-full">
+        <div class="glass-soft p-4 md:p-6 space-y-3 md:space-y-4 w-full">
           <h3 class="font-headline text-base md:text-xl font-bold flex items-center gap-2">
             <span class="material-symbols-outlined text-primary text-sm md:text-base">&#xe32c;</span>
             <T k="subscribe.mobile" />
@@ -126,7 +126,7 @@ const rssUrl = new URL('/rss.xml', Astro.site ?? Astro.url.origin).toString();
       <h2 class="font-headline text-lg md:text-2xl font-bold tracking-tight border-b border-outline-variant pb-4">
         <T k="subscribe.how" />
       </h2>
-      <div class="bg-surface-container-low p-4 md:p-6 space-y-3 md:space-y-4">
+      <div class="glass-soft p-4 md:p-6 space-y-3 md:space-y-4">
         <ol class="space-y-3 md:space-y-4 text-sm md:text-base text-on-surface-variant list-decimal list-inside">
           <li class="pl-2">
             <span class="text-on-surface font-semibold"><T k="subscribe.step1_a" /></span> <T k="subscribe.step1_b" />
@@ -145,7 +145,7 @@ const rssUrl = new URL('/rss.xml', Astro.site ?? Astro.url.origin).toString();
     </section>
 
     <!-- Alternative -->
-    <section class="bg-primary text-on-primary p-6 md:p-8 space-y-3 md:space-y-4">
+    <section class="rounded-3xl bg-primary text-on-primary p-6 md:p-8 space-y-3 md:space-y-4">
       <h2 class="font-headline text-lg md:text-2xl font-bold tracking-tight flex items-center gap-2 break-words">
         <span class="material-symbols-outlined text-sm md:text-base">&#xe866;</span>
         <span class="break-words"><T k="subscribe.manual" /></span>
@@ -155,7 +155,7 @@ const rssUrl = new URL('/rss.xml', Astro.site ?? Astro.url.origin).toString();
       </p>
       <a 
         href="/blog" 
-        class="inline-flex items-center gap-2 border border-on-primary px-4 md:px-6 py-2.5 md:py-3 text-sm md:text-lg font-label uppercase tracking-widest hover:bg-on-primary hover:text-primary transition-all"
+        class="inline-flex items-center gap-2 rounded-full border border-on-primary px-4 md:px-6 py-2.5 md:py-3 text-sm md:text-lg font-label uppercase tracking-widest hover:bg-on-primary hover:text-primary transition-all"
       >
         <span><T k="subscribe.visit_blog" /></span>
         <span class="material-symbols-outlined text-sm md:text-base">&#xe5c8;</span>

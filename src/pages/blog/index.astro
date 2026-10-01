@@ -29,7 +29,7 @@ const allTags = [...new Set(sortedPosts.flatMap(post => post.data.tags || []))];
         {allTags.map(tag => (
           <a
             href={`/tags/${tag.toLowerCase().replace(/\s+/g, '-')}/`}
-            class="px-2 md:px-3 py-1 bg-surface-container text-xs md:text-base font-label uppercase tracking-wider hover:bg-surface-container-highest transition-colors"
+            class="glass-btn px-2 md:px-3 py-1 text-xs md:text-base font-label uppercase tracking-wider"
           >
             {tag}
           </a>
@@ -40,7 +40,7 @@ const allTags = [...new Set(sortedPosts.flatMap(post => post.data.tags || []))];
     <!-- Posts List -->
     <section class="space-y-6">
       {sortedPosts.map(post => (
-        <article class="bg-surface-container p-4 md:p-6 flex flex-col md:flex-row md:items-start gap-3 md:gap-4 hover:bg-surface-container-highest transition-colors w-full">
+        <article class="glass p-4 md:p-6 flex flex-col md:flex-row md:items-start gap-3 md:gap-4 transition-all hover:-translate-y-0.5 w-full">
           <div class="md:w-32 shrink-0">
             <time class="font-label text-xs md:text-base text-outline uppercase" datetime={post.data.pubDate.toISOString()}>
               {post.data.pubDate.toISOString().split('T')[0]}

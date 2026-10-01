@@ -3,12 +3,12 @@ import T from './T.astro';
 ---
 
 <!-- Mobile Menu Overlay -->
-<div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-40 opacity-0 pointer-events-none transition-opacity duration-300 md:hidden" aria-hidden="true"></div>
+<div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-[55] opacity-0 pointer-events-none transition-opacity duration-300 md:hidden" aria-hidden="true"></div>
 
 <!-- Mobile Menu Sidebar -->
-<aside id="mobile-menu" class="fixed top-0 left-0 h-full w-72 bg-surface-container-high z-50 transform -translate-x-full transition-transform duration-300 ease-out md:hidden" aria-label="Mobile navigation" aria-hidden="true" inert>
+<aside id="mobile-menu" class="glass-drawer fixed top-0 left-0 h-full w-72 z-[60] transform -translate-x-full transition-transform duration-300 ease-out md:hidden" aria-label="Mobile navigation" aria-hidden="true" inert>
   <!-- Close Button -->
-  <button id="mobile-menu-close" class="absolute top-4 right-4 p-2 text-on-surface hover:text-primary transition-colors" data-i18n-attr="aria-label:nav.close_aria" aria-label="Close menu">
+  <button id="mobile-menu-close" class="absolute top-4 right-4 p-2 rounded-full text-on-surface hover:text-primary hover:bg-black/5 dark:hover:bg-white/10 transition-colors" data-i18n-attr="aria-label:nav.close_aria" aria-label="Close menu">
     <span class="material-symbols-outlined text-2xl">&#xe5cd;</span>
   </button>
 
@@ -16,19 +16,19 @@ import T from './T.astro';
   <div class="flex flex-col h-full pt-16 px-6 pb-8">
     <!-- Navigation Links -->
     <nav class="flex-1 space-y-2">
-      <a href="/" class="block py-3 px-4 font-headline text-lg font-semibold tracking-tight text-on-surface hover:bg-surface-container-highest transition-colors rounded">
+      <a href="/" class="block py-3 px-4 font-headline text-lg font-semibold tracking-tight text-on-surface hover:bg-black/5 dark:hover:bg-white/10 transition-colors rounded-xl">
         <T k="nav.home" />
       </a>
-      <a href="/welcome" class="block py-3 px-4 font-headline text-lg font-semibold tracking-tight text-on-surface hover:bg-surface-container-highest transition-colors rounded">
+      <a href="/welcome" class="block py-3 px-4 font-headline text-lg font-semibold tracking-tight text-on-surface hover:bg-black/5 dark:hover:bg-white/10 transition-colors rounded-xl">
         <T k="nav.welcome" />
       </a>
-      <a href="/blog" class="block py-3 px-4 font-headline text-lg font-semibold tracking-tight text-on-surface hover:bg-surface-container-highest transition-colors rounded">
+      <a href="/blog" class="block py-3 px-4 font-headline text-lg font-semibold tracking-tight text-on-surface hover:bg-black/5 dark:hover:bg-white/10 transition-colors rounded-xl">
         <T k="nav.articles" />
       </a>
-      <a href="/archive" class="block py-3 px-4 font-headline text-lg font-semibold tracking-tight text-on-surface hover:bg-surface-container-highest transition-colors rounded">
+      <a href="/archive" class="block py-3 px-4 font-headline text-lg font-semibold tracking-tight text-on-surface hover:bg-black/5 dark:hover:bg-white/10 transition-colors rounded-xl">
         <T k="nav.archive" />
       </a>
-      <a href="/subscribe" class="block py-3 px-4 font-headline text-lg font-semibold tracking-tight text-on-surface hover:bg-surface-container-highest transition-colors rounded">
+      <a href="/subscribe" class="block py-3 px-4 font-headline text-lg font-semibold tracking-tight text-on-surface hover:bg-black/5 dark:hover:bg-white/10 transition-colors rounded-xl">
         <T k="nav.subscribe" />
       </a>
     </nav>
@@ -36,7 +36,7 @@ import T from './T.astro';
     <div id="reading-progress-toggle-mobile-wrapper" class="pt-2 pb-2 hidden">
       <button
         id="reading-progress-toggle-mobile"
-        class="w-full flex items-center justify-center gap-3 py-3 px-4 border border-outline-variant text-on-surface hover:bg-surface-container transition-colors rounded"
+        class="glass-btn w-full flex items-center justify-center gap-3 py-3 px-4 text-on-surface"
         type="button"
         data-i18n-attr="aria-label:reading.toggle_aria"
         aria-label="Toggle reading progress navigation"
@@ -49,7 +49,7 @@ import T from './T.astro';
 
     <!-- Language Toggle (Mobile) -->
     <div class="pt-4 pb-2">
-      <button id="lang-toggle-mobile" data-lang-toggle class="w-full flex items-center justify-center gap-3 py-3 px-4 border border-outline-variant text-on-surface hover:bg-surface-container transition-colors rounded">
+      <button id="lang-toggle-mobile" data-lang-toggle class="glass-btn w-full flex items-center justify-center gap-3 py-3 px-4 text-on-surface">
         <span class="material-symbols-outlined text-xl">&#xe8e2;</span>
         <span class="font-label text-sm tracking-widest uppercase notranslate" translate="no"><T k="lang.toggle_label" /></span>
       </button>
@@ -57,7 +57,7 @@ import T from './T.astro';
 
     <!-- Dark Mode Toggle (Mobile) -->
     <div class="pt-2 pb-2">
-      <button id="theme-toggle-mobile" class="w-full flex items-center justify-center gap-3 py-3 px-4 border border-outline-variant text-on-surface hover:bg-surface-container transition-colors rounded">
+      <button id="theme-toggle-mobile" class="glass-btn w-full flex items-center justify-center gap-3 py-3 px-4 text-on-surface">
         <span class="material-symbols-outlined text-xl">&#xe51c;</span>
         <span class="font-label text-sm tracking-widest uppercase notranslate" translate="no">DARK</span>
       </button>

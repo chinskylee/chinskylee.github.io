@@ -22,12 +22,12 @@ import T from '../components/T.astro';
       <!-- Search Box -->
       <div class="w-full max-w-2xl relative z-10">
         <form id="search-form" class="relative" novalidate>
-          <div class="flex items-center bg-surface-container border border-outline-variant overflow-hidden">
+          <div class="glass glass-pill flex items-center overflow-hidden">
             <!-- Engine Text Button -->
             <button 
               type="button" 
               id="engine-btn"
-              class="flex items-center justify-center px-2 h-12 md:px-4 md:h-14 bg-surface-container-low border-r border-outline-variant hover:bg-surface-container-highest transition-colors shrink-0 min-w-[60px] md:min-w-[100px]"
+              class="flex items-center justify-center px-2 h-12 md:px-4 md:h-14 border-r border-outline-variant/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors shrink-0 min-w-[60px] md:min-w-[100px]"
               data-i18n-attr="aria-label:search.engine_aria"
               aria-label="Switch search engine"
             >
@@ -57,21 +57,21 @@ import T from '../components/T.astro';
           </div>
           
           <!-- Engine Dropdown -->
-          <div id="engine-dropdown" class="absolute top-full left-0 mt-1 w-48 bg-surface-container border border-outline-variant shadow-xl z-[100] hidden">
-            <button type="button" class="engine-option flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-highest transition-colors" data-engine="google" data-url="https://www.google.com/search?q=" data-name="Google">
+          <div id="engine-dropdown" class="glass absolute top-full left-0 mt-1 w-48 z-[100] hidden">
+            <button type="button" class="engine-option flex items-center gap-3 w-full px-4 py-3 hover:bg-black/5 dark:hover:bg-white/10 transition-colors" data-engine="google" data-url="https://www.google.com/search?q=" data-name="Google">
               <span class="font-label text-sm uppercase text-on-surface">Google</span>
             </button>
-            <button type="button" class="engine-option flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-highest transition-colors" data-engine="bing" data-url="https://www.bing.com/search?q=" data-name="Bing">
+            <button type="button" class="engine-option flex items-center gap-3 w-full px-4 py-3 hover:bg-black/5 dark:hover:bg-white/10 transition-colors" data-engine="bing" data-url="https://www.bing.com/search?q=" data-name="Bing">
               <span class="font-label text-sm uppercase text-on-surface">Bing</span>
             </button>
-            <button type="button" class="engine-option flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-highest transition-colors" data-engine="duckduckgo" data-url="https://duckduckgo.com/?q=" data-name="DuckDuckGo">
+            <button type="button" class="engine-option flex items-center gap-3 w-full px-4 py-3 hover:bg-black/5 dark:hover:bg-white/10 transition-colors" data-engine="duckduckgo" data-url="https://duckduckgo.com/?q=" data-name="DuckDuckGo">
               <span class="font-label text-sm uppercase text-on-surface">DuckDuckGo</span>
             </button>
-            <button type="button" class="engine-option flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-highest transition-colors" data-engine="github" data-url="https://github.com/search?q=" data-name="GitHub">
+            <button type="button" class="engine-option flex items-center gap-3 w-full px-4 py-3 hover:bg-black/5 dark:hover:bg-white/10 transition-colors" data-engine="github" data-url="https://github.com/search?q=" data-name="GitHub">
               <span class="font-label text-sm uppercase text-on-surface">GitHub</span>
             </button>
             <div class="border-t border-outline-variant"></div>
-            <button type="button" class="engine-option flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-highest transition-colors" data-engine="chatgpt" data-url="https://chat.openai.com/?q=" data-name="ChatGPT">
+            <button type="button" class="engine-option flex items-center gap-3 w-full px-4 py-3 hover:bg-black/5 dark:hover:bg-white/10 transition-colors" data-engine="chatgpt" data-url="https://chat.openai.com/?q=" data-name="ChatGPT">
               <span class="font-label text-sm uppercase text-on-surface">ChatGPT</span>
             </button>
           </div>
@@ -80,7 +80,7 @@ import T from '../components/T.astro';
 
       <!-- Clock Section -->
       <div class="w-full max-w-md">
-        <div class="bg-surface-container p-8 md:p-12 text-center cursor-pointer select-none" id="clock-container" data-i18n-attr="title:search.clock_title" title="Click to toggle clock style">
+        <div class="glass p-8 md:p-12 text-center cursor-pointer select-none" id="clock-container" data-i18n-attr="title:search.clock_title" title="Click to toggle clock style">
           <!-- Digital Clock (default) -->
           <div id="digital-clock" class="space-y-2">
             <div class="font-headline text-5xl md:text-7xl font-bold tracking-tight" id="time">--:--:--</div>

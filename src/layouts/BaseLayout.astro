@@ -1,5 +1,6 @@
 ---
 import MobileMenu from '../components/MobileMenu.astro';
+import '../styles/glass.css';
 
 export interface Props {
   title: string;
@@ -393,6 +394,45 @@ const csp = [
     });
   })();
 
+  // Floating navbar: hide while scrolling down, reveal on scroll up
+  function initNavAutoHide() {
+    const nav = document.getElementById('site-nav');
+    if (!nav || nav.dataset.autoHideInit) return;
+    nav.dataset.autoHideInit = 'true';
+
+    const REVEAL_ABOVE = 80; // always visible near the top of the page
+    const HIDE_AFTER = 160; // do not hide before this scroll depth
+    const DELTA = 6; // ignore tiny scroll jitters
+
+    let lastY = window.scrollY;
+    let ticking = false;
+
+    const update = () => {
+      const y = Math.max(window.scrollY, 0);
+      const delta = y - lastY;
+
+      if (y <= REVEAL_ABOVE) {
+        nav.classList.remove('nav-hidden');
+      } else if (delta > DELTA && y > HIDE_AFTER) {
+        nav.classList.add('nav-hidden');
+      } else if (delta < -DELTA) {
+        nav.classList.remove('nav-hidden');
+      }
+
+      lastY = y;
+      ticking = false;
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    update();
+  }
+
   // Back to top button
   function initBackToTop() {
     const backToTopButton = document.getElementById('back-to-top');
@@ -429,5 +469,7 @@ const csp = [
   }
 
   initBackToTop();
+  initNavAutoHide();
   document.addEventListener('astro:page-load', initBackToTop);
+  document.addEventListener('astro:page-load', initNavAutoHide);
 </script>

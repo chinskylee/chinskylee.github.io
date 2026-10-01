@@ -8,8 +8,8 @@ const currentYear = new Date().getFullYear();
 ---
 
 <footer class:list={[
-  "w-full border-t border-[#79776d]/10 bg-[#f5f4e8] dark:bg-[#1b1c15] flex items-center justify-center px-8 py-6 gap-4",
-  noTopMargin ? "" : "mt-24",
+  "glass-bar mx-3 md:mx-6 mb-3 md:mb-4 flex items-center justify-center px-6 py-5 gap-4",
+  noTopMargin ? "" : "mt-16",
 ]}>
   <div class="font-['Space_Grotesk'] text-base leading-tight text-[#705a4a] dark:text-[#f5f4e8]">
     © {currentYear} SYSTEM_ERR_NULL // ALL_EQUATIONS_RESERVED
@@ -19,7 +19,7 @@ const currentYear = new Date().getFullYear();
 <button 
   data-i18n-attr="aria-label:footer.back_to_top"
   aria-label="Back to top" 
-  class="hidden fixed right-6 bottom-8 z-40 border border-outline bg-surface-container text-on-surface px-3 py-3 hover:bg-surface-container-highest transition-colors" 
+  class="glass-btn hidden fixed right-6 bottom-8 z-40 text-on-surface px-3 py-3" 
   id="back-to-top" 
   type="button"
 >

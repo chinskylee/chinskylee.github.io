@@ -32,7 +32,7 @@ const recentPosts = posts
       
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         {recentPosts.map(post => (
-          <a href={`/blog/${post.slug}/`} class="group bg-surface-container p-4 flex flex-col gap-4 hover:bg-surface-container-highest transition-colors min-h-[200px]">
+          <a href={`/blog/${post.slug}/`} class="glass group p-4 flex flex-col gap-4 transition-all hover:-translate-y-0.5 min-h-[200px]">
             <div class="space-y-2 flex-1 min-w-0">
               <span class="font-label text-xs text-outline block h-5">
                 {post.data.pubDate.toISOString().split('T')[0]}
@@ -64,7 +64,7 @@ const recentPosts = posts
         </p>
         <div class="pt-4">
           <a class="inline-flex items-center gap-4 group" href="https://github.com/chinskylee" rel="noopener noreferrer" target="_blank">
-            <div class="w-12 h-12 flex items-center justify-center border border-outline group-hover:bg-primary group-hover:text-on-primary transition-all">
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center border border-outline group-hover:bg-primary group-hover:text-on-primary transition-all">
               <span class="material-symbols-outlined">&#xe86f;</span>
             </div>
             <div>
@@ -76,7 +76,7 @@ const recentPosts = posts
       </div>
       <div class="space-y-4">
         <!-- Repo 1: gomoku-game -->
-        <a href="https://github.com/chinskylee/gomoku-game" target="_blank" rel="noopener noreferrer" class="group bg-surface-container-low p-4 flex items-center justify-between hover:bg-surface-container transition-colors gap-2">
+        <a href="https://github.com/chinskylee/gomoku-game" target="_blank" rel="noopener noreferrer" class="glass group p-4 flex items-center justify-between gap-2 transition-all hover:-translate-y-0.5">
           <div class="flex items-center gap-3 min-w-0 flex-1">
             <span class="material-symbols-outlined text-primary shrink-0">&#xe2c7;</span>
             <div class="min-w-0">
@@ -89,7 +89,7 @@ const recentPosts = posts
           </div>
         </a>
         <!-- Repo 2: qrcode-creator -->
-        <a href="https://github.com/chinskylee/qrcode-creator" target="_blank" rel="noopener noreferrer" class="group bg-surface-container-low p-4 flex items-center justify-between hover:bg-surface-container transition-colors gap-2">
+        <a href="https://github.com/chinskylee/qrcode-creator" target="_blank" rel="noopener noreferrer" class="glass group p-4 flex items-center justify-between gap-2 transition-all hover:-translate-y-0.5">
           <div class="flex items-center gap-3 min-w-0 flex-1">
             <span class="material-symbols-outlined text-primary shrink-0">&#xe2c7;</span>
             <div class="min-w-0">
@@ -102,7 +102,7 @@ const recentPosts = posts
           </div>
         </a>
         <!-- Repo 3: chinskylee.github.io -->
-        <a href="https://github.com/chinskylee/chinskylee.github.io" target="_blank" rel="noopener noreferrer" class="group bg-surface-container-low p-4 flex items-center justify-between hover:bg-surface-container transition-colors gap-2">
+        <a href="https://github.com/chinskylee/chinskylee.github.io" target="_blank" rel="noopener noreferrer" class="glass group p-4 flex items-center justify-between gap-2 transition-all hover:-translate-y-0.5">
           <div class="flex items-center gap-3 min-w-0 flex-1">
             <span class="material-symbols-outlined text-primary shrink-0">&#xe2c7;</span>
             <div class="min-w-0">
@@ -124,14 +124,14 @@ const recentPosts = posts
         <p class="font-label text-sm md:text-base text-outline uppercase tracking-widest"><T k="home.contact_sub" /></p>
       </div>
       <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <a class="group bg-surface-container p-4 md:p-5 flex items-center justify-between hover:bg-surface-container-highest transition-colors gap-2" href="mailto:chinskylee@outlook.com">
+        <a class="glass group p-4 md:p-5 flex items-center justify-between gap-2 transition-all hover:-translate-y-0.5" href="mailto:chinskylee@outlook.com">
           <div class="space-y-1 min-w-0 flex-1">
             <span class="font-label text-sm md:text-base text-outline uppercase"><T k="home.email" /></span>
             <span class="block font-headline text-lg md:text-2xl font-semibold tracking-tight truncate">chinskylee@outlook.com</span>
           </div>
           <span class="material-symbols-outlined text-base text-outline group-hover:translate-x-1 transition-transform shrink-0">&#xe569;</span>
         </a>
-        <a class="group bg-surface-container p-4 md:p-5 flex items-center justify-between hover:bg-surface-container-highest transition-colors gap-2" href="https://github.com/chinskylee" rel="noopener noreferrer" target="_blank">
+        <a class="glass group p-4 md:p-5 flex items-center justify-between gap-2 transition-all hover:-translate-y-0.5" href="https://github.com/chinskylee" rel="noopener noreferrer" target="_blank">
           <div class="space-y-1 min-w-0 flex-1">
             <span class="font-label text-sm md:text-base text-outline uppercase"><T k="home.github" /></span>
             <span class="block font-headline text-lg md:text-2xl font-semibold tracking-tight truncate">github.com/chinskylee</span>
