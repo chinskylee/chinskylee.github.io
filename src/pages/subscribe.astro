@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import NavBar from '../components/NavBar.astro';
 import Footer from '../components/Footer.astro';
 
-const rssUrl = 'https://lyralex.qzz.io/rss.xml';
+const rssUrl = new URL('/rss.xml', Astro.site ?? Astro.url.origin).toString();
 ---
 
 <BaseLayout title="Subscribe // PHYSICIST_TERMINAL_V1.0" description="Subscribe to updates via RSS feed">
