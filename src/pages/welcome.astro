@@ -142,9 +142,13 @@ import Footer from '../components/Footer.astro';
   let userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   let isDigitalClock = true;
   let clockInterval: number | null = null;
+  let searchInitialized = false;
+  let clockInitialized = false;
   
-  // Initialize search functionality
+  // Initialize search functionality (idempotent: safe to call more than once,
+  // e.g. from both DOMContentLoaded and astro:page-load)
   function initSearch() {
+    if (searchInitialized) return;
     const searchForm = document.getElementById('search-form');
     const engineBtn = document.getElementById('engine-btn');
     const engineDropdown = document.getElementById('engine-dropdown');
@@ -152,6 +156,7 @@ import Footer from '../components/Footer.astro';
     const searchInput = document.getElementById('search-input') as HTMLInputElement;
     
     if (!searchForm || !engineBtn || !engineDropdown) return;
+    searchInitialized = true;
     
     // Toggle dropdown
     engineBtn.addEventListener('click', (e) => {
@@ -190,7 +195,8 @@ import Footer from '../components/Footer.astro';
       
       if (query && query.trim() && searchEngines[currentEngine]) {
         const url = searchEngines[currentEngine].url + encodeURIComponent(query);
-        window.open(url, '_blank');
+        // 'noopener' prevents the opened tab from controlling this page.
+        window.open(url, '_blank', 'noopener,noreferrer');
       }
     });
     
@@ -226,6 +232,20 @@ import Footer from '../components/Footer.astro';
         analogClock.classList.remove('hidden');
       }
     }
+  }
+
+  // Bind the clock toggle once; returns false if the container is absent
+  function initClock() {
+    const clockContainer = document.getElementById('clock-container');
+    if (!clockContainer) return false;
+    if (!clockInitialized) {
+      clockContainer.addEventListener('click', toggleClockMode);
+      clockInitialized = true;
+    }
+    updateClock();
+    if (clockInterval) clearInterval(clockInterval);
+    clockInterval = setInterval(updateClock, 1000);
+    return true;
   }
   
   // Update digital clock
@@ -293,32 +313,13 @@ import Footer from '../components/Footer.astro';
   // Initialize when DOM is loaded
   document.addEventListener('DOMContentLoaded', () => {
     initSearch();
-    
-    // Clock toggle
-    const clockContainer = document.getElementById('clock-container');
-    if (clockContainer) {
-      clockContainer.addEventListener('click', toggleClockMode);
-    }
-    
-    // Start clock
-    updateClock();
-    clockInterval = setInterval(updateClock, 1000);
+    initClock();
   });
   
-  // Re-initialize on Astro page transitions
+  // Re-initialize on Astro page transitions (no-op when ClientRouter is absent)
   document.addEventListener('astro:page-load', () => {
     initSearch();
-    
-    // Clock toggle
-    const clockContainer = document.getElementById('clock-container');
-    if (clockContainer) {
-      clockContainer.addEventListener('click', toggleClockMode);
-    }
-    
-    // Start clock
-    updateClock();
-    if (clockInterval) clearInterval(clockInterval);
-    clockInterval = setInterval(updateClock, 1000);
+    initClock();
   });
 </script>
 
