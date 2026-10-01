@@ -1,0 +1,17 @@
+---
+// Renders a UI string in every supported language as sibling spans.
+// BaseLayout's CSS shows only the span matching <html data-lang>, so the
+// correct language is in place on first paint (no flash, works without JS).
+import { ui } from '../i18n/ui';
+
+export interface Props {
+  k: string;
+  class?: string;
+}
+
+const { k, class: className } = Astro.props;
+const en = ui.en[k] ?? k;
+const zh = ui.zh[k] ?? k;
+---
+
+<span data-lang="en" class={className}>{en}</span><span data-lang="zh" class={className}>{zh}</span>

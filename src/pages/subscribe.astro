@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import NavBar from '../components/NavBar.astro';
 import Footer from '../components/Footer.astro';
+import T from '../components/T.astro';
 
 const rssUrl = new URL('/rss.xml', Astro.site ?? Astro.url.origin).toString();
 ---
@@ -15,13 +16,13 @@ const rssUrl = new URL('/rss.xml', Astro.site ?? Astro.url.origin).toString();
       <div class="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-primary text-on-primary mb-4">
         <span class="material-symbols-outlined text-3xl md:text-4xl">&#xe0e5;</span>
       </div>
-      <h1 class="font-headline text-2xl md:text-5xl font-bold tracking-tight">SUBSCRIBE_VIA_RSS</h1>
-      <p class="font-label text-sm md:text-base text-outline uppercase tracking-widest">Stay updated with the latest posts</p>
+      <h1 class="font-headline text-2xl md:text-5xl font-bold tracking-tight"><T k="subscribe.title" /></h1>
+      <p class="font-label text-sm md:text-base text-outline uppercase tracking-widest"><T k="subscribe.sub" /></p>
     </section>
 
     <!-- RSS URL Section -->
     <section class="bg-surface-container p-6 md:p-8 space-y-4 md:space-y-6">
-      <h2 class="font-headline text-lg md:text-2xl font-bold tracking-tight">FEED_URL</h2>
+      <h2 class="font-headline text-lg md:text-2xl font-bold tracking-tight"><T k="subscribe.feed_url" /></h2>
       <div class="flex flex-col md:flex-row gap-4">
         <code class="flex-1 bg-surface-container-low p-3 md:p-4 font-mono text-sm md:text-base break-all">
           {rssUrl}
@@ -32,34 +33,27 @@ const rssUrl = new URL('/rss.xml', Astro.site ?? Astro.url.origin).toString();
           data-url={rssUrl}
         >
           <span class="material-symbols-outlined text-sm md:text-base">&#xe14d;</span>
-          <span>COPY</span>
+          <span><T k="subscribe.copy" /></span>
         </button>
       </div>
-      <p id="copy-feedback" class="text-primary text-sm md:text-base hidden">URL copied to clipboard!</p>
+      <p id="copy-feedback" class="text-primary text-sm md:text-base hidden"><T k="subscribe.copied" /></p>
     </section>
 
     <!-- What is RSS -->
     <section class="space-y-4 md:space-y-6">
       <h2 class="font-headline text-lg md:text-2xl font-bold tracking-tight border-b border-outline-variant pb-4">
-        WHAT_IS_RSS
+        <T k="subscribe.what_is_rss" />
       </h2>
       <div class="space-y-3 md:space-y-4 text-base md:text-xl text-on-surface-variant leading-relaxed">
-        <p>
-          RSS (Really Simple Syndication) is a web feed format that allows you to subscribe to websites 
-          and receive automatic updates when new content is published. Instead of manually checking for 
-          new posts, your RSS reader will notify you.
-        </p>
-        <p>
-          Think of it like subscribing to a newsletter, but without the email. You use an RSS reader 
-          app to collect and read updates from all your favorite websites in one place.
-        </p>
+        <p><T k="subscribe.rss_p1" /></p>
+        <p><T k="subscribe.rss_p2" /></p>
       </div>
     </section>
 
     <!-- Recommended Readers -->
     <section class="space-y-4 md:space-y-6">
       <h2 class="font-headline text-lg md:text-2xl font-bold tracking-tight border-b border-outline-variant pb-4">
-        RECOMMENDED_READERS
+        <T k="subscribe.readers" />
       </h2>
       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
@@ -67,28 +61,28 @@ const rssUrl = new URL('/rss.xml', Astro.site ?? Astro.url.origin).toString();
         <div class="bg-surface-container p-4 md:p-6 space-y-3 md:space-y-4 w-full">
           <h3 class="font-headline text-base md:text-xl font-bold flex items-center gap-2">
             <span class="material-symbols-outlined text-primary text-sm md:text-base">&#xe30a;</span>
-            Desktop / Web
+            <T k="subscribe.desktop" />
           </h3>
           <ul class="space-y-2 md:space-y-3 text-on-surface-variant text-sm md:text-base">
             <li class="flex items-start gap-2 md:gap-3">
               <span class="text-primary">→</span>
               <div>
                 <a href="https://feedly.com" target="_blank" rel="noopener noreferrer" class="font-semibold hover:text-primary transition-colors">Feedly</a>
-                <p class="text-xs md:text-base">Popular web-based reader with mobile apps</p>
+                <p class="text-xs md:text-base"><T k="subscribe.feedly_desc" /></p>
               </div>
             </li>
             <li class="flex items-start gap-2 md:gap-3">
               <span class="text-primary">→</span>
               <div>
                 <a href="https://inoreader.com" target="_blank" rel="noopener noreferrer" class="font-semibold hover:text-primary transition-colors">Inoreader</a>
-                <p class="text-xs md:text-base">Powerful reader with advanced features</p>
+                <p class="text-xs md:text-base"><T k="subscribe.inoreader_desc" /></p>
               </div>
             </li>
             <li class="flex items-start gap-2 md:gap-3">
               <span class="text-primary">→</span>
               <div>
                 <a href="https://www.thunderbird.net/" target="_blank" rel="noopener noreferrer" class="font-semibold hover:text-primary transition-colors">Thunderbird</a>
-                <p class="text-xs md:text-base">Email client with built-in RSS support</p>
+                <p class="text-xs md:text-base"><T k="subscribe.thunderbird_desc" /></p>
               </div>
             </li>
           </ul>
@@ -98,28 +92,28 @@ const rssUrl = new URL('/rss.xml', Astro.site ?? Astro.url.origin).toString();
         <div class="bg-surface-container p-4 md:p-6 space-y-3 md:space-y-4 w-full">
           <h3 class="font-headline text-base md:text-xl font-bold flex items-center gap-2">
             <span class="material-symbols-outlined text-primary text-sm md:text-base">&#xe32c;</span>
-            Mobile Apps
+            <T k="subscribe.mobile" />
           </h3>
           <ul class="space-y-2 md:space-y-3 text-on-surface-variant text-sm md:text-base">
             <li class="flex items-start gap-2 md:gap-3">
               <span class="text-primary">→</span>
               <div>
                 <span class="font-semibold">Reeder</span>
-                <p class="text-xs md:text-base">iOS/macOS (Paid, highly recommended)</p>
+                <p class="text-xs md:text-base"><T k="subscribe.reeder_desc" /></p>
               </div>
             </li>
             <li class="flex items-start gap-2 md:gap-3">
               <span class="text-primary">→</span>
               <div>
                 <span class="font-semibold">Feedly</span>
-                <p class="text-xs md:text-base">iOS/Android (Free)</p>
+                <p class="text-xs md:text-base"><T k="subscribe.feedly_mobile_desc" /></p>
               </div>
             </li>
             <li class="flex items-start gap-2 md:gap-3">
               <span class="text-primary">→</span>
               <div>
                 <span class="font-semibold">Read You</span>
-                <p class="text-xs md:text-base">Android, open source (Free)</p>
+                <p class="text-xs md:text-base"><T k="subscribe.readyou_desc" /></p>
               </div>
             </li>
           </ul>
@@ -130,21 +124,21 @@ const rssUrl = new URL('/rss.xml', Astro.site ?? Astro.url.origin).toString();
     <!-- How to Subscribe -->
     <section class="space-y-4 md:space-y-6">
       <h2 class="font-headline text-lg md:text-2xl font-bold tracking-tight border-b border-outline-variant pb-4">
-        HOW_TO_SUBSCRIBE
+        <T k="subscribe.how" />
       </h2>
       <div class="bg-surface-container-low p-4 md:p-6 space-y-3 md:space-y-4">
         <ol class="space-y-3 md:space-y-4 text-sm md:text-base text-on-surface-variant list-decimal list-inside">
           <li class="pl-2">
-            <span class="text-on-surface font-semibold">Choose an RSS reader</span> from the recommendations above
+            <span class="text-on-surface font-semibold"><T k="subscribe.step1_a" /></span> <T k="subscribe.step1_b" />
           </li>
           <li class="pl-2">
-            <span class="text-on-surface font-semibold">Copy the feed URL</span> at the top of this page
+            <span class="text-on-surface font-semibold"><T k="subscribe.step2_a" /></span> <T k="subscribe.step2_b" />
           </li>
           <li class="pl-2">
-            <span class="text-on-surface font-semibold">Add the feed</span> to your reader (usually a "+" or "Add" button)
+            <span class="text-on-surface font-semibold"><T k="subscribe.step3_a" /></span> <T k="subscribe.step3_b" />
           </li>
           <li class="pl-2">
-            <span class="text-on-surface font-semibold">Done!</span> You'll receive automatic updates for new posts
+            <span class="text-on-surface font-semibold"><T k="subscribe.step4_a" /></span> <T k="subscribe.step4_b" />
           </li>
         </ol>
       </div>
@@ -154,16 +148,16 @@ const rssUrl = new URL('/rss.xml', Astro.site ?? Astro.url.origin).toString();
     <section class="bg-primary text-on-primary p-6 md:p-8 space-y-3 md:space-y-4">
       <h2 class="font-headline text-lg md:text-2xl font-bold tracking-tight flex items-center gap-2 break-words">
         <span class="material-symbols-outlined text-sm md:text-base">&#xe866;</span>
-        <span class="break-words">PREFER_MANUAL_CHECKING?</span>
+        <span class="break-words"><T k="subscribe.manual" /></span>
       </h2>
       <p class="text-sm md:text-lg opacity-90 break-words">
-        You can also bookmark the blog page and visit whenever you want to see new content.
+        <T k="subscribe.manual_desc" />
       </p>
       <a 
         href="/blog" 
         class="inline-flex items-center gap-2 border border-on-primary px-4 md:px-6 py-2.5 md:py-3 text-sm md:text-lg font-label uppercase tracking-widest hover:bg-on-primary hover:text-primary transition-all"
       >
-        <span>VISIT_BLOG</span>
+        <span><T k="subscribe.visit_blog" /></span>
         <span class="material-symbols-outlined text-sm md:text-base">&#xe5c8;</span>
       </a>
     </section>

@@ -4,6 +4,7 @@ import NavBar from '../components/NavBar.astro';
 import Footer from '../components/Footer.astro';
 import Hero from '../components/Hero.astro';
 import TerminalLog from '../components/TerminalLog.astro';
+import T from '../components/T.astro';
 import { getCollection } from 'astro:content';
 
 const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -23,10 +24,10 @@ const recentPosts = posts
     <section class="space-y-8 border-t border-outline-variant pt-24 scroll-mt-28" id="articles">
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <h2 class="font-headline text-2xl md:text-4xl font-bold tracking-tight scroll-mt-28" id="articles-heading">FEATURED_POSTS</h2>
-          <p class="font-label text-sm md:text-base text-outline uppercase tracking-widest mt-2">Modest insights into physics & tech notes</p>
+          <h2 class="font-headline text-2xl md:text-4xl font-bold tracking-tight scroll-mt-28" id="articles-heading"><T k="home.featured" /></h2>
+          <p class="font-label text-sm md:text-base text-outline uppercase tracking-widest mt-2"><T k="home.featured_sub" /></p>
         </div>
-        <a class="text-sm md:text-lg font-label border-b border-on-surface pb-1 hover:text-primary transition-colors" href="/blog">VIEW_ALL_RECORDS</a>
+        <a class="text-sm md:text-lg font-label border-b border-on-surface pb-1 hover:text-primary transition-colors" href="/blog"><T k="home.view_all" /></a>
       </div>
       
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -40,7 +41,7 @@ const recentPosts = posts
               <p class="text-sm md:text-base text-on-surface-variant line-clamp-3 min-h-[60px] md:min-h-[72px]">{post.data.description}</p>
             </div>
             <div class="flex items-center justify-between pt-4 border-t border-outline/10 mt-auto">
-              <span class="font-label text-sm uppercase">READ_MORE</span>
+              <span class="font-label text-sm uppercase"><T k="blog.read_more" /></span>
               <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform flex-shrink-0">&#xe5c8;</span>
             </div>
           </a>
@@ -48,7 +49,7 @@ const recentPosts = posts
         
         {recentPosts.length === 0 && (
           <div class="col-span-3 text-center py-12 text-on-surface-variant">
-            <p class="text-lg">No posts yet. Check back soon!</p>
+            <p class="text-lg"><T k="home.no_posts" /></p>
           </div>
         )}
       </div>
@@ -57,9 +58,9 @@ const recentPosts = posts
     <!-- GitHub Projects Section -->
     <section class="grid md:grid-cols-2 gap-12 border-t border-outline-variant pt-24 scroll-mt-28" id="projects">
       <div class="space-y-6">
-        <h2 class="font-headline text-2xl md:text-4xl font-bold tracking-tight scroll-mt-28" id="projects-heading">GITHUB_PROJECTS</h2>
+        <h2 class="font-headline text-2xl md:text-4xl font-bold tracking-tight scroll-mt-28" id="projects-heading"><T k="home.projects" /></h2>
         <p class="text-on-surface-variant text-sm md:text-xl max-w-md leading-relaxed">
-          Lately, I've been leaning into the intuition of vibe coding. On GitHub, you'll find my modest attempts at AI-assisted programming—rough prototypes and evolving experiments as I learn to co-create with LLMs.
+          <T k="home.projects_desc" />
         </p>
         <div class="pt-4">
           <a class="inline-flex items-center gap-4 group" href="https://github.com/chinskylee" rel="noopener noreferrer" target="_blank">
@@ -67,7 +68,7 @@ const recentPosts = posts
               <span class="material-symbols-outlined">&#xe86f;</span>
             </div>
             <div>
-              <span class="block font-headline font-bold text-lg tracking-widest uppercase">Visit Repository</span>
+              <span class="block font-headline font-bold text-lg tracking-widest uppercase"><T k="home.visit_repo" /></span>
               <span class="text-sm font-label text-outline uppercase">github.com/chinskylee</span>
             </div>
           </a>
@@ -119,20 +120,20 @@ const recentPosts = posts
     <!-- Contact Section -->
     <section class="border-t border-outline-variant pt-24 scroll-mt-28" id="contact">
       <div class="space-y-4">
-        <h2 class="font-headline text-2xl md:text-4xl font-bold tracking-tight">GET_IN_TOUCH</h2>
-        <p class="font-label text-sm md:text-base text-outline uppercase tracking-widest">Direct channels for collaboration</p>
+        <h2 class="font-headline text-2xl md:text-4xl font-bold tracking-tight"><T k="home.contact" /></h2>
+        <p class="font-label text-sm md:text-base text-outline uppercase tracking-widest"><T k="home.contact_sub" /></p>
       </div>
       <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
         <a class="group bg-surface-container p-4 md:p-5 flex items-center justify-between hover:bg-surface-container-highest transition-colors gap-2" href="mailto:chinskylee@outlook.com">
           <div class="space-y-1 min-w-0 flex-1">
-            <span class="font-label text-sm md:text-base text-outline uppercase">Email</span>
+            <span class="font-label text-sm md:text-base text-outline uppercase"><T k="home.email" /></span>
             <span class="block font-headline text-lg md:text-2xl font-semibold tracking-tight truncate">chinskylee@outlook.com</span>
           </div>
           <span class="material-symbols-outlined text-base text-outline group-hover:translate-x-1 transition-transform shrink-0">&#xe569;</span>
         </a>
         <a class="group bg-surface-container p-4 md:p-5 flex items-center justify-between hover:bg-surface-container-highest transition-colors gap-2" href="https://github.com/chinskylee" rel="noopener noreferrer" target="_blank">
           <div class="space-y-1 min-w-0 flex-1">
-            <span class="font-label text-sm md:text-base text-outline uppercase">GitHub</span>
+            <span class="font-label text-sm md:text-base text-outline uppercase"><T k="home.github" /></span>
             <span class="block font-headline text-lg md:text-2xl font-semibold tracking-tight truncate">github.com/chinskylee</span>
           </div>
           <span class="material-symbols-outlined text-base text-outline group-hover:translate-x-1 transition-transform shrink-0">&#xe569;</span>

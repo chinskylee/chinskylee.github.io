@@ -1,6 +1,6 @@
 <div id="reading-progress-nav" class="reading-progress-nav" aria-hidden="true">
   <div class="reading-progress-track" aria-hidden="true"></div>
-  <nav id="reading-progress-list" class="reading-progress-list" aria-label="Article section progress"></nav>
+  <nav id="reading-progress-list" class="reading-progress-list" data-i18n-attr="aria-label:reading.list_aria" aria-label="Article section progress"></nav>
 </div>
 
 <script is:inline>
@@ -19,6 +19,13 @@
         .replace(/[^\w\s-]/g, '')
         .replace(/\s+/g, '-')
         .replace(/-+/g, '-');
+    };
+
+    // Translated label for a section jump button (falls back to English before
+    // the i18n runtime is ready).
+    const jumpLabel = (label) => {
+      const api = window.__i18n;
+      return api && typeof api.t === 'function' ? api.t('reading.jump', { label }) : 'Jump to ' + label;
     };
 
     const getScrollBehavior = () => {
@@ -90,13 +97,14 @@
 
       const items = [];
       const circles = [];
+      const labels = [];
 
       headings.forEach((heading, index) => {
         const label = heading.textContent.trim();
         const item = document.createElement('button');
         item.className = 'reading-progress-item';
         item.type = 'button';
-        item.setAttribute('aria-label', `Jump to ${label}`);
+        item.setAttribute('aria-label', jumpLabel(label));
         item.dataset.index = String(index);
 
         const tooltip = document.createElement('div');
@@ -140,6 +148,7 @@
         list.appendChild(item);
         items.push(item);
         circles.push(ringFg);
+        labels.push(label);
       });
 
       let rafId = 0;
@@ -234,10 +243,16 @@
 
       const handleScroll = () => queueUpdate(false);
       const handleResize = () => queueUpdate(true);
+      const handleLangChange = () => {
+        items.forEach((item, index) => {
+          item.setAttribute('aria-label', jumpLabel(labels[index]));
+        });
+      };
 
       window.addEventListener('scroll', handleScroll, { passive: true });
       window.addEventListener('resize', handleResize);
       window.addEventListener(READING_PROGRESS_EVENT, handleResize);
+      window.addEventListener('lang-change', handleLangChange);
 
       if (typeof ResizeObserver !== 'undefined') {
         resizeObserver = new ResizeObserver(() => queueUpdate(true));
@@ -252,6 +267,7 @@
         window.removeEventListener('scroll', handleScroll);
         window.removeEventListener('resize', handleResize);
         window.removeEventListener(READING_PROGRESS_EVENT, handleResize);
+        window.removeEventListener('lang-change', handleLangChange);
         if (resizeObserver) {
           resizeObserver.disconnect();
           resizeObserver = null;

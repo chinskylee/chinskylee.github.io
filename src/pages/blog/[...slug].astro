@@ -5,6 +5,7 @@ import NavBar from '../../components/NavBar.astro';
 import Footer from '../../components/Footer.astro';
 import AudioPlayer from '../../components/AudioPlayer.astro';
 import ReadingProgressNav from '../../components/ReadingProgressNav.astro';
+import T from '../../components/T.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -54,7 +55,7 @@ const needsMath = /\$/.test(proseBody);
           {post.data.updatedDate && (
             <>
               <span>•</span>
-              <span>Updated: {post.data.updatedDate.toISOString().split('T')[0]}</span>
+              <span><T k="post.updated" /> {post.data.updatedDate.toISOString().split('T')[0]}</span>
             </>
           )}
         </div>
@@ -78,7 +79,7 @@ const needsMath = /\$/.test(proseBody);
     <nav class="mt-16 pt-8 border-t border-outline-variant flex justify-between">
       <a href="/blog" class="inline-flex items-center gap-2 text-outline hover:text-primary transition-colors text-sm md:text-base">
         <span class="material-symbols-outlined text-sm md:text-base">&#xe5c4;</span>
-        <span class="font-label uppercase tracking-wider">All Articles</span>
+        <span class="font-label uppercase tracking-wider"><T k="post.all_articles" /></span>
       </a>
     </nav>
   </main>
@@ -87,6 +88,8 @@ const needsMath = /\$/.test(proseBody);
 </BaseLayout>
 
 <script>
+  import { t, LANG_EVENT } from '../../i18n/client';
+
   // 为代码块添加复制按钮
   (function() {
     const codeBlocks = document.querySelectorAll<HTMLElement>('pre.astro-code');
@@ -96,8 +99,8 @@ const needsMath = /\$/.test(proseBody);
       const button = document.createElement('button');
       button.className = 'code-copy-btn';
       button.innerHTML = '<span class="material-symbols-outlined notranslate" translate="no">&#xe14d;</span>';
-      button.setAttribute('aria-label', '复制代码');
-      button.setAttribute('title', '复制代码');
+      button.setAttribute('aria-label', t('post.copy_code'));
+      button.setAttribute('title', t('post.copy_code'));
       
       // 按钮样式
       button.style.cssText = `
@@ -147,10 +150,14 @@ const needsMath = /\$/.test(proseBody);
           // 切换为对勾图标
           button.innerHTML = '<span class="material-symbols-outlined notranslate" translate="no">&#xe5ca;</span>';
           button.style.background = 'rgba(34, 197, 94, 0.9)';
+          button.setAttribute('aria-label', t('post.copied'));
+          button.setAttribute('title', t('post.copied'));
           
           // 2秒后恢复
           setTimeout(() => {
             button.innerHTML = '<span class="material-symbols-outlined notranslate" translate="no">&#xe14d;</span>';
+            button.setAttribute('aria-label', t('post.copy_code'));
+            button.setAttribute('title', t('post.copy_code'));
             if (document.documentElement.classList.contains('dark')) {
               button.style.background = 'rgba(222, 193, 173, 0.8)';
             } else {
@@ -163,6 +170,14 @@ const needsMath = /\$/.test(proseBody);
       });
       
       pre.appendChild(button);
+    });
+
+    // Keep the button labels in the active language
+    window.addEventListener(LANG_EVENT, () => {
+      document.querySelectorAll<HTMLElement>('.code-copy-btn').forEach((btn) => {
+        btn.setAttribute('aria-label', t('post.copy_code'));
+        btn.setAttribute('title', t('post.copy_code'));
+      });
     });
   })();
 </script>

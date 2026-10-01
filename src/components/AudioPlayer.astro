@@ -1,4 +1,6 @@
 ---
+import T from './T.astro';
+
 export interface Props {
   src: string;
   title?: string;
@@ -20,7 +22,7 @@ const {
 
   <div class="flex justify-between items-start md:items-center">
     <div class="flex items-center gap-3">
-      <button class="play-btn bg-primary text-on-primary p-2 hover:bg-on-primary-container transition-colors focus:outline-none flex-shrink-0 relative w-10 h-10 flex items-center justify-center" aria-label="播放/暂停">
+      <button class="play-btn bg-primary text-on-primary p-2 hover:bg-on-primary-container transition-colors focus:outline-none flex-shrink-0 relative w-10 h-10 flex items-center justify-center" data-i18n-attr="aria-label:audio.play_pause_aria" aria-label="Play/pause">
         <span class="material-symbols-outlined notranslate play-icon absolute" translate="no">&#xe037;</span>
         <span class="material-symbols-outlined notranslate pause-icon absolute hidden" translate="no">&#xe034;</span>
       </button>
@@ -30,16 +32,16 @@ const {
           {title}
         </div>
         <div class="font-label text-[9px] text-outline uppercase tracking-widest mt-0.5">
-          BITRATE: {bitrate}
+          <T k="audio.bitrate" />: {bitrate}
         </div>
       </div>
     </div>
 
     <div class="flex flex-col items-end">
-      <span class="font-label text-[9px] text-outline uppercase tracking-widest">STATUS</span>
+      <span class="font-label text-[9px] text-outline uppercase tracking-widest"><T k="audio.status" /></span>
       <span class="font-label text-[9px] text-primary flex items-center gap-1 uppercase tracking-widest font-bold status-text">
         <span class="w-1.5 h-1.5 bg-primary status-dot"></span>
-        STANDBY
+        <T k="audio.standby" />
       </span>
     </div>
   </div>
@@ -60,13 +62,13 @@ const {
       <div class="w-full h-[2px] bg-outline-variant/50 absolute pointer-events-none"></div>
       <div class="progress-fill h-[2px] bg-primary absolute pointer-events-none" style="width: 0%"></div>
       <div class="progress-thumb w-2 h-2 bg-primary absolute pointer-events-none transform -translate-y-1/2 group-hover:scale-125 transition-transform" style="top: 50%; left: -4px"></div>
-      <input type="range" min="0" max="100" value="0" class="seek-slider w-full h-full opacity-0 cursor-pointer z-10 absolute" aria-label="音频进度" />
+      <input type="range" min="0" max="100" value="0" class="seek-slider w-full h-full opacity-0 cursor-pointer z-10 absolute" data-i18n-attr="aria-label:audio.seek_aria" aria-label="Audio progress" />
     </div>
 
     <span class="font-label text-[10px] text-outline tracking-widest tabular-nums duration-time">00:00</span>
 
     <div class="flex items-center pl-2 ml-1 border-l border-outline-variant">
-      <button class="mute-btn text-outline hover:text-primary transition-colors focus:outline-none relative w-8 h-8 flex items-center justify-center" aria-label="静音/取消静音">
+      <button class="mute-btn text-outline hover:text-primary transition-colors focus:outline-none relative w-8 h-8 flex items-center justify-center" data-i18n-attr="aria-label:audio.mute_aria" aria-label="Mute/unmute">
         <span class="material-symbols-outlined notranslate volume-icon absolute" translate="no">&#xe050;</span>
         <span class="material-symbols-outlined notranslate volume-mute-icon absolute hidden" translate="no">&#xe04f;</span>
       </button>
@@ -75,6 +77,8 @@ const {
 </div>
 
 <script>
+  import { t, LANG_EVENT } from '../i18n/client';
+
   function formatTime(time) {
     if (isNaN(time)) return "00:00";
     const minutes = Math.floor(time / 60);
@@ -100,6 +104,16 @@ const {
 
     let isPlaying = false;
     let isMuted = false;
+    let currentStatusKey = 'audio.standby';
+    let currentStatusPulse = false;
+
+    const setStatus = (key, pulse = false) => {
+      currentStatusKey = key;
+      currentStatusPulse = pulse;
+      statusText.innerHTML = `<span class="w-1.5 h-1.5 bg-primary status-dot${pulse ? ' animate-pulse' : ''}"></span>${t(key)}`;
+    };
+
+    window.addEventListener(LANG_EVENT, () => setStatus(currentStatusKey, currentStatusPulse));
 
     playBtn.addEventListener('click', () => {
       if (audio.paused) {
@@ -114,14 +128,14 @@ const {
             isPlaying = false;
             playIcon.classList.remove('hidden');
             pauseIcon.classList.add('hidden');
-            statusText.innerHTML = '<span class="w-1.5 h-1.5 bg-primary status-dot"></span>STANDBY';
+            setStatus('audio.standby');
             waveBars.forEach(bar => bar.classList.remove('bg-primary'));
           });
         }
         isPlaying = true;
         playIcon.classList.add('hidden');
         pauseIcon.classList.remove('hidden');
-        statusText.innerHTML = '<span class="w-1.5 h-1.5 bg-primary status-dot animate-pulse"></span>SYNCHRONIZED';
+        setStatus('audio.sync', true);
         waveBars.forEach((bar, i) => {
           setTimeout(() => bar.classList.add('bg-primary'), i * 20);
         });
@@ -130,7 +144,7 @@ const {
         isPlaying = false;
         playIcon.classList.remove('hidden');
         pauseIcon.classList.add('hidden');
-        statusText.innerHTML = '<span class="w-1.5 h-1.5 bg-primary status-dot"></span>PAUSED';
+        setStatus('audio.paused');
         waveBars.forEach(bar => bar.classList.remove('bg-primary'));
       }
     });
@@ -164,7 +178,7 @@ const {
       isPlaying = false;
       playIcon.classList.remove('hidden');
       pauseIcon.classList.add('hidden');
-      statusText.innerHTML = '<span class="w-1.5 h-1.5 bg-primary status-dot"></span>COMPLETED';
+      setStatus('audio.completed');
       waveBars.forEach(bar => bar.classList.remove('bg-primary'));
       progressFill.style.width = '0%';
       progressThumb.style.left = '-4px';

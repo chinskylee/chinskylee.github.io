@@ -1,11 +1,12 @@
 ---
+import T from './T.astro';
 ---
 
 <section id="terminal-log" class="bg-surface-container-low p-6 md:p-12 space-y-6 md:space-y-8">
   <div class="flex items-center justify-between border-b border-outline-variant pb-4">
     <h2 class="font-headline text-base md:text-2xl font-bold tracking-widest uppercase flex items-center gap-2 min-w-0">
       <span class="material-symbols-outlined text-base md:text-2xl shrink-0">&#xeb8e;</span>
-      <span class="break-words">SYSTEM_REPORT_v2.log</span>
+      <span class="break-words"><T k="log.title" /></span>
     </h2>
     <div class="flex gap-2">
       <div class="w-2 h-2 md:w-3 md:h-3 rounded-full bg-outline-variant"></div>
@@ -15,19 +16,19 @@
   <div class="font-label text-sm md:text-xl space-y-3 md:space-y-4 text-on-surface-variant leading-relaxed">
     <div class="flex gap-2 md:gap-4">
       <span class="text-outline shrink-0 text-xs md:text-base">[10:41:53]</span>
-      <p class="break-words min-w-0"><span class="text-primary">INITIALIZING_SYSTEM:</span> Start my physics study as a little boy full of curiosity.</p>
+      <p class="break-words min-w-0"><span class="text-primary"><T k="log.init_label" /></span> <T k="log.init_text" /></p>
     </div>
     <div class="flex gap-2 md:gap-4">
       <span class="text-outline shrink-0 text-xs md:text-base">[10:42:05]</span>
-      <p class="break-words min-w-0"><span class="text-primary">RESEARCH_FOCUS:</span> Primary focus on Quantum Optics and Nanophotonic, with a specific emphasis on their applications in biosensing. Secondary interests include Quantum Communication and Computational Physics.</p>
+      <p class="break-words min-w-0"><span class="text-primary"><T k="log.focus_label" /></span> <T k="log.focus_text" /></p>
     </div>
     <div class="flex gap-2 md:gap-4">
       <span class="text-outline shrink-0 text-xs md:text-base">[10:42:12]</span>
-      <p class="break-words min-w-0"><span class="text-primary">LOCATION_DATA:</span> Currently based in China. Operating out of a university and digital workspace.</p>
+      <p class="break-words min-w-0"><span class="text-primary"><T k="log.loc_label" /></span> <T k="log.loc_text" /></p>
     </div>
     <div class="flex gap-2 md:gap-4">
       <span class="text-outline shrink-0 text-xs md:text-base">[10:42:15]</span>
-      <p class="break-words min-w-0"><span class="text-primary">CURRENT_STATUS:</span> Terminal input active. Monitoring for mode coupling and plasmonic resonance. Executing: vibe coding and nanophotonic simulations.</p>
+      <p class="break-words min-w-0"><span class="text-primary"><T k="log.status_label" /></span> <T k="log.status_text" /></p>
     </div>
     <div class="pt-4 flex gap-2 md:gap-4 text-primary items-center">
       <span class="text-outline shrink-0 font-bold text-xs md:text-base">lyra@nancy:~$</span>

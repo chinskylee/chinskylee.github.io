@@ -1,9 +1,11 @@
 ---
+import T from './T.astro';
+
 const navLinks = [
-  { href: '/welcome', label: 'WELCOME' },
-  { href: '/blog', label: 'ARTICLES' },
-  { href: '/archive', label: 'ARCHIVE' },
-  { href: '/subscribe', label: 'SUBSCRIBE' },
+  { href: '/welcome', label: 'nav.welcome' },
+  { href: '/blog', label: 'nav.articles' },
+  { href: '/archive', label: 'nav.archive' },
+  { href: '/subscribe', label: 'nav.subscribe' },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -11,7 +13,7 @@ const currentPath = Astro.url.pathname;
 
 <nav class="fixed top-0 w-full rounded-none border-b border-[#79776d]/20 dark:border-[#9f9c90]/20 bg-[#fbfaee] dark:bg-[#1b1c15] flex justify-between items-center px-6 py-4 max-w-full z-50">
   <!-- Mobile Menu Button (Left side) -->
-  <button id="mobile-menu-toggle-nav" class="md:hidden p-2 text-on-surface hover:text-primary transition-colors" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+  <button id="mobile-menu-toggle-nav" class="md:hidden p-2 text-on-surface hover:text-primary transition-colors" data-i18n-attr="aria-label:nav.menu_toggle_aria" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
     <span id="menu-icon" class="material-symbols-outlined text-2xl">&#xe5d2;</span>
   </button>
   
@@ -37,11 +39,22 @@ const currentPath = Astro.url.pathname;
             ]}
             aria-current={isActive ? 'page' : undefined}
           >
-            {link.label}
+            <T k={link.label} />
           </a>
         );
       })}
     </div>
+    <button
+      data-lang-toggle
+      class="lang-toggle hidden sm:inline-flex items-center justify-center gap-1.5 border border-outline-variant bg-surface-container-low px-2 py-2 hover:bg-surface-container transition-colors shrink-0"
+      type="button"
+      title="Language / 语言"
+    >
+      <span class="material-symbols-outlined text-base text-on-surface shrink-0" style="font-size: 20px; width: 20px; height: 20px;">&#xe8e2;</span>
+      <span class="font-label text-sm tracking-widest uppercase text-on-surface w-[40px] text-center notranslate" translate="no">
+        <T k="lang.toggle_label" />
+      </span>
+    </button>
     <button
       aria-label="Switch to dark mode"
       aria-pressed="false"
@@ -53,10 +66,7 @@ const currentPath = Astro.url.pathname;
       <span class="inline-flex items-center justify-center gap-1.5 w-full">
         <span class="material-symbols-outlined text-base text-on-surface transition-all duration-150 shrink-0" id="theme-toggle-icon" style="font-size: 20px; width: 20px; height: 20px;">&#xe51c;</span>
         <span class="theme-dot shrink-0" aria-hidden="true"></span>
-        <span class="font-label text-sm tracking-widest uppercase text-on-surface w-[40px] text-center relative notranslate" id="theme-toggle-label" translate="no">
-          <span class="dark:hidden">DARK</span>
-          <span class="hidden dark:inline">LIGHT</span>
-        </span>
+        <span class="font-label text-sm tracking-widest uppercase text-on-surface w-[40px] text-center relative notranslate" id="theme-toggle-label" translate="no"></span>
       </span>
     </button>
   </div>

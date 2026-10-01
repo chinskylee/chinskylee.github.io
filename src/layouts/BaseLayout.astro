@@ -31,12 +31,26 @@ const csp = [
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-lang="en">
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <!-- Content Security Policy: must precede any fetchable resource -->
   <meta http-equiv="Content-Security-Policy" content={csp}>
+  <!-- Language resolution: runs before paint to avoid a flash of the wrong language -->
+  <script is:inline>
+    (function () {
+      var lang = null;
+      try { lang = window.localStorage.getItem('lang'); } catch (e) { lang = null; }
+      if (lang !== 'zh' && lang !== 'en') {
+        var tag = (navigator.language || (navigator.languages && navigator.languages[0]) || 'en').toLowerCase();
+        lang = tag.indexOf('zh') === 0 ? 'zh' : 'en';
+      }
+      var root = document.documentElement;
+      root.setAttribute('data-lang', lang);
+      root.setAttribute('lang', lang === 'zh' ? 'zh-CN' : 'en');
+    })();
+  </script>
   <link rel="icon" href="/favicon-v2.ico" type="image/x-icon">
   <link href="/images/chinskylee.png" rel="apple-touch-icon">
   <title>{title}</title>
@@ -105,6 +119,13 @@ const csp = [
 </html>
 
 <style is:global>
+  /* Language switching: only the span matching <html data-lang> is shown.
+     Works without JS (English is the static default on <html>). */
+  html[data-lang="en"] [data-lang="zh"],
+  html[data-lang="zh"] [data-lang="en"] {
+    display: none !important;
+  }
+
   html {
     scroll-behavior: smooth;
     /* 防止滚动条导致的布局抖动 */
@@ -309,6 +330,11 @@ const csp = [
 </style>
 
 <script>
+  import { initI18n, t, LANG_EVENT } from '../i18n/client';
+
+  // Language: apply attribute strings and wire the toggle buttons
+  initI18n();
+
   // Page load handling
   document.documentElement.classList.add('loading');
   window.addEventListener('load', () => {
@@ -335,26 +361,28 @@ const csp = [
       }
     };
 
-    // Set initial aria attributes
-    const isDark = document.documentElement.classList.contains('dark');
-    themeToggleButton.setAttribute('aria-pressed', String(isDark));
-    themeToggleButton.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
-    // Note: Label text is controlled by CSS (dark: classes), no JS update needed
+    // Icon and label show what clicking will do next; both depend on language.
+    const syncThemeToggle = () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      themeToggleIcon.textContent = isDark ? '\ue518' : '\ue51c';
+      themeToggleLabel.textContent = isDark ? t('nav.theme_light') : t('nav.theme_dark');
+      themeToggleButton.setAttribute('aria-pressed', String(isDark));
+      themeToggleButton.setAttribute('aria-label', isDark ? t('nav.theme_aria_light') : t('nav.theme_aria_dark'));
+    };
+
+    syncThemeToggle();
+    window.addEventListener(LANG_EVENT, syncThemeToggle);
 
     // Handle click
     themeToggleButton.addEventListener('click', () => {
       const isDark = document.documentElement.classList.contains('dark');
       const newTheme = isDark ? 'light' : 'dark';
 
-      // Toggle theme class immediately (CSS will handle label text)
+      // Toggle theme class immediately
       document.documentElement.classList.toggle('dark', !isDark);
       document.documentElement.classList.toggle('light', isDark);
 
-      // Update icon - icon shows current state (light mode = light_mode icon)
-      themeToggleIcon.textContent = !isDark ? '\ue518' : '\ue51c';
-      themeToggleButton.setAttribute('aria-pressed', String(!isDark));
-      themeToggleButton.setAttribute('aria-label', !isDark ? 'Switch to light mode' : 'Switch to dark mode');
-
+      syncThemeToggle();
       writeStoredTheme(newTheme);
     });
   })();
