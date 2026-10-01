@@ -51,8 +51,12 @@ const csp = [
       root.setAttribute('lang', lang === 'zh' ? 'zh-CN' : 'en');
     })();
   </script>
-  <link rel="icon" href="/favicon-v2.ico" type="image/x-icon">
-  <link href="/images/chinskylee.png" rel="apple-touch-icon">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#fbfaee" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#15160f" media="(prefers-color-scheme: dark)">
   <title>{title}</title>
   <meta name="description" content={description}>
 
